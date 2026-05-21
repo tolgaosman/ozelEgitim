@@ -154,30 +154,6 @@ function initAccessibilityPanel() {
     });
   }
 
-  // Metin Boyutu Ayarlama dinleyicileri
-  const textButtons = [
-    { btn: document.getElementById('btn-text-normal'), scale: '1' },
-    { btn: document.getElementById('btn-text-large'), scale: '1.25' },
-    { btn: document.getElementById('btn-text-huge'), scale: '1.5' }
-  ];
-
-  textButtons.forEach(item => {
-    if (item.btn) {
-      item.btn.addEventListener('click', () => {
-        textButtons.forEach(b => {
-          if (b.btn) {
-            b.btn.classList.remove('active');
-            b.btn.setAttribute('aria-pressed', 'false');
-          }
-        });
-        item.btn.classList.add('active');
-        item.btn.setAttribute('aria-pressed', 'true');
-        document.documentElement.style.setProperty('--font-scale', item.scale);
-        announceToScreenReader(`Yazı boyutu yüzde ${parseInt(item.scale * 100)} olarak güncellendi.`);
-      });
-    }
-  });
-
   // Disleksi Dostu Yazı Karakteri Geçişi
   const fontStandard = document.getElementById('btn-font-standard');
   const fontDyslexic = document.getElementById('btn-font-dyslexic');
@@ -338,11 +314,9 @@ function resetAccessibilitySettings() {
   document.body.className = ''; // temaları ve disleksi sınıflarını sıfırla
   
   // Butonları sıfırla
-  const btnNormText = document.getElementById('btn-text-normal');
   const btnStdFont = document.getElementById('btn-font-standard');
   const themeCalming = document.getElementById('theme-btn-calming');
 
-  if (btnNormText) btnNormText.click();
   if (btnStdFont) btnStdFont.click();
   if (themeCalming) themeCalming.click();
 
