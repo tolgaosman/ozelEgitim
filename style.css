@@ -165,12 +165,30 @@ button, input, select, textarea {
    ========================================== */
 .site-header {
   background-color: var(--card-bg);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   border-bottom: 1px solid var(--border-color);
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
-  transition: background-color var(--transition-speed);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color var(--transition-speed),
+              box-shadow 0.3s ease;
+}
+
+.site-header.header-hidden {
+  transform: translateY(-100%);
+}
+
+/* Scrolled past hero: deepen shadow */
+.site-header.header-scrolled {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+}
+
+/* Push page content below fixed header */
+#live-site-container > main {
+  padding-top: 72px;
 }
 
 .header-container {

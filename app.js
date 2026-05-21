@@ -12,11 +12,49 @@ let voiceGuidanceActive = false;
 
 document.addEventListener('DOMContentLoaded', () => {
   initModeSwitcher();
+  initScrollHeader();
   initAccessibilityPanel();
   initReadingMask();
   initSensorySimulator();
   initIEPBuilder();
 });
+
+// ==========================================
+// 0. Scroll-Hide / Show Navbar
+// ==========================================
+function initScrollHeader() {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+
+        // Add scrolled shadow after 10px
+        if (currentScrollY > 10) {
+          header.classList.add('header-scrolled');
+        } else {
+          header.classList.remove('header-scrolled');
+        }
+
+        // Hide on scroll down, reveal on scroll up
+        if (currentScrollY > lastScrollY && currentScrollY > 80) {
+          header.classList.add('header-hidden');
+        } else {
+          header.classList.remove('header-hidden');
+        }
+
+        lastScrollY = currentScrollY;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+}
 
 // ==========================================
 // 1. Görünüm Modu Geçişi (Erişilebilirlik Paneli İçinde)
@@ -58,10 +96,21 @@ function initModeSwitcher() {
 // ==========================================
 // 2. Erişilebilirlik Ayarları Paneli
 // ==========================================
-const accDialog = document.getElementById('accessibility-dialog');
-const accToggleBtn = document.getElementById('accessibility-toggle-btn');
+// NOTE: These are resolved lazily inside functions, not at parse time,
+// because the DOM may not be ready when the script first runs.
+let accDialog;
+let accToggleBtn;
 
 function initAccessibilityPanel() {
+  // Resolve elements now that DOM is ready
+  accDialog = document.getElementById('accessibility-dialog');
+  accToggleBtn = document.getElementById('accessibility-toggle-btn');
+
+  if (!accDialog || !accToggleBtn) {
+    console.warn('Erişilebilirlik paneli öğeleri bulunamadı.');
+    return;
+  }
+
   // Panel açma/kapama
   accToggleBtn.addEventListener('click', () => {
     const isExpanded = accToggleBtn.getAttribute('aria-expanded') === 'true';
