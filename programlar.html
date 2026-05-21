@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programlar | İZ Özel Eğitim</title>
+  <meta name="description" content="İZ Özel Eğitim'in BEP, duyu bütünleme ve terapi programları hakkında bilgi edinin.">
+  <link rel="icon" type="image/jpeg" href="assets/bLogo.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="live-site-container" class="view-section">
+    <!-- Header/Navigation -->
+    <header class="site-header">
+      <div class="header-container">
+        <a href="index.html" class="logo-link" aria-label="İZ Özel Eğitim Ana Sayfa">
+          <div class="logo-mark">
+            <span class="logo-circle"></span>
+            <span class="logo-dot"></span>
+          </div>
+          <span class="logo-text">İZ Özel Eğitim</span>
+        </a>
+        
+        <nav class="main-nav" aria-label="Ana Navigasyon">
+          <ul>
+            <li><a href="index.html" class="nav-item">Ana Sayfa</a></li>
+            <li><a href="hakkimizda.html" class="nav-item">Hakkımızda</a></li>
+            <li><a href="programlar.html" class="nav-item active">Programlar</a></li>
+            <li><a href="ebeveyn.html" class="nav-item">Ebeveyn Rehberi</a></li>
+            <li><a href="iletisim.html" class="nav-item">İletişim</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <button id="accessibility-toggle-btn" class="accessibility-trigger-btn" aria-label="Erişilebilirlik Ayarlarını Aç" aria-haspopup="dialog" aria-expanded="false">
+            <svg class="accessibility-icon" viewBox="0 0 24 24" width="24" height="24">
+              <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/>
+            </svg>
+            <span class="btn-text">Erişilebilirlik</span>
+            <span class="status-indicator"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Reading Mask Line -->
+    <div id="reading-mask-overlay" class="reading-mask" style="display: none;"></div>
+
+    <main>
+      <!-- Page Hero -->
+      <section class="page-hero-section">
+        <div class="section-container">
+          <span class="section-badge">Gelişimi Nasıl Destekliyoruz</span>
+          <h1 class="page-hero-title">Programlarımız</h1>
+          <p class="page-hero-subtitle">Farklı zihinler için özel olarak tasarlanmış, bütüncül ve bireyselleştirilmiş eğitim programları.</p>
+        </div>
+      </section>
+
+      <!-- Features Grid Section -->
+      <section id="programs" class="features-section">
+        <div class="section-container">
+          <div class="section-header">
+            <span class="section-badge">Eğitim Çözümlerimiz</span>
+            <h2 class="section-title">Farklı Zihinler İçin Özel Eğitim Çözümleri</h2>
+            <p class="section-subtitle">Çocuğunuzun kendini güvende hissetmesi, eğitim sürecine aktif katılması ve potansiyelini en üst düzeye çıkarması için tüm imkanlarımızı seferber ediyoruz.</p>
+          </div>
+
+          <div class="features-grid">
+            <!-- Card 1: IEP -->
+            <div class="feature-card">
+              <div class="card-icon-container sage-bg">
+                <svg viewBox="0 0 24 24" class="card-icon">
+                  <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                </svg>
+              </div>
+              <h3 class="card-title">Bireyselleştirilmiş Eğitim Programları (BEP)</h3>
+              <p class="card-description">Her öğrencimiz için aileler, terapistler ve özel eğitim uzmanları eşliğinde hedeflere yönelik hazırlanan tamamen kişiselleştirilmiş öğrenme yolları sunuyoruz.</p>
+              <button class="card-btn-action" onclick="scrollToWidget('iep')" aria-haspopup="dialog">
+                BEP Profil Aracı Demosu
+                <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+              </button>
+            </div>
+
+            <!-- Card 2: Sensory Rooms -->
+            <div class="feature-card">
+              <div class="card-icon-container blue-bg">
+                <svg viewBox="0 0 24 24" class="card-icon">
+                  <path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.22 19.58 10.57 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm-1-8h2v2h-2zm0-4h2v2h-2zm0 8h2v2h-2z"/>
+                </svg>
+              </div>
+              <h3 class="card-title">Duyu Bütünleme ve Terapi Odaları</h3>
+              <p class="card-description">Duyusal regülasyonu desteklemek için özel tasarlanmış ışık sistemleri, sakinleştirici melodiler, kabarcık tüpleri ve dokunsal materyaller içeren son teknoloji odalar.</p>
+              <button class="card-btn-action" onclick="scrollToWidget('sensory')" aria-haspopup="dialog">
+                Duyu Odasını Simüle Et
+                <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+              </button>
+            </div>
+
+            <!-- Card 3: Expert Therapists -->
+            <div class="feature-card">
+              <div class="card-icon-container gold-bg">
+                <svg viewBox="0 0 24 24" class="card-icon">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </div>
+              <h3 class="card-title">Uzman Terapist ve Eğitimci Kadrosu</h3>
+              <p class="card-description">Dil ve konuşma, ergoterapi ve davranış terapistlerimiz sınıf içinde öğretmenlerle her an entegre çalışarak gelişim hedeflerini günlük hayata yayarlar.</p>
+              <button class="card-btn-action" onclick="scrollToWidget('therapists')" aria-haspopup="dialog">
+                Ekibimizle Tanışın
+                <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Playground Section -->
+      <section id="interactive-playground" class="playground-section">
+        <div class="section-container">
+          <div class="playground-layout">
+            
+            <!-- Sensory Tool Box Widget -->
+            <div class="widget-box sensory-box">
+              <div class="widget-header">
+                <span class="widget-label">Canlı Etkileşim Deneyimi</span>
+                <h3>Duyusal Sakinleşme Simülatörü</h3>
+                <p>Duyu odalarımızın, öğrencilerimizin bireysel profillerine nasıl sakinleştirici uyaranlar sağladığını kendiniz test edin.</p>
+              </div>
+              <div class="sensory-control-panel">
+                <div class="sensory-visual-preview" id="sensory-preview">
+                  <div class="bubble-tube" id="sensory-bubble-tube">
+                    <span class="bubble"></span>
+                    <span class="bubble"></span>
+                    <span class="bubble"></span>
+                    <span class="bubble"></span>
+                  </div>
+                  <span class="sensory-status" id="sensory-status-text">Ortam Aydınlatması: Yumuşak Adaçayı Yeşili</span>
+                </div>
+                
+                <div class="sensory-options">
+                  <div class="option-group">
+                    <label class="control-label">Ortam Aydınlatması</label>
+                    <div class="color-options">
+                      <button class="color-btn active" data-color="sage" style="background-color: #7DA493;" aria-label="Adaçayı Yeşili Işığı Seç"></button>
+                      <button class="color-btn" data-color="blue" style="background-color: #92B4D6;" aria-label="Mavi Işığı Seç"></button>
+                      <button class="color-btn" data-color="lavender" style="background-color: #B4A0E0;" aria-label="Lavanta Işığını Seç"></button>
+                      <button class="color-btn" data-color="amber" style="background-color: #E6C594;" aria-label="Kehribar Işığını Seç"></button>
+                    </div>
+                  </div>
+                  
+                  <div class="option-group">
+                    <label class="control-label">Sakinleştirici Ses</label>
+                    <div class="audio-toggles">
+                      <button id="btn-ambient-rain" class="audio-btn">
+                        <svg class="audio-icon" viewBox="0 0 24 24"><path d="M12 2c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.22 19.58 10.57 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/></svg>
+                        Beyaz Gürültü (Yağmur)
+                      </button>
+                      <button id="btn-ambient-forest" class="audio-btn">
+                        <svg class="audio-icon" viewBox="0 0 24 24"><path d="M10 20H4v-2h6v2zm10 0h-6v-2h6v2zM12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+                        Okyanus Dalgası
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="option-group">
+                    <label class="control-label">Kabarcık Tüpü Yükselme Hızı</label>
+                    <div class="range-container">
+                      <input type="range" id="bubble-speed-slider" min="0" max="3" value="1" step="1" aria-label="Kabarcık Tüpü Hızı Ayarı">
+                      <div class="range-labels">
+                        <span>Kapalı</span>
+                        <span>Hafif</span>
+                        <span>Orta</span>
+                        <span>Aktif</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- IEP Builder Widget -->
+            <div class="widget-box iep-box">
+              <div class="widget-header">
+                <span class="widget-label">Öğrenci Başarı Destek Sistemi</span>
+                <h3>Bireysel Öğrenme Profili Oluşturucu</h3>
+                <p>Öğrenme tercihlerine göre çocuğunuza en uygun eğitim stratejilerini saniyeler içinde simüle edip inceleyin.</p>
+              </div>
+              <div class="iep-builder-panel">
+                <form id="iep-builder-form" onsubmit="event.preventDefault();">
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label for="student-strength">Birincil Güçlü Yön</label>
+                      <select id="student-strength">
+                        <option value="visual">Görsel-Uzamsal / Sanata Yatkın</option>
+                        <option value="kinesthetic">Uygulamalı / Kinestetik Öğrenen</option>
+                        <option value="musical">İşitsel / Ritim Odaklı</option>
+                        <option value="analytical">Detay Odaklı / Yapboz ve Mantık</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="student-support">Gereken Destek Alanı</label>
+                      <select id="student-support">
+                        <option value="focus">Dikkat ve Odaklanma Desteği</option>
+                        <option value="speech">İletişim / Dil ve Konuşma Terapisi</option>
+                        <option value="motor">Fine/Gross Motor Koordinasyonu</option>
+                        <option value="sensory">Sensory Processing Regulation</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <button type="button" id="btn-build-iep" class="build-iep-btn">Özel BEP Stratejileri Üret</button>
+                </form>
+
+                <div class="iep-result-card" id="iep-result-view" style="display: none;">
+                  <h4>Önerilen Eğitim Stratejisi</h4>
+                  <div class="iep-result-strategy">
+                    <span class="strategy-badge" id="iep-strategy-badge">Görsel + Duyusal Strateji</span>
+                    <ul class="strategy-list" id="iep-strategy-list">
+                      <!-- Strategies populated by Javascript -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <div class="logo-mark">
+            <span class="logo-circle"></span>
+            <span class="logo-dot"></span>
+          </div>
+          <span class="logo-text">İZ Özel Eğitim</span>
+          <p class="footer-brand-tagline">Farklı zihinleri destekliyoruz, benzersiz potansiyelleri gururla açığa çıkarıyoruz.</p>
+        </div>
+        <div class="footer-links">
+          <div class="link-column">
+            <h4>Hızlı Menü</h4>
+            <ul>
+              <li><a href="index.html">Ana Sayfa</a></li>
+              <li><a href="hakkimizda.html">Hakkımızda</a></li>
+              <li><a href="programlar.html">Programlar</a></li>
+              <li><a href="ebeveyn.html">Ebeveyn Rehberi</a></li>
+              <li><a href="iletisim.html">İletişim</a></li>
+            </ul>
+          </div>
+          <div class="link-column">
+            <h4>Destek Alanları</h4>
+            <ul>
+              <li><a href="programlar.html">BEP Danışmanlığı</a></li>
+              <li><a href="programlar.html">Dil ve Konuşma Terapisi</a></li>
+              <li><a href="programlar.html">Ergoterapi</a></li>
+              <li><a href="programlar.html">Duyu Bütünleme</a></li>
+            </ul>
+          </div>
+          <div class="link-column">
+            <h4>Erişilebilirlik Taahhüdü</h4>
+            <p>Tüm dijital platformlarımızda WCAG 2.1 AA kriterlerini aşmayı hedefliyoruz. Herhangi bir erişim engeli yaşarsanız lütfen bizimle paylaşın.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 İZ Özel Eğitim. Kapsayıcı ve engelsiz tasarım. Tüm hakları saklıdır.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ACCESSIBILITY SETTINGS PANEL MODAL/DRAWER -->
+  <div id="accessibility-dialog" class="accessibility-panel-dialog" role="dialog" aria-modal="true" aria-labelledby="acc-panel-title" style="display: none;">
+    <div class="accessibility-panel-backdrop" onclick="closeAccessibilityPanel()"></div>
+    <div class="accessibility-panel-content">
+      <div class="panel-header">
+        <h2 id="acc-panel-title">Erişilebilirlik Paneli</h2>
+        <button class="close-panel-btn" onclick="closeAccessibilityPanel()" aria-label="Erişilebilirlik Seçeneklerini Kapat">✕</button>
+      </div>
+      <div class="panel-body">
+        <div class="panel-section">
+          <h3>Görünüm Teması</h3>
+          <div class="acc-option-group">
+            <div class="acc-buttons-row">
+              <button id="quick-theme-light" class="acc-toggle-btn active" aria-pressed="true">☀️ Açık Tema</button>
+              <button id="quick-theme-dark" class="acc-toggle-btn" aria-pressed="false">🌙 Koyu Tema</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel-section">
+          <h3>Metin ve Yazı Tipi Ayarları</h3>
+          <div class="acc-option-group">
+            <label class="section-sublabel">Metin Boyutu</label>
+            <div class="acc-buttons-row">
+              <button id="btn-text-normal" class="acc-toggle-btn active" data-scale="1" aria-pressed="true">Normal (%100)</button>
+              <button id="btn-text-large" class="acc-toggle-btn" data-scale="1.25" aria-pressed="false">Büyük (%125)</button>
+              <button id="btn-text-huge" class="acc-toggle-btn" data-scale="1.5" aria-pressed="false">Çok Büyük (%150)</button>
+            </div>
+          </div>
+          <div class="acc-option-group">
+            <label class="section-sublabel">Okuma Yazı Tipi Stili</label>
+            <div class="acc-buttons-row">
+              <button id="btn-font-standard" class="acc-toggle-btn active" aria-pressed="true">Standart (Inter)</button>
+              <button id="btn-font-dyslexic" class="acc-toggle-btn" aria-pressed="false">Disleksi Dostu (Lexend)</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <h3>Bilişsel ve Okuma Desteği</h3>
+          <div class="toggle-control-item">
+            <div class="toggle-text">
+              <label for="chk-reading-mask"><strong>Satır Okuma Maskesi</strong></label>
+              <p>Satırları daha kolay takip edebilmeniz için imlecinizi takip eden bir okuma cetveli ekler.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="chk-reading-mask">
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div class="toggle-control-item">
+            <div class="toggle-text">
+              <label for="chk-stop-animations"><strong>Hareketleri Durdur</strong></label>
+              <p>Aşırı duyusal yüklenmeyi engellemek için tüm sayfa animasyonlarını kapatır.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="chk-stop-animations">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="toggle-control-item">
+            <div class="toggle-text">
+              <label for="chk-voice-synthesizer"><strong>Sesli Yönlendirme Rehberi</strong></label>
+              <p>Farenizle üzerine geldiğiniz başlık ve paragrafları otomatik olarak Türkçe seslendirir.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="chk-voice-synthesizer">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    function scrollToWidget(type) {
+      const playground = document.getElementById('interactive-playground');
+      if (playground) {
+        playground.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+          if (type === 'iep') {
+            const el = document.getElementById('student-strength');
+            if (el) el.focus();
+          } else if (type === 'sensory') {
+            const el = document.querySelector('.color-btn');
+            if (el) el.focus();
+          }
+        }, 500);
+      }
+    }
+  </script>
+</body>
+</html>

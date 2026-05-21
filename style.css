@@ -1996,3 +1996,185 @@ body.font-dyslexic-active {
     padding: 24px;
   }
 }
+
+/* ==========================================
+   Multi-Page Layout — Shared Page Hero
+   ========================================== */
+.page-hero-section {
+  padding: 100px 24px 60px;
+  background: radial-gradient(circle at 70% 30%, var(--secondary-light) 0%, transparent 50%),
+              radial-gradient(circle at 10% 90%, var(--primary-light) 0%, transparent 40%);
+  text-align: center;
+}
+
+.page-hero-title {
+  font-size: clamp(2.4rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 12px 0 20px;
+  color: var(--text-color);
+}
+
+.page-hero-subtitle {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ==========================================
+   Stats Section (Hakkımızda)
+   ========================================== */
+.stats-section {
+  padding: 80px 24px;
+  background-color: var(--primary-light);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+  text-align: center;
+}
+
+.stat-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.stat-big-number {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: var(--primary-color);
+  line-height: 1;
+}
+
+.stat-big-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.stat-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  max-width: 200px;
+}
+
+/* ==========================================
+   FAQ Section (Ebeveyn Rehberi)
+   ========================================== */
+.faq-section {
+  padding: 80px 24px;
+  background-color: var(--bg-color);
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 28px;
+  margin-top: 48px;
+}
+
+.faq-item {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: 32px;
+  box-shadow: var(--card-shadow);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.faq-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.faq-item h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+.faq-item p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ==========================================
+   CTA Section (Ebeveyn Rehberi Alt)
+   ========================================== */
+.cta-section {
+  padding: 80px 24px;
+  background-color: var(--secondary-light);
+}
+
+.cta-box {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border-radius: var(--border-radius-xl);
+  padding: 72px 48px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(125, 164, 147, 0.3);
+}
+
+.cta-box .section-badge {
+  color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 6px 16px;
+  border-radius: 100px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.cta-box h2 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: white;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+
+.cta-box p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 36px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-box .cta-button {
+  background-color: white;
+  color: var(--primary-color);
+  font-weight: 800;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.cta-box .cta-button:hover {
+  background-color: var(--bg-color);
+  color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .page-hero-section {
+    padding: 80px 24px 48px;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+  .cta-box {
+    padding: 48px 24px;
+  }
+}
+
