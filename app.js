@@ -1,8 +1,8 @@
 // ==========================================
-// Bloom Academy - Interactive Application Scripts
+// İZ Özel Eğitim - Etkileşimli Uygulama Kodları
 // ==========================================
 
-// Global state for synthesizers and speech
+// Sentezleyici ve ses için global durumlar
 let audioContext = null;
 let noiseNode = null;
 let filterNode = null;
@@ -19,46 +19,50 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================
-// 1. Viewing Mode Switcher
+// 1. Görünüm Modu Geçişi (Erişilebilirlik Paneli İçinde)
 // ==========================================
 function initModeSwitcher() {
-  const btnLiveSite = document.getElementById('btn-live-site');
-  const btnBehance = document.getElementById('btn-behance');
+  const btnLiveSite = document.getElementById('btn-toggle-live');
+  const btnBehance = document.getElementById('btn-toggle-behance');
   const liveContainer = document.getElementById('live-site-container');
   const behanceContainer = document.getElementById('behance-container');
 
-  btnLiveSite.addEventListener('click', () => {
-    btnLiveSite.classList.add('active');
-    btnLiveSite.setAttribute('aria-pressed', 'true');
-    btnBehance.classList.remove('active');
-    btnBehance.setAttribute('aria-pressed', 'false');
+  if (btnLiveSite && btnBehance) {
+    btnLiveSite.addEventListener('click', () => {
+      btnLiveSite.classList.add('active');
+      btnLiveSite.setAttribute('aria-pressed', 'true');
+      btnBehance.classList.remove('active');
+      btnBehance.setAttribute('aria-pressed', 'false');
 
-    liveContainer.style.display = 'block';
-    behanceContainer.style.display = 'none';
-  });
+      liveContainer.style.display = 'block';
+      behanceContainer.style.display = 'none';
+      announceToScreenReader('Canlı etkileşimli site görünümüne geçildi.');
+    });
 
-  btnBehance.addEventListener('click', () => {
-    btnBehance.classList.add('active');
-    btnBehance.setAttribute('aria-pressed', 'true');
-    btnLiveSite.classList.remove('active');
-    btnLiveSite.setAttribute('aria-pressed', 'false');
+    btnBehance.addEventListener('click', () => {
+      btnBehance.classList.add('active');
+      btnBehance.setAttribute('aria-pressed', 'true');
+      btnLiveSite.classList.remove('active');
+      btnLiveSite.setAttribute('aria-pressed', 'false');
 
-    liveContainer.style.display = 'none';
-    behanceContainer.style.display = 'block';
-    
-    // Shut down speech synthesis when leaving live view
-    if (speechSynth) speechSynth.cancel();
-  });
+      liveContainer.style.display = 'none';
+      behanceContainer.style.display = 'block';
+      announceToScreenReader('Behance portfolyo sunumu görünümüne geçildi.');
+      
+      // Canlı görünümden çıkarken ses sentezini kapat
+      if (speechSynth) speechSynth.cancel();
+    });
+  }
 }
 
 // ==========================================
-// 2. Accessibility Options Panel
+// 2. Erişilebilirlik Ayarları Paneli
 // ==========================================
 const accDialog = document.getElementById('accessibility-dialog');
 const accToggleBtn = document.getElementById('accessibility-toggle-btn');
 
 function initAccessibilityPanel() {
-  // Toggle panel opening
+  // Panel açma/kapama
   accToggleBtn.addEventListener('click', () => {
     const isExpanded = accToggleBtn.getAttribute('aria-expanded') === 'true';
     if (isExpanded) {
@@ -68,14 +72,40 @@ function initAccessibilityPanel() {
     }
   });
 
-  // Esc key closes panel
+  // Esc tuşu ile paneli kapatma
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && accDialog.style.display === 'flex') {
       closeAccessibilityPanel();
     }
   });
 
-  // Text Scaling listeners
+  // Hızlı Açık/Koyu Tema Geçiş Tuşları (Erişilebilirlik Paneli En Üst Kısmı)
+  const quickThemeLight = document.getElementById('quick-theme-light');
+  const quickThemeDark = document.getElementById('quick-theme-dark');
+
+  if (quickThemeLight && quickThemeDark) {
+    quickThemeLight.addEventListener('click', () => {
+      quickThemeLight.classList.add('active');
+      quickThemeLight.setAttribute('aria-pressed', 'true');
+      quickThemeDark.classList.remove('active');
+      quickThemeDark.setAttribute('aria-pressed', 'false');
+      
+      // Varsayılan pastel açık temaya tıkla
+      document.getElementById('theme-btn-calming').click();
+    });
+
+    quickThemeDark.addEventListener('click', () => {
+      quickThemeDark.classList.add('active');
+      quickThemeDark.setAttribute('aria-pressed', 'true');
+      quickThemeLight.classList.remove('active');
+      quickThemeLight.setAttribute('aria-pressed', 'false');
+      
+      // Rahatlatıcı koyu temaya tıkla
+      document.getElementById('theme-btn-dark').click();
+    });
+  }
+
+  // Metin Boyutu Ayarlama dinleyicileri
   const textButtons = [
     { btn: document.getElementById('btn-text-normal'), scale: '1' },
     { btn: document.getElementById('btn-text-large'), scale: '1.25' },
@@ -83,41 +113,47 @@ function initAccessibilityPanel() {
   ];
 
   textButtons.forEach(item => {
-    item.btn.addEventListener('click', () => {
-      textButtons.forEach(b => {
-        b.btn.classList.remove('active');
-        b.btn.setAttribute('aria-pressed', 'false');
+    if (item.btn) {
+      item.btn.addEventListener('click', () => {
+        textButtons.forEach(b => {
+          if (b.btn) {
+            b.btn.classList.remove('active');
+            b.btn.setAttribute('aria-pressed', 'false');
+          }
+        });
+        item.btn.classList.add('active');
+        item.btn.setAttribute('aria-pressed', 'true');
+        document.documentElement.style.setProperty('--font-scale', item.scale);
+        announceToScreenReader(`Yazı boyutu yüzde ${parseInt(item.scale * 100)} olarak güncellendi.`);
       });
-      item.btn.classList.add('active');
-      item.btn.setAttribute('aria-pressed', 'true');
-      document.documentElement.style.setProperty('--font-scale', item.scale);
-      announceToScreenReader(`Text size adjusted to ${parseInt(item.scale * 100)} percent.`);
-    });
+    }
   });
 
-  // Dyslexic Font Toggle
+  // Disleksi Dostu Yazı Karakteri Geçişi
   const fontStandard = document.getElementById('btn-font-standard');
   const fontDyslexic = document.getElementById('btn-font-dyslexic');
 
-  fontStandard.addEventListener('click', () => {
-    fontStandard.classList.add('active');
-    fontStandard.setAttribute('aria-pressed', 'true');
-    fontDyslexic.classList.remove('active');
-    fontDyslexic.setAttribute('aria-pressed', 'false');
-    document.body.classList.remove('font-dyslexic-active');
-    announceToScreenReader('Font set to standard sans serif.');
-  });
+  if (fontStandard && fontDyslexic) {
+    fontStandard.addEventListener('click', () => {
+      fontStandard.classList.add('active');
+      fontStandard.setAttribute('aria-pressed', 'true');
+      fontDyslexic.classList.remove('active');
+      fontDyslexic.setAttribute('aria-pressed', 'false');
+      document.body.classList.remove('font-dyslexic-active');
+      announceToScreenReader('Yazı karakteri standart sans-serif olarak ayarlandı.');
+    });
 
-  fontDyslexic.addEventListener('click', () => {
-    fontDyslexic.classList.add('active');
-    fontDyslexic.setAttribute('aria-pressed', 'true');
-    fontStandard.classList.remove('active');
-    fontStandard.setAttribute('aria-pressed', 'false');
-    document.body.classList.add('font-dyslexic-active');
-    announceToScreenReader('Font set to Lexend dyslexic friendly reader mode.');
-  });
+    fontDyslexic.addEventListener('click', () => {
+      fontDyslexic.classList.add('active');
+      fontDyslexic.setAttribute('aria-pressed', 'true');
+      fontStandard.classList.remove('active');
+      fontStandard.setAttribute('aria-pressed', 'false');
+      document.body.classList.add('font-dyslexic-active');
+      announceToScreenReader('Yazı karakteri disleksi dostu Lexend okuma modu olarak ayarlandı.');
+    });
+  }
 
-  // Visual Customization Theme Buttons
+  // Görsel Özelleştirme Temaları Butonları
   const themes = [
     { btn: document.getElementById('theme-btn-calming'), className: '' },
     { btn: document.getElementById('theme-btn-contrast'), className: 'theme-high-contrast' },
@@ -126,112 +162,158 @@ function initAccessibilityPanel() {
   ];
 
   themes.forEach(theme => {
-    theme.btn.addEventListener('click', () => {
-      themes.forEach(t => {
-        t.btn.classList.remove('active');
-        t.btn.setAttribute('aria-pressed', 'false');
-        if (t.className) document.body.classList.remove(t.className);
+    if (theme.btn) {
+      theme.btn.addEventListener('click', () => {
+        themes.forEach(t => {
+          if (t.btn) {
+            t.btn.classList.remove('active');
+            t.btn.setAttribute('aria-pressed', 'false');
+          }
+          if (t.className) document.body.classList.remove(t.className);
+        });
+        theme.btn.classList.add('active');
+        theme.btn.setAttribute('aria-pressed', 'true');
+        if (theme.className) {
+          document.body.classList.add(theme.className);
+        }
+        
+        // Hızlı Açık/Koyu tema butonlarını da senkronize et
+        updateQuickThemeButtons(theme.className);
+
+        const themeName = theme.btn.querySelector('.theme-choice-name').innerText;
+        announceToScreenReader(`Görsel tema ${themeName} olarak değiştirildi.`);
       });
-      theme.btn.classList.add('active');
-      theme.btn.setAttribute('aria-pressed', 'true');
-      if (theme.className) {
-        document.body.classList.add(theme.className);
-      }
-      const themeName = theme.btn.querySelector('.theme-choice-name').innerText;
-      announceToScreenReader(`Visual theme changed to ${themeName}.`);
-    });
+    }
   });
 
-  // Cognitive supports checkboxes
+  // Bilişsel Destek Seçenekleri (Checkox'lar)
   const chkReadingMask = document.getElementById('chk-reading-mask');
   const chkHighlightLinks = document.getElementById('chk-highlight-links');
   const chkStopAnimations = document.getElementById('chk-stop-animations');
   const chkVoiceSynthesizer = document.getElementById('chk-voice-synthesizer');
 
-  chkReadingMask.addEventListener('change', (e) => {
-    const mask = document.getElementById('reading-mask-overlay');
-    mask.style.display = e.target.checked ? 'block' : 'none';
-    announceToScreenReader(`Line reading guide ${e.target.checked ? 'activated' : 'deactivated'}.`);
-  });
+  if (chkReadingMask) {
+    chkReadingMask.addEventListener('change', (e) => {
+      const mask = document.getElementById('reading-mask-overlay');
+      if (mask) mask.style.display = e.target.checked ? 'block' : 'none';
+      announceToScreenReader(`Satır okuma maskesi kılavuzu ${e.target.checked ? 'etkinleştirildi' : 'kapatıldı'}.`);
+    });
+  }
 
-  chkHighlightLinks.addEventListener('change', (e) => {
-    if (e.target.checked) {
-      document.body.classList.add('highlight-links');
-      announceToScreenReader('Highlighting links and action buttons.');
-    } else {
-      document.body.classList.remove('highlight-links');
-      announceToScreenReader('Removed link highlights.');
-    }
-  });
+  if (chkHighlightLinks) {
+    chkHighlightLinks.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        document.body.classList.add('highlight-links');
+        announceToScreenReader('Bağlantılar ve butonlar görsel olarak vurgulandı.');
+      } else {
+        document.body.classList.remove('highlight-links');
+        announceToScreenReader('Bağlantı vurguları kaldırıldı.');
+      }
+    });
+  }
 
-  chkStopAnimations.addEventListener('change', (e) => {
-    if (e.target.checked) {
-      document.body.classList.add('reduce-motion');
-      announceToScreenReader('Motion elements and animations paused.');
-    } else {
-      document.body.classList.remove('reduce-motion');
-      announceToScreenReader('Motion and animations enabled.');
-    }
-  });
+  if (chkStopAnimations) {
+    chkStopAnimations.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        document.body.classList.add('reduce-motion');
+        announceToScreenReader('Sayfadaki tüm animasyonlar ve hareketli öğeler durduruldu.');
+      } else {
+        document.body.classList.remove('reduce-motion');
+        announceToScreenReader('Animasyonlar ve hareketler tekrar etkin.');
+      }
+    });
+  }
 
-  chkVoiceSynthesizer.addEventListener('change', (e) => {
-    voiceGuidanceActive = e.target.checked;
-    if (voiceGuidanceActive) {
-      announceToScreenReader('Interactive voice guidance activated. Hover or tap text to read aloud.');
-      speakText('Voice guidance ready');
-    } else {
-      if (speechSynth) speechSynth.cancel();
-      announceToScreenReader('Interactive voice guidance deactivated.');
-    }
-  });
+  if (chkVoiceSynthesizer) {
+    chkVoiceSynthesizer.addEventListener('change', (e) => {
+      voiceGuidanceActive = e.target.checked;
+      if (voiceGuidanceActive) {
+        announceToScreenReader('Etkileşimli sesli yönlendirme açıldı. Metinleri sesli dinlemek için farenizi üzerlerine getirebilirsiniz.');
+        speakText('Sesli rehber hazır');
+      } else {
+        if (speechSynth) speechSynth.cancel();
+        announceToScreenReader('Sesli yönlendirme kapatıldı.');
+      }
+    });
+  }
 
-  // Setup Hover Voice Synthesizer listener
+  // Hover ile Sesli Okuyucuyu Yapılandır
   setupHoverReader();
 }
 
+function updateQuickThemeButtons(themeClass) {
+  const quickLight = document.getElementById('quick-theme-light');
+  const quickDark = document.getElementById('quick-theme-dark');
+  if (!quickLight || !quickDark) return;
+  
+  if (themeClass === 'theme-dark') {
+    quickDark.classList.add('active');
+    quickDark.setAttribute('aria-pressed', 'true');
+    quickLight.classList.remove('active');
+    quickLight.setAttribute('aria-pressed', 'false');
+  } else if (themeClass === '') {
+    quickLight.classList.add('active');
+    quickLight.setAttribute('aria-pressed', 'true');
+    quickDark.classList.remove('active');
+    quickDark.setAttribute('aria-pressed', 'false');
+  } else {
+    quickLight.classList.remove('active');
+    quickLight.setAttribute('aria-pressed', 'false');
+    quickDark.classList.remove('active');
+    quickDark.setAttribute('aria-pressed', 'false');
+  }
+}
+
 function openAccessibilityPanel() {
-  accDialog.style.display = 'flex';
-  accToggleBtn.setAttribute('aria-expanded', 'true');
-  // Set focus on close button for keyboard trapping accessibility
-  setTimeout(() => {
-    accDialog.querySelector('.close-panel-btn').focus();
-  }, 100);
+  if (accDialog) {
+    accDialog.style.display = 'flex';
+    accToggleBtn.setAttribute('aria-expanded', 'true');
+    // Klavye navigasyon odağını kapatma tuşuna getir
+    setTimeout(() => {
+      const closeBtn = accDialog.querySelector('.close-panel-btn');
+      if (closeBtn) closeBtn.focus();
+    }, 100);
+  }
 }
 
 function closeAccessibilityPanel() {
-  accDialog.style.display = 'none';
-  accToggleBtn.setAttribute('aria-expanded', 'false');
-  accToggleBtn.focus();
+  if (accDialog) {
+    accDialog.style.display = 'none';
+    accToggleBtn.setAttribute('aria-expanded', 'false');
+    accToggleBtn.focus();
+  }
 }
 
 function resetAccessibilitySettings() {
-  // Revert layout styles
   document.documentElement.style.setProperty('--font-scale', '1');
-  document.body.className = ''; // remove themes & dyslexic classes
+  document.body.className = ''; // temaları ve disleksi sınıflarını sıfırla
   
-  // Revert buttons
-  document.getElementById('btn-text-normal').click();
-  document.getElementById('btn-font-standard').click();
-  document.getElementById('theme-btn-calming').click();
+  // Butonları sıfırla
+  const btnNormText = document.getElementById('btn-text-normal');
+  const btnStdFont = document.getElementById('btn-font-standard');
+  const themeCalming = document.getElementById('theme-btn-calming');
 
-  // Reset checkboxes
+  if (btnNormText) btnNormText.click();
+  if (btnStdFont) btnStdFont.click();
+  if (themeCalming) themeCalming.click();
+
+  // Checkbox'ları sıfırla
   const checkboxes = ['chk-reading-mask', 'chk-highlight-links', 'chk-stop-animations', 'chk-voice-synthesizer'];
   checkboxes.forEach(id => {
     const chk = document.getElementById(id);
-    if (chk.checked) {
+    if (chk && chk.checked) {
       chk.checked = false;
       chk.dispatchEvent(new Event('change'));
     }
   });
 
-  announceToScreenReader('Accessibility configurations reset to defaults.');
+  announceToScreenReader('Erişilebilirlik ayarları varsayılana sıfırlandı.');
 }
 
 // ==========================================
-// 3. Screen Reader Utilities & Voice Synthesis
+// 3. Ekran Okuyucu Yardımcıları ve Ses Sentezi
 // ==========================================
 function announceToScreenReader(message) {
-  // Check if live region exists, else create one
   let liveRegion = document.getElementById('accessibility-live-announcer');
   if (!liveRegion) {
     liveRegion = document.createElement('div');
@@ -245,7 +327,6 @@ function announceToScreenReader(message) {
     document.body.appendChild(liveRegion);
   }
   
-  // Update content to trigger screen reader announcement
   liveRegion.textContent = '';
   setTimeout(() => {
     liveRegion.textContent = message;
@@ -254,17 +335,17 @@ function announceToScreenReader(message) {
 
 function speakText(text) {
   if (!speechSynth) return;
-  speechSynth.cancel(); // Stop any currently reading item
+  speechSynth.cancel(); // Mevcut okumayı kes
   
   currentUtterance = new SpeechSynthesisUtterance(text);
-  currentUtterance.rate = 0.9; // Slightly slower, calm speaking rate
+  currentUtterance.rate = 0.95; // Sakin okuma hızı
   currentUtterance.pitch = 1.0;
   
-  // Find a pleasant, clear voice if available
+  // Varsa Türkçe ses seç
   const voices = speechSynth.getVoices();
-  const calmingVoice = voices.find(v => v.lang.includes('en') && (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Zira')));
-  if (calmingVoice) {
-    currentUtterance.voice = calmingVoice;
+  const turkishVoice = voices.find(v => v.lang.includes('tr') || v.lang.includes('TR'));
+  if (turkishVoice) {
+    currentUtterance.voice = turkishVoice;
   }
   
   speechSynth.speak(currentUtterance);
@@ -276,7 +357,6 @@ function setupHoverReader() {
   document.addEventListener('mouseover', (e) => {
     if (!voiceGuidanceActive) return;
     
-    // Find closest speakable element
     const element = e.target.closest(speakableSelector);
     if (element && !element.dataset.speechRead) {
       const textToRead = element.innerText || element.ariaLabel || '';
@@ -286,7 +366,6 @@ function setupHoverReader() {
     }
   });
 
-  // Trigger for keyboard tab navigation focus
   document.addEventListener('focusin', (e) => {
     if (!voiceGuidanceActive) return;
     
@@ -301,28 +380,35 @@ function setupHoverReader() {
 }
 
 // ==========================================
-// 4. Line Reading Mask Logic
+// 4. Satır Okuma Maskesi Kılavuzu
 // ==========================================
 function initReadingMask() {
   const mask = document.getElementById('reading-mask-overlay');
   
   document.addEventListener('mousemove', (e) => {
-    if (mask.style.display !== 'none') {
+    if (mask && mask.style.display !== 'none') {
       mask.style.top = e.clientY + 'px';
     }
   });
 }
 
 // ==========================================
-// 5. Sensory Room Simulator Widget
+// 5. Duyu Odası Sakinleşme Simülatörü
 // ==========================================
+const colorsTR = {
+  sage: "Yumuşak Adaçayı Yeşili",
+  blue: "Yumuşak Mavi",
+  lavender: "Yumuşak Lavanta",
+  amber: "Sakinleştirici Kehribar"
+};
+
 function initSensorySimulator() {
   const sensoryPreview = document.getElementById('sensory-preview');
   const sensoryStatusText = document.getElementById('sensory-status-text');
   const bubbleTube = document.getElementById('sensory-bubble-tube');
   const bubbleSlider = document.getElementById('bubble-speed-slider');
 
-  // A. Color toggles
+  // A. Renk butonları
   const colorBtns = document.querySelectorAll('.color-btn');
   colorBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -331,68 +417,70 @@ function initSensorySimulator() {
 
       const color = btn.dataset.color;
       
-      // Update preview wrapper classes
-      sensoryPreview.className = 'sensory-visual-preview';
-      sensoryPreview.classList.add(`color-${color}`);
+      if (sensoryPreview) {
+        sensoryPreview.className = 'sensory-visual-preview';
+        sensoryPreview.classList.add(`color-${color}`);
+      }
 
-      // Translate color names for status display
-      let formattedColor = color.charAt(0).toUpperCase() + color.slice(1);
-      sensoryStatusText.textContent = `Ambient Mode: Soft ${formattedColor}`;
-      announceToScreenReader(`Sensory room lighting adjusted to Soft ${formattedColor}.`);
+      if (sensoryStatusText) {
+        sensoryStatusText.textContent = `Ortam Aydınlatması: ${colorsTR[color]}`;
+      }
+      announceToScreenReader(`Duyu odası aydınlatması ${colorsTR[color]} olarak ayarlandı.`);
     });
   });
 
-  // B. Bubble Speed Slider
-  bubbleSlider.addEventListener('input', (e) => {
-    const val = e.target.value;
-    
-    // Clear old bubble classes
-    bubbleTube.className = 'bubble-tube';
-    bubbleTube.classList.add(`bubble-speed-${val}`);
+  // B. Kabarcık Tüpü Hızı
+  if (bubbleSlider && bubbleTube) {
+    bubbleSlider.addEventListener('input', (e) => {
+      const val = e.target.value;
+      
+      bubbleTube.className = 'bubble-tube';
+      bubbleTube.classList.add(`bubble-speed-${val}`);
 
-    let speedLabel = 'Off';
-    if (val == 1) speedLabel = 'Gentle';
-    if (val == 2) speedLabel = 'Medium';
-    if (val == 3) speedLabel = 'Active';
+      let speedLabel = 'Kapalı';
+      if (val == 1) speedLabel = 'Hafif';
+      if (val == 2) speedLabel = 'Orta';
+      if (val == 3) speedLabel = 'Aktif';
 
-    announceToScreenReader(`Bubble tube speed set to ${speedLabel}.`);
-  });
+      announceToScreenReader(`Kabarcık tüpü hızı ${speedLabel} olarak ayarlandı.`);
+    });
+  }
 
-  // C. Calming Audio Synthesis (Web Audio API)
+  // C. Sakinleştirici Ses Sentezleyicisi (Web Audio API)
   const rainBtn = document.getElementById('btn-ambient-rain');
   const forestBtn = document.getElementById('btn-ambient-forest');
 
-  rainBtn.addEventListener('click', () => {
-    if (rainBtn.classList.contains('active')) {
-      stopAmbientAudio();
-      rainBtn.classList.remove('active');
-    } else {
-      stopAmbientAudio();
-      forestBtn.classList.remove('active');
-      rainBtn.classList.add('active');
-      playAmbientNoise('pink'); // Pink noise resembles soft rain
-      announceToScreenReader('Calming white noise enabled.');
-    }
-  });
+  if (rainBtn && forestBtn) {
+    rainBtn.addEventListener('click', () => {
+      if (rainBtn.classList.contains('active')) {
+        stopAmbientAudio();
+        rainBtn.classList.remove('active');
+      } else {
+        stopAmbientAudio();
+        forestBtn.classList.remove('active');
+        rainBtn.classList.add('active');
+        playAmbientNoise('pink'); // Pembe gürültü yağmur sesini andırır
+        announceToScreenReader('Sakinleştirici yağmur gürültüsü açıldı.');
+      }
+    });
 
-  forestBtn.addEventListener('click', () => {
-    if (forestBtn.classList.contains('active')) {
-      stopAmbientAudio();
-      forestBtn.classList.remove('active');
-    } else {
-      stopAmbientAudio();
-      rainBtn.classList.remove('active');
-      forestBtn.classList.add('active');
-      playAmbientNoise('brown'); // Brown/Red noise resembles deep ocean waves
-      announceToScreenReader('Calming ocean waves sound simulated.');
-    }
-  });
+    forestBtn.addEventListener('click', () => {
+      if (forestBtn.classList.contains('active')) {
+        stopAmbientAudio();
+        forestBtn.classList.remove('active');
+      } else {
+        stopAmbientAudio();
+        rainBtn.classList.remove('active');
+        forestBtn.classList.add('active');
+        playAmbientNoise('brown'); // Kahverengi gürültü derin dalgaları andırır
+        announceToScreenReader('Sakinleştirici okyanus dalgaları sesi açıldı.');
+      }
+    });
+  }
 }
 
-// Synth engine for calming auditory stimulation (pink/brown noise generator)
 function playAmbientNoise(type) {
   try {
-    // Setup AudioContext
     if (!audioContext) {
       audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
@@ -401,16 +489,13 @@ function playAmbientNoise(type) {
       audioContext.resume();
     }
 
-    // Stop current nodes
     stopAmbientAudio();
 
-    // 1. Generate Noise Buffer (Pink/Brown noise algorithm)
     const bufferSize = 2 * audioContext.sampleRate;
     const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
     const output = noiseBuffer.getChannelData(0);
     
     if (type === 'pink') {
-      // Pink noise approximation algorithm (Paul Kellet's refined method)
       let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
       for (let i = 0; i < bufferSize; i++) {
         let white = Math.random() * 2 - 1;
@@ -421,42 +506,37 @@ function playAmbientNoise(type) {
         b4 = 0.55000 * b4 + white * 0.5329522;
         b5 = -0.7616 * b5 - white * 0.0168980;
         output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
-        output[i] *= 0.11; // Gain normalization
+        output[i] *= 0.11;
         b6 = white * 0.115926;
       }
     } else {
-      // Brown noise algorithm (integration of white noise)
       let lastOut = 0.0;
       for (let i = 0; i < bufferSize; i++) {
         let white = Math.random() * 2 - 1;
         output[i] = (lastOut + (0.02 * white)) / 1.02;
         lastOut = output[i];
-        output[i] *= 3.5; // Gain normalization
+        output[i] *= 3.5;
       }
     }
 
-    // 2. Setup Nodes
     noiseNode = audioContext.createBufferSource();
     noiseNode.buffer = noiseBuffer;
     noiseNode.loop = true;
 
-    // Filter to make sounds even softer (lowpass filter)
     filterNode = audioContext.createBiquadFilter();
     filterNode.type = 'lowpass';
-    filterNode.frequency.value = type === 'pink' ? 1200 : 400; // Brown noise gets deeper cut
+    filterNode.frequency.value = type === 'pink' ? 1200 : 400;
 
-    // Gain node for gentle volume
     const gainNode = audioContext.createGain();
-    gainNode.gain.value = 0.15; // Low volume level
+    gainNode.gain.value = 0.15;
 
-    // Connect
     noiseNode.connect(filterNode);
     filterNode.connect(gainNode);
     gainNode.connect(audioContext.destination);
 
     noiseNode.start();
   } catch (err) {
-    console.warn("Audio Context init blocked or not supported on this browser:", err);
+    console.warn("Ses sentezi desteklenmiyor:", err);
   }
 }
 
@@ -470,97 +550,111 @@ function stopAmbientAudio() {
 }
 
 // ==========================================
-// 6. IEP Profile Builder Strategy Generator
+// 6. BEP Profil Oluşturucu Stratejileri
 // ==========================================
 const iepStrategies = {
   visual: {
     focus: [
-      "Visual schedules with pictorial symbols detailing classroom daily workflow.",
-      "Clear workstation boundaries marked with green tape to anchor focusing points.",
-      "Color-coded subjects folder systems to reduce mental search overhead."
+      "Sınıf içi günlük çalışma akışını ve ders sıralamasını gösteren resimli/sembollü görsel programlar.",
+      "Odaklanmayı artırmak ve çalışma alanını belirlemek için çalışma masası sınırlarının renkli bantlarla belirlenmesi.",
+      "Arama yükünü azaltmak ve düzen sağlamak için renk kodlu ders klasör sistemleri."
     ],
     speech: [
-      "Dynamic Communication Boards featuring PECS (Picture Exchange Communication System).",
-      "Interactive tablets with visual sentence builders to prompt vocal expression.",
-      "Visual timers for turn-taking activities to manage socialization flow."
+      "PECS (Resim Değiş Tokuşuna Dayalı İletişim Sistemi) içeren dinamik iletişim panolarının yaygın kullanımı.",
+      "Kendini ifade etme süreçlerini desteklemek amacıyla görsel cümle kurucular içeren etkileşimli mobil uygulamalar.",
+      "Sıra alma ve paylaşma davranışlarını düzenlemek için etkinliklerde kullanılan renkli görsel zamanlayıcılar."
     ],
     motor: [
-      "High-contrast visual cut outlines matching thick-line cutting worksheets.",
-      "Visual instruction diagrams detailing physical finger arrangements for pencil grips.",
-      "Color-matched pegs and sensory trays mapping coordination targets."
+      "Kalın kesim hatlarına sahip çalışma sayfalarıyla eşleşen yüksek kontrastlı kesim kılavuz çizgileri.",
+      "Kalemin doğru parmak duruşuyla kavranmasını gösteren adım adım görsel yönerge şemaları.",
+      "Koordinasyon hedeflerini pekiştiren renk eşleştirmeli mandal takımları ve duyusal tepsiler."
     ],
     sensory: [
-      "Individual desk visual calm-down zones showing bubble speed or counting stars.",
-      "Low contrast worksheets printed on warm cream colored paper instead of white.",
-      "Visual 'Quiet Zone' access ticket indicators to use on-demand."
+      "Bireysel çalışma masalarında baloncuk hızı veya yıldız saymayı simüle eden görsel sakinleşme kartları.",
+      "Göz kamaşmasını önlemek için beyaz yerine krem rengi kağıda basılmış düşük kontrastlı çalışma kağıtları.",
+      "Öğrencinin ihtiyaç duyduğu anda bağımsız şekilde kullanabileceği görsel 'Sessiz Köşe' erişim kartları."
     ]
   },
   kinesthetic: {
     focus: [
-      "Active wobble cushions or wiggle seats to channel sensory focusing energy.",
-      "Short tactile task intervals broken up with 'brain break' motor loops.",
-      "Weighted lap pads (3-5 lbs) during listening circles to encourage anchoring."
+      "Duyusal odaklanma ihtiyacını hareketle karşılamak için aktif denge minderleri veya kıpırdanma tabureleri.",
+      "Hafif motor hareket döngüleri (kısa fiziksel egzersiz araları) ile bölünmüş odaklanma çalışma süreleri.",
+      "Grup etkinliklerinde odaklanmayı artırmak ve gövde kontrolünü sabitlemek için ağırlıklı kucak yastıkları."
     ],
     speech: [
-      "Pairing target vocabulary gestures (sign language/Makaton) with verbal phonics.",
-      "Active floor word-hop games to build syntax structures physically.",
-      "Sensory word boxes (find letters hidden in sensory sand/rice to build verbal words)."
+      "Sözel sesleri ve fonetik gelişimi desteklemek amacıyla harflerle el işaretlerini (işaret dili/Makaton) eşleştirme.",
+      "Cümle yapısını fiziksel olarak deneyimlemek için yerdeki büyük kelime kartlarıyla seksek oyunları.",
+      "Duyusal kelime kutuları (kum veya pirinç içine gizlenmiş dokulu harfleri bularak kelimeler türetme)."
     ],
     motor: [
-      "Using weighted pencils and thick clay molding to bolster finger muscle tone.",
-      "Textured scissors and squishy grips to increase sensory motor awareness.",
-      "Tactile trace boards (velvet paper, sand paths) for letter formation tracing."
+      "El ve parmak kas tonusunu güçlendirmek için ağırlıklı kalemler ve sert oyun hamurları ile modelleme çalışmaları.",
+      "Duyusal motor farkındalığı uyaran dokulu kenarlı makaslar ve yumuşak ergonomik kalem tutamakları.",
+      "Harf oluşum hatlarını parmakla hissetmek için tasarlanmış kadife veya zımpara kağıdı dokulu takip kartları."
     ],
     sensory: [
-      "On-demand access to squeeze items (putty, stress balls) during lectures.",
-      "Dedicated sensory corridor paths (hopscotch, wall-touches) to regulate system.",
-      "Deep pressure therapy breaks (gentle resistance movements) between periods."
+      "Sınıf içi çalışmalar sırasında eldeki duyusal dürtüyü düzenleyici yumuşak stres topları veya bükülebilir aparatlar.",
+      "Duyusal sistemi yatıştırmak ve dengelemek amacıyla hazırlanan hareket koridoru (seksek yolları, duvar şablonları).",
+      "Ders aralarında kas gerginliğini ve stres seviyesini azaltan derin basınç odaklı esneme egzersizleri."
     ]
   },
   musical: {
     focus: [
-      "Soft rhythmic metronome click tracks played via noise-canceling headphones during tasks.",
-      "Singing focus cues (simple catchy transitions melodies) to reset attention.",
-      "White/pink noise soundscapes loaded onto headphones during quiet studies."
+      "Bireysel çalışma süreçlerinde gürültü önleyici kulaklıklar eşliğinde dinletilen sabit ritimli metronom ritimleri.",
+      "Etkinlik geçişlerindeki dikkat dağınıklığını önlemek için öğretmen tarafından kullanılan ritmik geçiş melodileri.",
+      "Dış uyaranları baskılamak ve odaklanmayı artırmak amacıyla arka planda çalınan sakinleştirici pembe gürültü."
     ],
     speech: [
-      "Chanting vocabulary words in rhythmic structures to prompt articulation.",
-      "Song-based sentence patterns to facilitate stutter-free fluent verbal scripting.",
-      "Auditory echo imitation games using xylophones or rhythm sticks."
+      "Kelimelerin telaffuzunu ve hece yapılarını ritmik kalıplarla seslendirerek konuşma akışını düzenleme.",
+      "Akıcı konuşma gelişimini desteklemek amacıyla melodik ve şarkı formunda hazırlanan cümle tekrarları.",
+      "Ksilofon, marakas veya ritim çubukları kullanılarak yapılan işitsel ritim taklit oyunları."
     ],
     motor: [
-      "Clapping rhythms to synchronize hand-eye motor coordination sequences.",
-      "Rhythm-matched drawing activities (drawing circles in time with background beat).",
-      "Keyboarding/Piano finger exercise patterns to strengthen fine muscle controls."
+      "El-göz koordinasyonunu ritimle senkronize etmek için tempoya uyumlu el çırpma ve davul çalışmaları.",
+      "Ritmik müzik eşliğinde yapılan koordinasyon çizimleri (müziğin temposuna göre çizgiler ve daireler çizme).",
+      "Parmak eklemlerini ve ince motor becerilerini güçlendiren basit klavye/piyano parmak egzersizleri."
     ],
     sensory: [
-      "Listening to soft binaural beats or forest ambient sounds during sensory rests.",
-      "Providing quiet acoustic instruments (rainstick, chimes) for self-regulation.",
-      "Use of soft sound-canceling headphones during high-decibel assemblies."
+      "Duyusal dinlenme zamanlarında öğrenciye dinletilen sakinleştirici doğa sesleri veya çift kulaklı vuruşlar (binaural beats).",
+      "Kendi kendini sakinleştirme (otoregülasyon) sürecini destekleyen yağmur çubuğu veya yumuşak tonlu rüzgar çanları.",
+      "Gürültülü okul ortamlarında veya törenlerde kullanılmak üzere öğrenciye özel gürültü azaltıcı kulaklıklar."
     ]
   },
   analytical: {
     focus: [
-      "Checklists displaying numeric percentages of progress (e.g. 1 of 5 steps completed).",
-      "Structured rubrics outlining step-by-step logic expected in tasks.",
-      "Grid sheets and puzzle organizers to map structural objectives."
+      "Görevin aşamalarını ve tamamlanma oranını sayısal olarak gösteren adım adım kontrol listeleri (örn. 5/1 tamamlandı).",
+      "Çalışmalardaki başarı kriterlerini ve beklenen adımları gösteren net yapılandırılmış değerlendirme şablonları (rubrikler).",
+      "Sorun çözme süreçlerini parçalara ayırmak için kareli şema kağıtları ve mantık yapbozu kılavuzları."
     ],
     speech: [
-      "Structured scripting cards outlining exact phrases needed in social requests.",
-      "Flowcharts representing conversation trees (e.g., 'If greeting, say Hello').",
-      "Dynamic vocabulary classification tasks sorting words by clear rules."
+      "Sosyal ortamlarda iletişimi başlatmak veya yardım istemek için kullanılacak yapılandırılmış hazır konuşma kartları.",
+      "Sosyal diyalog akışlarını şematize eden konuşma ağacı tabloları (örn. 'Selamlaştığında sırasıyla bunları söyle').",
+      "Sözcük dağarcığını geliştirmek ve ilişkileri anlamak için kelimeleri mantıksal gruplara göre ayırma egzersizleri."
     ],
     motor: [
-      "Building complex Lego structures or logic puzzles to practice fine spatial coordination.",
-      "Grid-aligned handwriting exercises with box indicators for each letter.",
-      "Structured maze designs to coordinate pencil pressure and target tracking."
+      "İnce motor ve uzamsal koordinasyonu geliştirmek için yönergelere göre yapılan karmaşık yapım blokları ve lego setleri.",
+      "El yazısını düzenlemek ve harf boyutlarını kontrol etmek için her harf için sınırları çizilmiş kutucuklu kağıtlar.",
+      "Kalem basıncını ayarlamayı ve yön takibini güçlendirmeyi sağlayan çizgisel labirent bulmacaları."
     ],
     sensory: [
-      "Structured quiet times with logic puzzles to re-align overstimulated circuits.",
-      "Low-light workspaces with structured visual guides to minimize clutter.",
-      "Earplugs with explicit decibel reductions during group work phases."
+      "Duyusal aşırı yüklenmeyi yatıştırmak için sessiz zamanlarda uygulanan mantıksal eşleştirme ve akıl oyunları.",
+      "Görsel dikkat dağınıklığını en aza indiren, gereksiz afiş ve eşyalardan arındırılmış yalın çalışma köşeleri.",
+      "Grup çalışmalarında akustik uyaranları hafifletmek için tasarlanmış desibel filtreli kulak tıkaçları."
     ]
   }
+};
+
+const strengthsTR = {
+  visual: "Görsel-Uzamsal",
+  kinesthetic: "Kinestetik/Uygulamalı",
+  musical: "İşitsel/Ritmik",
+  analytical: "Analitik/Mantıksal"
+};
+
+const supportsTR = {
+  focus: "Dikkat/Odaklanma",
+  speech: "İletişim/Konuşma",
+  motor: "Motor Koordinasyon",
+  sensory: "Duyusal Düzenleme"
 };
 
 function initIEPBuilder() {
@@ -569,70 +663,83 @@ function initIEPBuilder() {
   const strategyList = document.getElementById('iep-strategy-list');
   const strategyBadge = document.getElementById('iep-strategy-badge');
 
-  btnBuild.addEventListener('click', () => {
-    const strength = document.getElementById('student-strength').value;
-    const support = document.getElementById('student-support').value;
+  if (btnBuild) {
+    btnBuild.addEventListener('click', () => {
+      const strength = document.getElementById('student-strength').value;
+      const support = document.getElementById('student-support').value;
 
-    // Get specific strategies
-    const strategies = iepStrategies[strength]?.[support] || [];
-    
-    // Clear list
-    strategyList.innerHTML = '';
-    
-    // Populate
-    strategies.forEach(item => {
-      const li = document.createElement('li');
-      li.textContent = item;
-      strategyList.appendChild(li);
+      const strategies = iepStrategies[strength]?.[support] || [];
+      
+      if (strategyList) {
+        strategyList.innerHTML = '';
+        strategies.forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = item;
+          strategyList.appendChild(li);
+        });
+      }
+
+      if (strategyBadge) {
+        strategyBadge.textContent = `${strengthsTR[strength]} Öğrenen + ${supportsTR[support]} Destek Planı`;
+      }
+
+      if (resultView) {
+        resultView.style.display = 'block';
+      }
+
+      announceToScreenReader(`${strengthsTR[strength]} öğrenenler ve ${supportsTR[support]} desteği için BEP stratejileri oluşturuldu.`);
     });
-
-    // Label formatting
-    const strengthLabel = strength.charAt(0).toUpperCase() + strength.slice(1);
-    const supportLabel = support.charAt(0).toUpperCase() + support.slice(1);
-    strategyBadge.textContent = `${strengthLabel} Learner + ${supportLabel} Support Plan`;
-
-    // View result
-    resultView.style.display = 'block';
-
-    announceToScreenReader(`IEP strategies generated for ${strengthLabel} learners with ${supportLabel} needs.`);
-  });
+  }
 }
 
 // ==========================================
-// 7. Contact Form Handling
+// 7. İletişim Formu İşlemleri
 // ==========================================
 function handleFormSubmit() {
   const formFeedback = document.getElementById('form-feedback-message');
   const nameVal = document.getElementById('contact-name').value;
 
-  formFeedback.style.display = 'block';
-  formFeedback.className = 'form-feedback success';
-  formFeedback.textContent = `Thank you, ${nameVal}! Your inquiry has been logged successfully. Our admissions team and occupational therapists will review your notes and contact you within 24 hours to schedule a sensory-adapted tour.`;
-  
-  announceToScreenReader(`Form submitted successfully. ${formFeedback.textContent}`);
+  if (formFeedback) {
+    formFeedback.style.display = 'block';
+    formFeedback.className = 'form-feedback success';
+    formFeedback.textContent = `Teşekkürler Sayın ${nameVal}! Bilgi talebiniz başarıyla kaydedildi. Kabul ekibimiz ve ergoterapistlerimiz başvurunuzu inceleyerek, çocuğunuza özel kampüs ve duyu odaları turumuzu planlamak üzere en geç 24 saat içinde sizinle iletişime geçecektir.`;
+    announceToScreenReader(`Form başarıyla gönderildi. ${formFeedback.textContent}`);
+  }
 
-  // Clear Form
-  document.getElementById('contact-form').reset();
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) contactForm.reset();
 }
 
-// Open interactive modals from the feature cards
+// Kartlardan etkileşimli alanlara yumuşak geçiş sağlayan fonksiyonlar
 function openInteractiveDemo(type) {
-  const switcher = document.getElementById('btn-live-site');
-  switcher.click(); // ensure we are in live view
+  const switcher = document.getElementById('btn-toggle-live');
+  if (switcher) switcher.click(); // Canlı site görünümünde olduğumuzdan emin ol
+
+  const targetPlayground = document.getElementById('interactive-playground');
+  const targetAbout = document.getElementById('about');
 
   if (type === 'iep') {
-    const target = document.getElementById('interactive-playground');
-    target.scrollIntoView({ behavior: 'smooth' });
-    document.getElementById('student-strength').focus();
-    announceToScreenReader('Scrolled to Individualized Education Profile Builder widget.');
+    if (targetPlayground) {
+      targetPlayground.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        const studentStrength = document.getElementById('student-strength');
+        if (studentStrength) studentStrength.focus();
+      }, 500);
+      announceToScreenReader('Bireyselleştirilmiş Eğitim Planı (BEP) hazırlama aracına geçildi.');
+    }
   } else if (type === 'sensory') {
-    const target = document.getElementById('interactive-playground');
-    target.scrollIntoView({ behavior: 'smooth' });
-    document.querySelector('.color-btn').focus();
-    announceToScreenReader('Scrolled to Sensory Calming Simulator widget.');
+    if (targetPlayground) {
+      targetPlayground.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        const firstColorBtn = document.querySelector('.color-btn');
+        if (firstColorBtn) firstColorBtn.focus();
+      }, 500);
+      announceToScreenReader('Duyusal Sakinleşme Simülatörüne geçildi.');
+    }
   } else if (type === 'therapists') {
-    const target = document.getElementById('about');
-    target.scrollIntoView({ behavior: 'smooth' });
-    announceToScreenReader('Scrolled to About Support Team and Mission details.');
+    if (targetAbout) {
+      targetAbout.scrollIntoView({ behavior: 'smooth' });
+      announceToScreenReader('Destek Ekibi ve Misyonumuz alanına geçildi.');
+    }
   }
 }

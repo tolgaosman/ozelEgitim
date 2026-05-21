@@ -161,70 +161,6 @@ button, input, select, textarea {
 }
 
 /* ==========================================
-   Mode Switcher Bar (Live Site vs Behance)
-   ========================================== */
-.mode-switcher-bar {
-  background-color: #1E293B;
-  color: #F8FAFC;
-  padding: 10px 20px;
-  position: sticky;
-  top: 0;
-  z-index: 9999;
-  border-bottom: 2px solid #334155;
-}
-
-.mode-switcher-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.mode-label {
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: #94A3B8;
-}
-
-.mode-buttons {
-  display: flex;
-  gap: 12px;
-}
-
-.mode-btn {
-  background-color: #334155;
-  color: #F8FAFC;
-  border: none;
-  padding: 8px 16px;
-  border-radius: var(--border-radius-sm);
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: background-color var(--transition-speed);
-}
-
-.mode-btn:hover {
-  background-color: #475569;
-}
-
-.mode-btn.active {
-  background-color: var(--primary-color);
-  color: var(--primary-contrast);
-}
-
-.mode-icon {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
-}
-
-/* ==========================================
    Header & Navigation
    ========================================== */
 .site-header {
@@ -232,7 +168,7 @@ button, input, select, textarea {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
   border-bottom: 1px solid var(--border-color);
   position: sticky;
-  top: 48px; /* Offset for mode switcher */
+  top: 0;
   z-index: 1000;
   transition: background-color var(--transition-speed);
 }
