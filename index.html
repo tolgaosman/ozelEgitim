@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bloom Academy - Premier Special Education & Inclusive School</title>
+  <meta name="description" content="Bloom Academy is a premier Special Education and Inclusive School dedicated to unlocking every child's potential through individualized programs, sensory integration, and expert therapists.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Mode Switcher (Live Site vs Behance Case Study) -->
+  <div class="mode-switcher-bar" aria-label="View Mode Switcher">
+    <div class="mode-switcher-container">
+      <span class="mode-label">Viewing Mode:</span>
+      <div class="mode-buttons">
+        <button id="btn-live-site" class="mode-btn active" aria-pressed="true">
+          <svg class="mode-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.53c-.26-.81-1-1.4-1.9-1.4h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.4z"/></svg>
+          Live Interactive Site
+        </button>
+        <button id="btn-behance" class="mode-btn" aria-pressed="false">
+          <svg class="mode-icon" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12s4.48 10 10 10 10-4.48 10-10zm-9.33-4.88c.38.25.56.63.56 1.12 0 .43-.16.79-.47 1.09-.32.3-.77.45-1.34.45H9.68v-3.3h1.76c.55 0 .97.12 1.23.36zM9.68 14.8v-3.3h1.8c.55 0 .99.14 1.3.42.31.28.47.66.47 1.14 0 .48-.17.86-.52 1.14-.35.28-.8.42-1.37.42H9.68zm7.57-2.91c0-.44-.09-.81-.28-1.12-.19-.31-.48-.56-.85-.75s-.82-.28-1.33-.28c-.52 0-.97.1-1.35.29s-.67.46-.86.79-.29.74-.29 1.2h4.96c0-.12-.02-.23-.05-.35zm-2.48-3.09c1.65 0 2.92.51 3.81 1.54.89 1.03 1.33 2.42 1.33 4.2h-7.79c.04.99.36 1.74.96 2.27s1.39.79 2.37.79c.77 0 1.44-.14 2.01-.43.57-.29.98-.67 1.23-1.15h1.49c-.36.85-1.01 1.55-1.94 2.11s-2.07.84-3.41.84c-1.68 0-3-.52-3.97-1.55-1.04-1.1-1.56-2.58-1.56-4.43 0-1.78.53-3.23 1.58-4.35 1.06-1.12 2.45-1.68 4.19-1.68z"/></svg>
+          Behance Presentation Shot
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN WRAPPER FOR LIVE INTERACTIVE SITE -->
+  <div id="live-site-container" class="view-section">
+    <!-- Header/Navigation -->
+    <header class="site-header">
+      <div class="header-container">
+        <a href="#" class="logo-link" aria-label="Bloom Academy Home">
+          <div class="logo-mark">
+            <span class="logo-circle"></span>
+            <span class="logo-dot"></span>
+          </div>
+          <span class="logo-text">Bloom Academy</span>
+        </a>
+        
+        <nav class="main-nav" aria-label="Main Navigation">
+          <ul>
+            <li><a href="#home" class="nav-item active">Home</a></li>
+            <li><a href="#about" class="nav-item">About</a></li>
+            <li><a href="#programs" class="nav-item">Programs</a></li>
+            <li><a href="#parents" class="nav-item">Parents Guide</a></li>
+            <li><a href="#contact" class="nav-item">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <button id="accessibility-toggle-btn" class="accessibility-trigger-btn" aria-label="Open Accessibility Settings Panel" aria-haspopup="dialog" aria-expanded="false">
+            <svg class="accessibility-icon" viewBox="0 0 24 24" width="24" height="24">
+              <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/>
+            </svg>
+            <span class="btn-text">Accessibility</span>
+            <span class="status-indicator"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Reading Mask Line (Disabled by default, controlled via accessibility panel) -->
+    <div id="reading-mask-overlay" class="reading-mask" style="display: none;"></div>
+
+    <main>
+      <!-- Hero Section -->
+      <section id="home" class="hero-section">
+        <div class="section-container hero-grid">
+          <div class="hero-content">
+            <span class="hero-badge">A Safe, Nurturing & Inclusive Space</span>
+            <h1 class="hero-title">Every Child's Potential, <span class="highlight">Unlocked</span></h1>
+            <p class="hero-subtitle">
+              At Bloom Academy, we believe neurodiversity is a strength. Our dedicated specialists design unique educational journeys that honor how your child learns, grows, and thrives.
+            </p>
+            <div class="hero-actions-group">
+              <a href="#programs" class="cta-button primary-cta">Explore Our Programs</a>
+              <a href="#contact" class="cta-button secondary-cta">Schedule a Tour</a>
+            </div>
+            <div class="hero-stats">
+              <div class="stat-item">
+                <span class="stat-number">1:3</span>
+                <span class="stat-label">Staff to Student Ratio</span>
+              </div>
+              <div class="stat-divider"></div>
+              <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Individualized Plans (IEP)</span>
+              </div>
+              <div class="stat-divider"></div>
+              <div class="stat-item">
+                <span class="stat-number">15+</span>
+                <span class="stat-label">Years of Inclusion Service</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="illustration-wrapper">
+              <div class="blob-bg-1"></div>
+              <div class="blob-bg-2"></div>
+              <!-- Generated vector illustration of children learning -->
+              <img src="assets/hero.png" alt="Friendly vector illustration of diverse children learning and playing together in a supportive classroom environment" class="hero-img">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Grid Section -->
+      <section id="programs" class="features-section">
+        <div class="section-container">
+          <div class="section-header">
+            <span class="section-badge">How We Support Growth</span>
+            <h2 class="section-title">Designed for Diverse Minds</h2>
+            <p class="section-subtitle">Our specialized resources and tailored approach ensure that every learner feels safe, engaged, and empowered to succeed.</p>
+          </div>
+
+          <div class="features-grid">
+            <!-- Card 1: IEP -->
+            <div class="feature-card">
+              <div class="card-icon-container sage-bg">
+                <svg viewBox="0 0 24 24" class="card-icon">
+                  <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                </svg>
+              </div>
+              <h3 class="card-title">Individualized Education Programs (IEP)</h3>
+              <p class="card-description">Each child receives a highly customized learning path, structured closely with families, therapists, and specialist educators to meet specific goals.</p>
+              <button class="card-btn-action" onclick="openInteractiveDemo('iep')" aria-haspopup="dialog">
+                Try IEP Builder Demo
+                <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+              </button>
+            </div>
+
+            <!-- Card 2: Sensory Rooms -->
+            <div class="feature-card">
+              <div class="card-icon-container blue-bg">
+                <svg viewBox="0 0 24 24" class="card-icon">
+                  <path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.22 19.58 10.57 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm-1-8h2v2h-2zm0-4h2v2h-2zm0 8h2v2h-2z"/>
+                </svg>
+              </div>
+              <h3 class="card-title">Sensory Integration Rooms</h3>
+              <p class="card-description">State-of-the-art sensory rooms equipped with adjustable light displays, calming sounds, bubble tubes, and tactile surfaces to help regulate sensory needs.</p>
+              <button class="card-btn-action" onclick="openInteractiveDemo('sensory')" aria-haspopup="dialog">
+                Explore Sensory Room
+                <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+              </button>
+            </div>
+
+            <!-- Card 3: Expert Therapists -->
+            <div class="feature-card">
+              <div class="card-icon-container gold-bg">
+                <svg viewBox="0 0 24 24" class="card-icon">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </div>
+              <h3 class="card-title">Expert Care & Therapists</h3>
+              <p class="card-description">In-house Speech, Occupational, and Behavioral (ABA) Therapists collaborate daily with teachers to integrate development directly into the classroom.</p>
+              <button class="card-btn-action" onclick="openInteractiveDemo('therapists')" aria-haspopup="dialog">
+                Meet Support Team
+                <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Playground Section (Sensory & IEP Interactive widgets) -->
+      <section id="interactive-playground" class="playground-section">
+        <div class="section-container">
+          <div class="playground-layout">
+            
+            <!-- Sensory Tool Box Widget -->
+            <div class="widget-box sensory-box">
+              <div class="widget-header">
+                <span class="widget-label">Live Interactive Experience</span>
+                <h3>Sensory Calming Simulator</h3>
+                <p>Experience how our sensory rooms offer calming cues tailored to each student's sensory profile.</p>
+              </div>
+              <div class="sensory-control-panel">
+                <div class="sensory-visual-preview" id="sensory-preview">
+                  <div class="bubble-tube" id="sensory-bubble-tube">
+                    <span class="bubble"></span>
+                    <span class="bubble"></span>
+                    <span class="bubble"></span>
+                    <span class="bubble"></span>
+                  </div>
+                  <span class="sensory-status" id="sensory-status-text">Ambient Mode: Soft Sage</span>
+                </div>
+                
+                <div class="sensory-options">
+                  <div class="option-group">
+                    <label class="control-label">Ambient Lighting</label>
+                    <div class="color-options">
+                      <button class="color-btn active" data-color="sage" style="background-color: #7DA493;" aria-label="Set Sage Green Light"></button>
+                      <button class="color-btn" data-color="blue" style="background-color: #92B4D6;" aria-label="Set Soft Blue Light"></button>
+                      <button class="color-btn" data-color="lavender" style="background-color: #B4A0E0;" aria-label="Set Soft Lavender Light"></button>
+                      <button class="color-btn" data-color="amber" style="background-color: #E6C594;" aria-label="Set Calming Amber Light"></button>
+                    </div>
+                  </div>
+                  
+                  <div class="option-group">
+                    <label class="control-label">Calming Audio</label>
+                    <div class="audio-toggles">
+                      <button id="btn-ambient-rain" class="audio-btn">
+                        <svg class="audio-icon" viewBox="0 0 24 24"><path d="M12 2c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.22 19.58 10.57 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/></svg>
+                        White Noise
+                      </button>
+                      <button id="btn-ambient-forest" class="audio-btn">
+                        <svg class="audio-icon" viewBox="0 0 24 24"><path d="M10 20H4v-2h6v2zm10 0h-6v-2h6v2zM12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+                        Soft Ocean
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="option-group">
+                    <label class="control-label">Bubble Tube Speed</label>
+                    <div class="range-container">
+                      <input type="range" id="bubble-speed-slider" min="0" max="3" value="1" step="1" aria-label="Bubble Tube Speed Slider">
+                      <div class="range-labels">
+                        <span>Off</span>
+                        <span>Gentle</span>
+                        <span>Medium</span>
+                        <span>Active</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- IEP Builder Widget -->
+            <div class="widget-box iep-box">
+              <div class="widget-header">
+                <span class="widget-label">Student Success Tool</span>
+                <h3>Custom Learning Profile Builder</h3>
+                <p>Simulate how we craft individualized education goals based on specific learning preferences.</p>
+              </div>
+              <div class="iep-builder-panel">
+                <form id="iep-builder-form" onsubmit="event.preventDefault();">
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label for="student-strength">Primary Strength</label>
+                      <select id="student-strength">
+                        <option value="visual">Visual-Spatial / Art-loving</option>
+                        <option value="kinesthetic">Hands-on / Kinesthetic Learner</option>
+                        <option value="musical">Auditory / Rhythm-focused</option>
+                        <option value="analytical">Detail-oriented / Puzzles & Logic</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="student-support">Support Needed</label>
+                      <select id="student-support">
+                        <option value="focus">Attention & Concentration Support</option>
+                        <option value="speech">Communication / Speech Therapy</option>
+                        <option value="motor">Fine/Gross Motor Coordination</option>
+                        <option value="sensory">Sensory Processing Regulation</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <button type="button" id="btn-build-iep" class="build-iep-btn">Generate Tailored IEP Strategy</button>
+                </form>
+
+                <div class="iep-result-card" id="iep-result-view" style="display: none;">
+                  <h4>Generated IEP Overview</h4>
+                  <div class="iep-result-strategy">
+                    <span class="strategy-badge" id="iep-strategy-badge">Visual + Sensory Strategy</span>
+                    <ul class="strategy-list" id="iep-strategy-list">
+                      <!-- Strategies populated by Javascript -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section / Inclusion Statement -->
+      <section id="about" class="about-section">
+        <div class="section-container">
+          <div class="about-grid">
+            <div class="about-visual">
+              <div class="quote-card">
+                <span class="quote-icon">“</span>
+                <p class="quote-text">We didn't just find a school; we found a family that understands our son's beautiful mind and celebrates it.</p>
+                <div class="quote-author">
+                  <span class="author-name">Sarah Jenkins</span>
+                  <span class="author-title">Mother of Ethan (Grade 2 student)</span>
+                </div>
+              </div>
+            </div>
+            <div class="about-content">
+              <span class="section-badge">Our Mission</span>
+              <h2 class="about-title">A Community Where Every Mind Fits</h2>
+              <p class="about-paragraph">
+                Bloom Academy was established with a singular vision: to break the barriers of traditional education and build an inclusive learning sanctuary. We welcome kids with Autism Spectrum Conditions (ASC), ADHD, Dyslexia, Down Syndrome, and various learning styles.
+              </p>
+              <div class="about-features">
+                <div class="about-feat-item">
+                  <div class="feat-bullet">✓</div>
+                  <div>
+                    <strong>Therapy-Integrated Classrooms</strong>
+                    <p>Therapy targets are woven directly into daily classroom assignments so students learn naturally.</p>
+                  </div>
+                </div>
+                <div class="about-feat-item">
+                  <div class="feat-bullet">✓</div>
+                  <div>
+                    <strong>Neuro-Inclusive Design</strong>
+                    <p>Low-glare lighting, soundproofing, visual schedules, and alternative seating options in every room.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Parents Guide Section -->
+      <section id="parents" class="guide-section">
+        <div class="section-container">
+          <div class="section-header">
+            <span class="section-badge">For Families</span>
+            <h2 class="section-title">The Parents' Navigation Guide</h2>
+            <p class="section-subtitle">Navigating special education can feel overwhelming. We are here to simplify the process step-by-step.</p>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-number">1</div>
+              <div class="timeline-content">
+                <h3>Initial Assessment Chat</h3>
+                <p>We host a relaxed, informal meeting with you and your child to observe their interests, communication patterns, and sensory comfort zones.</p>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-number">2</div>
+              <div class="timeline-content">
+                <h3>Collaborative IEP Draft</h3>
+                <p>Our educators, speech therapists, and occupational therapists construct a custom goals roadmap, which is iterated directly with you.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-number">3</div>
+              <div class="timeline-content">
+                <h3>Sensory & Setup Alignment</h3>
+                <p>We customize the classroom furniture, sensory supports, and tactile materials specifically matching your child's sensory plan.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-number">4</div>
+              <div class="timeline-content">
+                <h3>Continuous Progress Tracking</h3>
+                <p>Weekly summaries, video updates, and regular collaborative meetings keep you connected to every breakthrough and success.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact / Tour Booking Section -->
+      <section id="contact" class="contact-section">
+        <div class="section-container">
+          <div class="contact-grid">
+            <div class="contact-info">
+              <span class="section-badge">Get in Touch</span>
+              <h2 class="contact-title">Visit Our Inclusive Campus</h2>
+              <p class="contact-intro">We would love to show you our classrooms, therapeutic clinics, and interactive sensory spaces. Reach out to schedule a private tour.</p>
+              
+              <div class="contact-details">
+                <div class="detail-item">
+                  <svg class="detail-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  <div>
+                    <strong>Our Location</strong>
+                    <p>458 Sage Meadow Way, Suite 100, Austin, TX 78746</p>
+                  </div>
+                </div>
+                
+                <div class="detail-item">
+                  <svg class="detail-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                  <div>
+                    <strong>Email Address</strong>
+                    <p>hello@bloomacademy.edu</p>
+                  </div>
+                </div>
+
+                <div class="detail-item">
+                  <svg class="detail-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                  <div>
+                    <strong>Phone Support</strong>
+                    <p>(512) 555-0182</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-form-card">
+              <h3>Schedule a Visit or Inquiry</h3>
+              <form id="contact-form" class="responsive-form" onsubmit="event.preventDefault(); handleFormSubmit();">
+                <div class="form-group">
+                  <label for="contact-name">Parent/Guardian Name *</label>
+                  <input type="text" id="contact-name" required placeholder="e.g. Maria Thompson">
+                </div>
+                
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="contact-email">Email Address *</label>
+                    <input type="email" id="contact-email" required placeholder="e.g. maria@example.com">
+                  </div>
+                  <div class="form-group">
+                    <label for="contact-phone">Phone Number</label>
+                    <input type="tel" id="contact-phone" placeholder="e.g. (512) 555-0182">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="child-needs">How can we support your child? *</label>
+                  <textarea id="child-needs" required rows="4" placeholder="Tell us briefly about your child's age, strengths, interests, and how we can support them (e.g., speech therapy, sensory accommodations, ADHD learning styles)"></textarea>
+                </div>
+
+                <button type="submit" class="form-submit-btn">Send Inquiry Request</button>
+                <div id="form-feedback-message" class="form-feedback" style="display: none;"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <div class="logo-mark">
+            <span class="logo-circle"></span>
+            <span class="logo-dot"></span>
+          </div>
+          <span class="logo-text">Bloom Academy</span>
+          <p class="footer-brand-tagline">Nurturing diverse minds, celebrating unique potential.</p>
+        </div>
+        <div class="footer-links">
+          <div class="link-column">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#home">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#programs">Programs</a></li>
+              <li><a href="#parents">Parents Guide</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="link-column">
+            <h4>Support Services</h4>
+            <ul>
+              <li><a href="#">IEP Consultation</a></li>
+              <li><a href="#">Speech Pathology</a></li>
+              <li><a href="#">Occupational Therapy</a></li>
+              <li><a href="#">Sensory Integration</a></li>
+            </ul>
+          </div>
+          <div class="link-column">
+            <h4>Accessibility Commitment</h4>
+            <p>Our digital platforms strive to exceed WCAG 2.1 AA parameters. If you encounter barriers, please let us know.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Bloom Academy. Built with inclusion in mind. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+
+  <!-- ACCESSIBILITY SETTINGS PANEL MODAL/DRAWER -->
+  <div id="accessibility-dialog" class="accessibility-panel-dialog" role="dialog" aria-modal="true" aria-labelledby="acc-panel-title" style="display: none;">
+    <div class="accessibility-panel-backdrop" onclick="closeAccessibilityPanel()"></div>
+    <div class="accessibility-panel-content">
+      <div class="panel-header">
+        <h2 id="acc-panel-title">Accessibility Options</h2>
+        <button class="close-panel-btn" onclick="closeAccessibilityPanel()" aria-label="Close Accessibility Options">✕</button>
+      </div>
+      
+      <div class="panel-body">
+        
+        <!-- Text Size Options -->
+        <div class="panel-section">
+          <h3>Text & Font Adjustments</h3>
+          <div class="acc-option-group">
+            <label class="section-sublabel">Text Size</label>
+            <div class="acc-buttons-row">
+              <button id="btn-text-normal" class="acc-toggle-btn active" data-scale="1" aria-pressed="true">Normal (100%)</button>
+              <button id="btn-text-large" class="acc-toggle-btn" data-scale="1.25" aria-pressed="false">Large (125%)</button>
+              <button id="btn-text-huge" class="acc-toggle-btn" data-scale="1.5" aria-pressed="false">Extra Large (150%)</button>
+            </div>
+          </div>
+
+          <div class="acc-option-group">
+            <label class="section-sublabel">Reading Font Style</label>
+            <div class="acc-buttons-row">
+              <button id="btn-font-standard" class="acc-toggle-btn active" aria-pressed="true">Standard (Inter)</button>
+              <button id="btn-font-dyslexic" class="acc-toggle-btn" aria-pressed="false">Dyslexic Friendly (Lexend)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Color Themes -->
+        <div class="panel-section">
+          <h3>Visual Customization Themes</h3>
+          <div class="acc-grid">
+            <button id="theme-btn-calming" class="theme-choice-btn active" aria-pressed="true">
+              <span class="theme-preview" style="background: linear-gradient(135deg, #7DA493, #92B4D6, #FAFAFA);"></span>
+              <span class="theme-choice-name">Calming Pastel (Default)</span>
+            </button>
+            
+            <button id="theme-btn-contrast" class="theme-choice-btn" aria-pressed="false">
+              <span class="theme-preview" style="background: linear-gradient(135deg, #FFFF00, #00FFFF, #000000);"></span>
+              <span class="theme-choice-name">High Contrast Black</span>
+            </button>
+
+            <button id="theme-btn-dark" class="theme-choice-btn" aria-pressed="false">
+              <span class="theme-preview" style="background: linear-gradient(135deg, #8EB7A6, #A3C2E0, #12181A);"></span>
+              <span class="theme-choice-name">Soothing Dark Mode</span>
+            </button>
+            
+            <button id="theme-btn-monochrome" class="theme-choice-btn" aria-pressed="false">
+              <span class="theme-preview" style="background: linear-gradient(135deg, #888, #444, #fff);"></span>
+              <span class="theme-choice-name">Monochrome / Grayscale</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Cognitive Tools -->
+        <div class="panel-section">
+          <h3>Cognitive & Reading Support</h3>
+          
+          <div class="toggle-control-item">
+            <div class="toggle-text">
+              <label for="chk-reading-mask"><strong>Line Reading Mask</strong></label>
+              <p>Adds a horizontal guide overlay matching your cursor to help read lines.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="chk-reading-mask">
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div class="toggle-control-item">
+            <div class="toggle-text">
+              <label for="chk-highlight-links"><strong>Highlight Links & Buttons</strong></label>
+              <p>Adds borders and indicators to identify interactive options instantly.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="chk-highlight-links">
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div class="toggle-control-item">
+            <div class="toggle-text">
+              <label for="chk-stop-animations"><strong>Reduce Motion / Pause Animations</strong></label>
+              <p>Removes all CSS animations and sliding transitions to prevent sensory overload.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="chk-stop-animations">
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div class="toggle-control-item">
+            <div class="toggle-text">
+              <label for="chk-voice-synthesizer"><strong>Interactive Voice Guidance</strong></label>
+              <p>Speaks highlighted or hovered text aloud using the web browser speech synthesis.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="chk-voice-synthesizer">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+      </div>
+      <div class="panel-footer">
+        <button class="reset-acc-btn" onclick="resetAccessibilitySettings()">Reset All Settings</button>
+        <button class="apply-acc-btn" onclick="closeAccessibilityPanel()">Apply & Close</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MAIN WRAPPER FOR BEHANCE PORTFOLIO CASE STUDY VIEW (TOGGLED) -->
+  <div id="behance-container" class="view-section" style="display: none;">
+    <div class="behance-hero">
+      <div class="behance-header">
+        <span class="behance-badge">Behance Portfolio Presentation</span>
+        <h1 class="behance-main-title">Bloom Academy Brand Design & UI/UX Case Study</h1>
+        <p class="behance-meta">Design Lead & UI/UX Architect | Neuro-inclusive Accessible Interface (WCAG 2.1 AA)</p>
+      </div>
+    </div>
+
+    <div class="behance-content-container">
+      
+      <!-- Section 1: The Generated High-Fidelity Mockup Shot -->
+      <div class="behance-project-section">
+        <h2 class="behance-sec-heading">01. High-Fidelity Home Page Mockup Shot</h2>
+        <p class="behance-sec-desc">A full 8K rendering presenting the desktop landing page layout. Features calibrated lighting, crisp UI elements, grid layouts, and soft pastel drop shadows.</p>
+        <div class="behance-mockup-wrapper">
+          <!-- Embed generated mockup image -->
+          <img src="assets/mockup.png" alt="A premier Special Education and Inclusive School website desktop mockup design shot on Behance. Calming ivory background, sage green and pastel blue components, clear illustrations of children, features grid, clean rounded cards." class="behance-mockup-img">
+        </div>
+      </div>
+
+      <!-- Section 2: Design Philosophy & Palette -->
+      <div class="behance-project-section">
+        <h2 class="behance-sec-heading">02. Inclusive Design System</h2>
+        <div class="behance-design-grid">
+          
+          <div class="behance-design-card">
+            <h3>Visual & Color Psychology</h3>
+            <p>Designed intentionally for neurodiverse individuals. Standard primary colors can over-stimulate. We utilizes soft, calming organic tones with excellent contrast scores (WCAG AA 4.5:1 ratio).</p>
+            <div class="behance-palette-row">
+              <div class="palette-swatch" style="background-color: #FAFAFA; border: 1px solid #ddd;">
+                <span class="swatch-color">#FAFAFA</span>
+                <span class="swatch-label">Ivory Background</span>
+              </div>
+              <div class="palette-swatch" style="background-color: #7DA493; color: white;">
+                <span class="swatch-color">#7DA493</span>
+                <span class="swatch-label">Sage Green</span>
+              </div>
+              <div class="palette-swatch" style="background-color: #92B4D6; color: white;">
+                <span class="swatch-color">#92B4D6</span>
+                <span class="swatch-label">Pastel Blue</span>
+              </div>
+              <div class="palette-swatch" style="background-color: #2D3748; color: white;">
+                <span class="swatch-color">#2D3748</span>
+                <span class="swatch-label">Charcoal Text</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="behance-design-card">
+            <h3>Accessible Typography</h3>
+            <p>We leverage <strong>Lexend</strong>, a font specifically engineered by researchers to improve reading speeds, fluency, and text comprehension for individuals with dyslexia, paired with <strong>Inter</strong> for clean, minimalist layouts.</p>
+            <div class="behance-typography-display">
+              <div class="font-sample-box font-inter">
+                <span class="font-sample-title">Inter (Nav, Headings)</span>
+                <p>Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz</p>
+              </div>
+              <div class="font-sample-box font-lexend">
+                <span class="font-sample-title">Lexend (Dyslexic Reader Mode)</span>
+                <p>Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Section 3: UX Details -->
+      <div class="behance-project-section">
+        <h2 class="behance-sec-heading">03. Interactive Accessibility Showcase</h2>
+        <p class="behance-sec-desc">Unlike traditional layouts, Bloom Academy incorporates a built-in accessibility framework offering users full cognitive control over their reading environment.</p>
+        
+        <div class="behance-ux-highlights">
+          <div class="ux-item">
+            <div class="ux-item-number">A</div>
+            <div>
+              <h4>Dyslexia Adaptation Options</h4>
+              <p>Toggles layout into the research-proven Lexend typeface, expanding letter spacing and word bounding boxes to prevent characters from blurring together.</p>
+            </div>
+          </div>
+
+          <div class="ux-item">
+            <div class="ux-item-number">B</div>
+            <div>
+              <h4>Focused Reading Guides</h4>
+              <p>A reading ruler guide tracks cursor movements, masking secondary paragraphs to reduce distractions and help children stay on the active text line.</p>
+            </div>
+          </div>
+
+          <div class="ux-item">
+            <div class="ux-item-number">C</div>
+            <div>
+              <h4>Dynamic Audio Assistance</h4>
+              <p>Integrates speech synthesis that reads aloud hovering sections, helping pupils with speech therapy or reading barriers digest text independently.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
