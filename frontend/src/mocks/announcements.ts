@@ -1,0 +1,44 @@
+import { AnnouncementSchema, type Announcement } from "@/lib/schemas/announcement";
+
+/** YER TUTUCU VERİ — bkz. src/mocks/programs.ts üstündeki not. */
+const rawAnnouncements: Announcement[] = [
+  {
+    id: 1,
+    slug: "2026-2027-kayit-donemi-basladi",
+    title: "2026-2027 Eğitim Dönemi Kayıtları Başladı",
+    excerpt:
+      "Yeni eğitim dönemi için ön görüşme ve değerlendirme randevuları alınmaya başlandı.",
+    body: [
+      "2026-2027 eğitim dönemi için kontenjanlarımız sınırlı sayıdadır.",
+      "Ön görüşme talebinde bulunan ailelerimizle bir hafta içinde iletişime geçilmektedir.",
+    ],
+    category: "duyuru",
+    publishedAt: "2026-08-20T09:00:00.000Z",
+  },
+  {
+    id: 2,
+    slug: "duyu-butunleme-salonu-yenilendi",
+    title: "Duyu Bütünleme Salonumuz Yenilendi",
+    excerpt: "Yeni ekipmanlarla genişletilen duyu bütünleme salonumuz hizmete açıldı.",
+    body: [
+      "Fizyoterapi ve duyu bütünleme programımız kapsamında salonumuza yeni denge ve koordinasyon ekipmanları eklendi.",
+    ],
+    category: "etkinlik",
+    publishedAt: "2026-07-02T09:00:00.000Z",
+  },
+  {
+    id: 3,
+    slug: "veli-egitim-atolyesi-eylul",
+    title: "Eylül Ayı Veli Eğitim Atölyesi",
+    excerpt: "Ev programlarının etkili sürdürülmesi üzerine ücretsiz atölye çalışması.",
+    body: [
+      "Aile danışmanlığı programımız kapsamında düzenlenen atölyede, evde uygulanabilecek pekiştirme stratejileri paylaşılacaktır.",
+    ],
+    category: "etkinlik",
+    publishedAt: "2026-06-18T09:00:00.000Z",
+  },
+];
+
+export const mockAnnouncements: Announcement[] = rawAnnouncements.map((announcement) =>
+  AnnouncementSchema.parse(announcement),
+);

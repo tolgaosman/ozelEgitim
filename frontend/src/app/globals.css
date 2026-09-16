@@ -1,0 +1,371 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * İz Özel Eğitim Merkezi — Tasarım Sistemi (Faz 2: editoryal yeniden tasarım)
+ *
+ * Palet, logo renklerinden türetilmiştir: lacivert (ink), orman yeşili
+ * (forest — koyu dolu bantlar), adaçayı (sage), şeftali (peach) ve kilden
+ * kırmızı-turuncu (clay — birincil CTA). Zemin sıcak kremdir (paper).
+ * Kontrast oranları docs/architecture.md içinde belgelenmiştir; gövde
+ * metni AAA (≥7:1), UI bileşenleri en az AA (≥4.5:1) hedefler.
+ */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-fraunces);
+  --font-display: var(--font-fraunces);
+  --font-legible: var(--font-atkinson);
+  --font-mono: var(--font-geist-mono);
+
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-paper: var(--paper);
+
+  --color-forest-500: var(--forest-500);
+  --color-forest-700: var(--forest-700);
+  --color-forest-800: var(--forest-800);
+  --color-forest-900: var(--forest-900);
+
+  --color-sage-50: var(--sage-50);
+  --color-sage-100: var(--sage-100);
+  --color-sage-200: var(--sage-200);
+  --color-sage-300: var(--sage-300);
+  --color-sage-400: var(--sage-400);
+  --color-sage-500: var(--sage-500);
+  --color-sage-600: var(--sage-600);
+  --color-sage-700: var(--sage-700);
+
+  --color-peach-50: var(--peach-50);
+  --color-peach-100: var(--peach-100);
+  --color-peach-200: var(--peach-200);
+  --color-peach-300: var(--peach-300);
+  --color-peach-400: var(--peach-400);
+  --color-peach-500: var(--peach-500);
+
+  --color-clay-50: var(--clay-50);
+  --color-clay-500: var(--clay-500);
+  --color-clay-600: var(--clay-600);
+  --color-clay-700: var(--clay-700);
+
+  --color-sky-100: var(--sky-100);
+  --color-sky-500: var(--sky-500);
+  --color-sky-800: var(--sky-800);
+
+  --color-focus: var(--focus);
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+
+  --shadow-card: 0 1px 2px rgba(18, 40, 63, 0.05), 0 4px 14px rgba(18, 40, 63, 0.07);
+  --shadow-raised: 0 4px 8px rgba(18, 40, 63, 0.08), 0 16px 32px rgba(18, 40, 63, 0.12);
+
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-fade-up: fade-up 0.5s var(--ease-spring);
+
+  /* Editoryal display ölçeği — akışkan (clamp), Fraunces ile eşleşir */
+  --text-display-xl: clamp(2.75rem, 6vw, 6rem);
+  --text-display-xl--line-height: 0.97;
+  --text-display-xl--letter-spacing: -0.02em;
+  --text-display-lg: clamp(2.1rem, 4vw, 3.5rem);
+  --text-display-lg--line-height: 1.05;
+  --text-display-lg--letter-spacing: -0.015em;
+  --text-display-md: clamp(1.5rem, 2.3vw, 2.15rem);
+  --text-display-md--line-height: 1.15;
+  --text-display-sm: clamp(1.25rem, 1.6vw, 1.625rem);
+  --text-display-sm--line-height: 1.25;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+:root {
+  --paper: #fbf7f1;
+
+  /* Orman yeşili — koyu dolu bantlar */
+  --forest-500: #3f6b48;
+  --forest-700: #2a5238;
+  --forest-800: #1b3a27;
+  --forest-900: #12291c;
+
+  /* Adaçayı — logo yeşili */
+  --sage-50: #eef6ee;
+  --sage-100: #dcebdc;
+  --sage-200: #c2dec2;
+  --sage-300: #a3cea3;
+  --sage-400: #8fbf8f;
+  --sage-500: #6fa66f;
+  --sage-600: #518a54;
+  --sage-700: #386239;
+
+  /* Şeftali — logo aksanı */
+  --peach-50: #fdf1e7;
+  --peach-100: #fbe1cc;
+  --peach-200: #f6c9a3;
+  --peach-300: #f2b47f;
+  --peach-400: #efa97e;
+  --peach-500: #e68f53;
+
+  /* Kil — birincil CTA */
+  --clay-50: #fbeee6;
+  --clay-500: #c96a34;
+  --clay-600: #b3541f;
+  --clay-700: #8f4118;
+
+  /* Gökyüzü mavisi — üçüncül vurgu */
+  --sky-100: #e4edf9;
+  --sky-500: #7fa8d8;
+  --sky-800: #1e4e8c;
+
+  /* Metin */
+  --ink: #12283f;
+  --ink-soft: #3d5266;
+  --ink-faint: #64768a;
+
+  --focus: #1d6fe0;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: #ffffff;
+  --card-foreground: var(--ink);
+  --popover: #ffffff;
+  --popover-foreground: var(--ink);
+
+  --primary: var(--clay-600);
+  --primary-foreground: #fff8f2;
+
+  --secondary: var(--forest-700);
+  --secondary-foreground: #ffffff;
+
+  --muted: var(--peach-50);
+  --muted-foreground: var(--ink-soft);
+
+  --accent: var(--sage-50);
+  --accent-foreground: var(--forest-800);
+
+  --destructive: #b3261e;
+  --destructive-foreground: #ffffff;
+
+  --border: #e6d8c4;
+  --input: #e6d8c4;
+  --ring: var(--focus);
+
+  --chart-1: var(--sage-500);
+  --chart-2: var(--peach-400);
+  --chart-3: var(--clay-500);
+  --chart-4: var(--forest-500);
+  --chart-5: var(--sky-500);
+
+  --radius: 0.75rem;
+
+  --sidebar: var(--peach-50);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--clay-600);
+  --sidebar-primary-foreground: #fff8f2;
+  --sidebar-accent: var(--sage-50);
+  --sidebar-accent-foreground: var(--forest-800);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--focus);
+}
+
+.dark {
+  --background: #0f1c14;
+  --foreground: #f2ede2;
+  --card: #16261b;
+  --card-foreground: #f2ede2;
+  --popover: #16261b;
+  --popover-foreground: #f2ede2;
+
+  --primary: #e08a4f;
+  --primary-foreground: #1a0c05;
+
+  --secondary: var(--sage-500);
+  --secondary-foreground: #0f1c14;
+
+  --muted: #1c2e21;
+  --muted-foreground: #b9c9bb;
+
+  --accent: #1c2e2199;
+  --accent-foreground: var(--sage-200);
+
+  --destructive: #e5695f;
+  --destructive-foreground: #2a0906;
+
+  --border: #2a3f2e;
+  --input: #2a3f2e;
+  --ring: #5ea0ff;
+
+  --sidebar: #16261b;
+  --sidebar-foreground: #f2ede2;
+  --sidebar-primary: #e08a4f;
+  --sidebar-primary-foreground: #1a0c05;
+  --sidebar-accent: #1c2e21;
+  --sidebar-accent-foreground: var(--sage-200);
+  --sidebar-border: #2a3f2e;
+  --sidebar-ring: #5ea0ff;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans scroll-smooth;
+    text-size-adjust: 100%;
+  }
+
+  html[data-motion="reduced"] *,
+  html[data-motion="reduced"] *::before,
+  html[data-motion="reduced"] *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html[data-font="legible"] body {
+    font-family: var(--font-legible), var(--font-sans), sans-serif;
+    letter-spacing: 0.02em;
+    line-height: 1.85;
+  }
+
+  html[data-font="legible"] h1,
+  html[data-font="legible"] h2,
+  html[data-font="legible"] h3,
+  html[data-font="legible"] h4 {
+    font-family: var(--font-legible), var(--font-sans), sans-serif;
+    font-style: normal;
+  }
+
+  /*
+   * Yüksek kontrast modu yalnızca metin rengini değil, fotoğraf üzerindeki
+   * karartma katmanlarını (scrim) ve açık renkli zeminleri de güçlendirir —
+   * aksi halde cesur editoryal tasarımda kontrast tavizi oluşur.
+   */
+  html[data-contrast="high"] {
+    --ink-soft: #0d1c2c;
+    --ink-faint: #17293b;
+    --border: #7a6a4a;
+    --muted-foreground: #0d1c2c;
+    --muted: #f3e6d3;
+  }
+
+  html[data-contrast="high"] [data-scrim] {
+    --scrim-opacity: 0.92;
+  }
+
+  html[data-text-scale="lg"] body {
+    font-size: 1.125rem;
+  }
+
+  html[data-text-scale="xl"] body {
+    font-size: 1.25rem;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+    hyphens: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading font-semibold text-ink text-balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Odak halkası her koşulda görünür kalır — Rule 03 zero-trust erişilebilirlik */
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@layer utilities {
+  .prose-copy {
+    max-width: 66ch;
+  }
+
+  .stretched-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  /* Fotoğraf üzerine binen metnin okunabilirliğini garanti eden karartma katmanı. */
+  .scrim-bottom {
+    background: linear-gradient(
+      to top,
+      rgba(10, 20, 15, var(--scrim-opacity, 0.85)) 0%,
+      rgba(10, 20, 15, calc(var(--scrim-opacity, 0.85) * 0.55)) 45%,
+      rgba(10, 20, 15, 0) 100%
+    );
+  }
+
+  .scrim-full {
+    background: linear-gradient(
+      180deg,
+      rgba(10, 20, 15, calc(var(--scrim-opacity, 0.85) * 0.5)) 0%,
+      rgba(10, 20, 15, var(--scrim-opacity, 0.85)) 100%
+    );
+  }
+}
