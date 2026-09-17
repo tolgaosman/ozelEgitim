@@ -1,28 +1,42 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, Fragment } from "react";
+import { useSearchParams } from "next/navigation";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { submitInquiryAction } from "@/app/kayit/actions";
+import { submitInquiryAction } from "@/app/iletisim/actions";
 import type { InquiryFormState } from "@/lib/schemas/inquiry";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectSeparator,
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
 const INITIAL_FORM_STATE: InquiryFormState = { status: "idle", message: "" };
 
-const programOptions = [
-  { value: "", label: "Fark etmez / Görüşmede belirleyelim" },
-  { value: "ozel-ogrenme-guclugu", label: "Özel Öğrenme Güçlüğü Destek Programı" },
-  { value: "dil-ve-konusma-terapisi", label: "Dil ve Konuşma Terapisi" },
-  { value: "otizm-spektrum-destek", label: "Otizm Spektrum Destek Programı" },
-  { value: "zihinsel-yetersizlik-destek", label: "Zihinsel Yetersizlik Destek Eğitimi" },
-  { value: "fizyoterapi-duyu-butunleme", label: "Fizyoterapi ve Duyu Bütünleme" },
-  { value: "erken-cocukluk-ozel-egitimi", label: "Erken Çocukluk Özel Eğitimi" },
-  { value: "dehb-destek-programi", label: "DEHB Destek Programı" },
-  { value: "aile-danismanligi", label: "Aile Danışmanlığı" },
-];
+/**
+ * Program listesi artık burada sabit değil: sunucu bileşeni
+ * `fetchProgramCollection()` sonucunu bu bileşene geçiriyor. Böylece panelden
+ * eklenen bir program otomatik olarak forma da düşer ve slug listesinin
+ * ikinci bir kopyası kodda tutulmaz.
+ */
+export type ProgramOption = {
+  value: string;
+  label: string;
+};
+
+const UNDECIDED_PROGRAM_OPTION: ProgramOption = {
+  value: "",
+  label: "Fark etmez / Görüşmede belirleyelim",
+};
 
 function FieldError({ message }: { message?: string }) {
   if (!message) return null;
@@ -33,7 +47,11 @@ function FieldError({ message }: { message?: string }) {
   );
 }
 
-export function InquiryForm() {
+export function InquiryForm({ programOptions: availablePrograms }: { programOptions: ProgramOption[] }) {
+  const searchParams = useSearchParams();
+  const defaultProgram = searchParams.get("program") || "";
+  const programOptions = [UNDECIDED_PROGRAM_OPTION, ...availablePrograms];
+
   const [formState, formAction, isSubmitPending] = useActionState(
     submitInquiryAction,
     INITIAL_FORM_STATE,
@@ -43,11 +61,11 @@ export function InquiryForm() {
     return (
       <div
         role="status"
-        className="flex flex-col items-center gap-3 rounded-2xl border border-sage-200 bg-sage-50 px-6 py-12 text-center"
+        className="flex flex-col items-center gap-3 rounded-xl border border-grass-500/30 bg-grass-100 px-6 py-12 text-center"
       >
-        <CheckCircle2 className="size-10 text-sage-700" aria-hidden="true" />
-        <p className="font-display text-lg font-semibold text-forest-800">Teşekkürler!</p>
-        <p className="max-w-sm text-sm text-forest-700">{formState.message}</p>
+        <CheckCircle2 className="size-10 text-grass-600" aria-hidden="true" />
+        <p className="font-display text-lg font-bold text-navy-800">Teşekkürler!</p>
+        <p className="max-w-sm text-sm text-ink-soft">{formState.message}</p>
       </div>
     );
   }
@@ -77,6 +95,9 @@ export function InquiryForm() {
             autoComplete="name"
             aria-invalid={Boolean(formState.fieldErrors?.parentFullName)}
             aria-describedby={formState.fieldErrors?.parentFullName ? "parentFullName-error" : undefined}
+            onInput={(e) => {
+              e.currentTarget.value = e.currentTarget.value.replace(/[^a-zA-ZçÇğĞıİöÖşŞüÜ\s\.\-]/g, "");
+            }}
           />
           <div id="parentFullName-error">
             <FieldError message={formState.fieldErrors?.parentFullName} />
@@ -90,9 +111,14 @@ export function InquiryForm() {
             name="childAgeLabel"
             required
             className="h-11"
-            placeholder="Örn. 6 yaş"
+            placeholder="Örn. 6"
             aria-invalid={Boolean(formState.fieldErrors?.childAgeLabel)}
             aria-describedby={formState.fieldErrors?.childAgeLabel ? "childAgeLabel-error" : undefined}
+            onInput={(e) => {
+              let val = e.currentTarget.value.replace(/[^0-9]/g, "");
+              if (val.length > 2) val = val.slice(0, 2);
+              e.currentTarget.value = val;
+            }}
           />
           <div id="childAgeLabel-error">
             <FieldError message={formState.fieldErrors?.childAgeLabel} />
@@ -111,6 +137,9 @@ export function InquiryForm() {
             placeholder="05XX XXX XX XX"
             aria-invalid={Boolean(formState.fieldErrors?.phoneNumber)}
             aria-describedby={formState.fieldErrors?.phoneNumber ? "phoneNumber-error" : undefined}
+            onInput={(e) => {
+              e.currentTarget.value = e.currentTarget.value.replace(/[^0-9\s\+]/g, "");
+            }}
           />
           <div id="phoneNumber-error">
             <FieldError message={formState.fieldErrors?.phoneNumber} />
@@ -128,6 +157,9 @@ export function InquiryForm() {
             autoComplete="email"
             aria-invalid={Boolean(formState.fieldErrors?.email)}
             aria-describedby={formState.fieldErrors?.email ? "email-error" : undefined}
+            onInput={(e) => {
+              e.currentTarget.value = e.currentTarget.value.replace(/\s/g, "");
+            }}
           />
           <div id="email-error">
             <FieldError message={formState.fieldErrors?.email} />
@@ -137,21 +169,28 @@ export function InquiryForm() {
 
       <div className="space-y-1.5">
         <Label htmlFor="programOfInterest">İlgilendiğiniz Program</Label>
-        <select
-          id="programOfInterest"
-          name="programOfInterest"
-          defaultValue=""
-          className={cn(
-            "h-11 w-full rounded-lg border border-input bg-background px-3 text-sm text-foreground",
-            "focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:border-ring",
-          )}
-        >
-          {programOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+        <Select name="programOfInterest" defaultValue={defaultProgram}>
+          <SelectTrigger
+            id="programOfInterest"
+            className={cn(
+              "h-11 w-full bg-background px-3 text-base md:text-sm",
+            )}
+          >
+            <SelectValue placeholder="İlgilendiğiniz Programı Seçin" />
+          </SelectTrigger>
+          <SelectContent className="max-h-[250px]">
+            <SelectGroup>
+              {programOptions.map((option, index) => (
+                <Fragment key={option.value}>
+                  <SelectItem value={option.value} className="py-2.5">
+                    {option.label}
+                  </SelectItem>
+                  {index < programOptions.length - 1 && <SelectSeparator />}
+                </Fragment>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="space-y-1.5">
@@ -159,7 +198,7 @@ export function InquiryForm() {
         <Textarea id="message" name="message" rows={4} placeholder="Çocuğunuz hakkında kısaca bilgi verebilirsiniz." />
       </div>
 
-      <Button type="submit" size="lg" disabled={isSubmitPending} className="h-11 w-full sm:w-auto">
+      <Button type="submit" size="pill" disabled={isSubmitPending} className="w-full sm:w-auto">
         {isSubmitPending ? <Loader2 className="size-4 animate-spin" aria-hidden="true" /> : null}
         {isSubmitPending ? "Gönderiliyor..." : "Ön Görüşme Talebini Gönder"}
       </Button>

@@ -38,22 +38,23 @@ export default async function FaqPage() {
   return (
     <>
       <PageHero
-        title="Sıkça Sorulan Sorular"
+        lead="Sıkça Sorulan"
+        accent="SORULAR"
         description="Merak ettiklerinizin çoğu burada. Aradığınızı bulamazsanız bizimle iletişime geçmekten çekinmeyin."
         breadcrumbItems={[{ label: "Sıkça Sorulan Sorular" }]}
         image="/images/hero-contact.jpg"
       />
 
-      <section className="bg-white py-24 lg:py-32">
+      <section className="bg-white py-16 sm:py-20 lg:py-32">
         <Container>
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[14rem_1fr]">
-            <nav aria-label="SSS kategorileri" className="lg:sticky lg:top-28 lg:self-start">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[14rem_1fr] lg:gap-12">
+            <nav aria-label="SSS kategorileri" className="hidden lg:sticky lg:top-28 lg:block lg:self-start">
               <ul className="space-y-1 border-l border-border">
                 {categories.map((category) => (
                   <li key={category}>
                     <a
                       href={`#${categoryAnchorId(category)}`}
-                      className="block border-l-2 border-transparent py-1.5 pl-4 text-sm font-medium text-ink-soft transition-colors hover:border-clay-500 hover:text-clay-600"
+                      className="block border-l-2 border-transparent py-1.5 pl-4 text-sm font-medium text-ink-soft transition-colors hover:border-navy-800 hover:text-navy-800"
                     >
                       {formatFaqCategoryLabel(category)}
                     </a>

@@ -5,57 +5,56 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * İz Özel Eğitim Merkezi — Tasarım Sistemi (Faz 2: editoryal yeniden tasarım)
+ * İz Özel Eğitim Merkezi — Tasarım Sistemi (Faz 3: geometrik yeniden tasarım)
  *
- * Palet, logo renklerinden türetilmiştir: lacivert (ink), orman yeşili
- * (forest — koyu dolu bantlar), adaçayı (sage), şeftali (peach) ve kilden
- * kırmızı-turuncu (clay — birincil CTA). Zemin sıcak kremdir (paper).
- * Kontrast oranları docs/architecture.md içinde belgelenmiştir; gövde
- * metni AAA (≥7:1), UI bileşenleri en az AA (≥4.5:1) hedefler.
+ * Referans: gatewayschool.org. Dil editoryalden geometriğe taşındı — tek bir
+ * sans aile (Figtree), açık gri zemin, doygun lacivert taban ve kenarlardan
+ * taşan düz renk daire/kare dekorlar. Köşeler yumuşak (Faz 4): kart, panel ve
+ * görseller yuvarlatılır, yalnız tam genişlik hero'lar ve dekoratif geometrik
+ * şekiller kare kalır.
+ *
+ * Palet logodan türetilmiştir: lacivert (navy — kurum adının rengi), açık
+ * mavi ve adaçayı yeşili canlandırılarak camgöbeği (aqua) ve çim yeşiline
+ * (grass) taşındı; şeftali (peach) logo aksanı olarak korundu. Gövde metni
+ * AAA (>=7:1), UI bileşenleri en az AA (>=4.5:1) hedefler.
+ *
+ * DİKKAT: aqua-500 ve grass-500 açık zeminde metin olarak KULLANILMAZ
+ * (~2:1). Bunlar yalnız dekoratif dolgu; koyu zemin üzerinde metin olarak
+ * güvenlidir. Açık zeminde metin gerekiyorsa aqua-600 / grass-600 kullanın.
  */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-heading: var(--font-fraunces);
-  --font-display: var(--font-fraunces);
+
+  --font-sans: var(--font-figtree);
+  --font-heading: var(--font-figtree);
+  --font-display: var(--font-figtree);
   --font-legible: var(--font-atkinson);
-  --font-mono: var(--font-geist-mono);
 
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
   --color-ink-faint: var(--ink-faint);
   --color-paper: var(--paper);
 
-  --color-forest-500: var(--forest-500);
-  --color-forest-700: var(--forest-700);
-  --color-forest-800: var(--forest-800);
-  --color-forest-900: var(--forest-900);
+  --color-navy-600: var(--navy-600);
+  --color-navy-800: var(--navy-800);
+  --color-navy-900: var(--navy-900);
+  --color-navy-hero: var(--navy-hero);
 
-  --color-sage-50: var(--sage-50);
-  --color-sage-100: var(--sage-100);
-  --color-sage-200: var(--sage-200);
-  --color-sage-300: var(--sage-300);
-  --color-sage-400: var(--sage-400);
-  --color-sage-500: var(--sage-500);
-  --color-sage-600: var(--sage-600);
-  --color-sage-700: var(--sage-700);
+  --color-aqua-500: var(--aqua-500);
+  --color-aqua-600: var(--aqua-600);
 
-  --color-peach-50: var(--peach-50);
-  --color-peach-100: var(--peach-100);
-  --color-peach-200: var(--peach-200);
-  --color-peach-300: var(--peach-300);
+  --color-grass-500: var(--grass-500);
+  --color-grass-600: var(--grass-600);
+
   --color-peach-400: var(--peach-400);
   --color-peach-500: var(--peach-500);
 
-  --color-clay-50: var(--clay-50);
-  --color-clay-500: var(--clay-500);
-  --color-clay-600: var(--clay-600);
-  --color-clay-700: var(--clay-700);
+  --color-aqua-100: var(--aqua-100);
+  --color-grass-100: var(--grass-100);
+  --color-peach-100: var(--peach-100);
 
-  --color-sky-100: var(--sky-100);
-  --color-sky-500: var(--sky-500);
-  --color-sky-800: var(--sky-800);
+  --color-signal: var(--signal);
 
   --color-focus: var(--focus);
 
@@ -90,29 +89,61 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
 
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
+  /*
+   * Köşeler yumuşak: kart, panel ve görseller xl, form kontrolleri md-lg,
+   * CTA butonları ve rozetler tam pill (rounded-full).
+   */
+  --radius-sm: 0.5rem; /* 8px  — chip, küçük rozet */
+  --radius-md: 0.625rem; /* 10px — input, select, küçük buton */
+  --radius-lg: 0.75rem; /* 12px — buton, menü öğesi, tab */
+  --radius-xl: 1rem; /* 16px — kart, panel, görsel */
+  --radius-2xl: 1.25rem; /* 20px — büyük panel, modal, split bölüm */
+  --radius-3xl: 1.5rem; /* 24px — bölüm blokları */
 
-  --shadow-card: 0 1px 2px rgba(18, 40, 63, 0.05), 0 4px 14px rgba(18, 40, 63, 0.07);
-  --shadow-raised: 0 4px 8px rgba(18, 40, 63, 0.08), 0 16px 32px rgba(18, 40, 63, 0.12);
+  /*
+   * Gölgeler geniş yayılımlı ve düşük opaklıklı — sert bir kenar çizgisi
+   * yerine zeminden yumuşakça ayrılan bir kalkma hissi verir. Üç katman:
+   * temas (1-2px), ana yayılım (negatif spread ile dağınık), ara dolgu.
+   */
+  --shadow-card: 0 1px 2px rgba(13, 27, 61, 0.04), 0 8px 24px -6px rgba(13, 27, 61, 0.08),
+    0 2px 8px -2px rgba(13, 27, 61, 0.05);
+  --shadow-raised: 0 2px 4px rgba(13, 27, 61, 0.05), 0 18px 40px -10px rgba(13, 27, 61, 0.13),
+    0 6px 16px -6px rgba(13, 27, 61, 0.08);
+
+  /*
+   * Tailwind'in ham gri `shadow-sm|md|lg` değerleri bu palette soğuk ve sert
+   * kalıyordu; aynı lacivert tonda kendi ölçeğimizle değiştirildi (sheet,
+   * select ve navigation-menu bu utility'leri kullanıyor).
+   */
+  --shadow-sm: 0 1px 2px rgba(13, 27, 61, 0.04), 0 2px 6px -1px rgba(13, 27, 61, 0.06);
+  --shadow-md: 0 2px 4px rgba(13, 27, 61, 0.05), 0 8px 20px -4px rgba(13, 27, 61, 0.1);
+  --shadow-lg: 0 4px 8px rgba(13, 27, 61, 0.06), 0 20px 44px -12px rgba(13, 27, 61, 0.15);
 
   --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
 
   --animate-fade-up: fade-up 0.5s var(--ease-spring);
 
-  /* Editoryal display ölçeği — akışkan (clamp), Fraunces ile eşleşir */
-  --text-display-xl: clamp(2.75rem, 6vw, 6rem);
-  --text-display-xl--line-height: 0.97;
+  /*
+   * Display ölçeği — referans sitenin strapline ölçüleriyle eşleşir:
+   * küçük satır 25 > 50px, büyük harf aksan satırı 32 > 110px (tavan, root
+   * ölçeğiyle birlikte 2560px monitörde ~159px'e çıkar).
+   *
+   * clamp()'lerin tabanı ve tavanı saf rem, orta terimi saf vw. Böylece her
+   * viewport'ta yalnız tek bir terim bağlar ve monitör ölçeğiyle (`--ui-scale`)
+   * çift ölçeklenme oluşmaz: küçük ekranda rem tabanı, orta ekranda vw, büyük
+   * ekranda rem tavanı — ve tavan root ile orantılı büyür.
+   */
+  --text-strap: clamp(1.25rem, 3vw, 3.125rem);
+  --text-strap--line-height: 1;
+  --text-display-xl: clamp(1.75rem, 8.2vw, 6.875rem);
+  --text-display-xl--line-height: 0.95;
   --text-display-xl--letter-spacing: -0.02em;
-  --text-display-lg: clamp(2.1rem, 4vw, 3.5rem);
-  --text-display-lg--line-height: 1.05;
-  --text-display-lg--letter-spacing: -0.015em;
-  --text-display-md: clamp(1.5rem, 2.3vw, 2.15rem);
-  --text-display-md--line-height: 1.15;
+  --text-display-lg: clamp(2rem, 4.6vw, 4rem);
+  --text-display-lg--line-height: 1;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-display-md: clamp(1.5rem, 2.4vw, 2.25rem);
+  --text-display-md--line-height: 1.1;
+  --text-display-md--letter-spacing: -0.01em;
   --text-display-sm: clamp(1.25rem, 1.6vw, 1.625rem);
   --text-display-sm--line-height: 1.25;
 
@@ -129,49 +160,72 @@
 }
 
 :root {
-  --paper: #fbf7f1;
+  /*
+   * Monitör ölçeği — sitenin tek büyütme kadranı. 1440px referans genişlikte
+   * 1.00x (16px); 1440px altında sabit 1.00x, 2560px üstünde 1.45x tavanında
+   * sabitlenir, arası doğrusal.
+   *
+   * Alt sınır kasıtlı olarak 1rem: clamp()'in min bağı 1440px ALTINDAKİ her
+   * viewport'ta geçerlidir — telefon dahil. 1rem'den küçük bir taban tüm mobil
+   * metni küçültürdü, ki bu responsive hedefiyle doğrudan çelişir. Böylece
+   * 1440px'e kadar hiçbir şey değişmez, ölçek yalnız yukarı doğru çalışır.
+   * Site neredeyse tamamen rem tabanlı olduğu için bu tek değer tipografiyi,
+   * boşlukları, buton ve navbar yüksekliklerini birlikte ölçekler.
+   *
+   * Değerler rem cinsinden: root elementin kendi font-size'ındaki rem, spec
+   * gereği elementin *initial* değerine (tarayıcının varsayılan yazı boyutu)
+   * çözülür. Böylece kullanıcının tarayıcı ayarı korunur ve döngü oluşmaz.
+   *
+   * Tailwind breakpoint'leri etkilenmez: media query içindeki rem de initial
+   * 16px'e çözülür, yani `lg:` hâlâ tam 1024 CSS px'te tetiklenir.
+   */
+  --ui-scale: clamp(1rem, 0.4214rem + 0.6429vw, 1.45rem);
 
-  /* Orman yeşili — koyu dolu bantlar */
-  --forest-500: #3f6b48;
-  --forest-700: #2a5238;
-  --forest-800: #1b3a27;
-  --forest-900: #12291c;
+  /* Erişilebilirlik yazı ölçeği kadranı — `html[data-text-scale]` ile biner. */
+  --a11y-scale: 1;
 
-  /* Adaçayı — logo yeşili */
-  --sage-50: #eef6ee;
-  --sage-100: #dcebdc;
-  --sage-200: #c2dec2;
-  --sage-300: #a3cea3;
-  --sage-400: #8fbf8f;
-  --sage-500: #6fa66f;
-  --sage-600: #518a54;
-  --sage-700: #386239;
+  --paper: #f6f6f6;
+
+  /* Lacivert — logonun kurum adı rengi; koyu bantlar ve ana metin */
+  --navy-900: #0b1533;
+  --navy-800: #0d1b3d;
+  --navy-600: #16357a;
+  --navy-hero: #10306b;
+
+  /* Camgöbeği — logonun açık mavisinin canlandırılmış hali */
+  --aqua-500: #0cbeff;
+  --aqua-600: #0b87b5;
+
+  /* Çim yeşili — logonun adaçayısının canlandırılmış hali */
+  --grass-500: #7ec94f;
+  --grass-600: #4f7f2e;
 
   /* Şeftali — logo aksanı */
-  --peach-50: #fdf1e7;
-  --peach-100: #fbe1cc;
-  --peach-200: #f6c9a3;
-  --peach-300: #f2b47f;
-  --peach-400: #efa97e;
-  --peach-500: #e68f53;
+  --peach-400: #f6b26e;
+  --peach-500: #d8802c;
 
-  /* Kil — birincil CTA */
-  --clay-50: #fbeee6;
-  --clay-500: #c96a34;
-  --clay-600: #b3541f;
-  --clay-700: #8f4118;
+  /* Açık tonlar — rozet/ikon-kutusu zeminleri (kayıt panellerinde çeşitlilik için) */
+  --aqua-100: #d9f4ff;
+  --grass-100: #e6f5d9;
+  --peach-100: #fdeadb;
 
-  /* Gökyüzü mavisi — üçüncül vurgu */
-  --sky-100: #e4edf9;
-  --sky-500: #7fa8d8;
-  --sky-800: #1e4e8c;
+  /* Vurgu — hover altçizgisi, uyarı rozeti */
+  --signal: #d70740;
 
   /* Metin */
-  --ink: #12283f;
-  --ink-soft: #3d5266;
-  --ink-faint: #64768a;
+  --ink: #0d1b3d;
+  --ink-soft: #414e6e;
+  --ink-faint: #5d6a8a;
 
   --focus: #1d6fe0;
+
+  /*
+   * Yerleşim — tipografi ölçeğiyle aynı desen: taban ve tavan saf rem, orta
+   * terim saf vw. Taban telefonda kenar boşluğunun ekranı yemesini, tavan da
+   * büyük monitörde root ölçeğiyle orantılı büyümeyi sağlar.
+   */
+  --gutter: clamp(1.25rem, 3.47vw, 3.125rem);
+  --shape-size: clamp(5.5rem, 17vw, 18rem);
 
   --background: var(--paper);
   --foreground: var(--ink);
@@ -180,78 +234,116 @@
   --popover: #ffffff;
   --popover-foreground: var(--ink);
 
-  --primary: var(--clay-600);
-  --primary-foreground: #fff8f2;
+  --primary: var(--navy-800);
+  --primary-foreground: #ffffff;
 
-  --secondary: var(--forest-700);
+  --secondary: var(--navy-600);
   --secondary-foreground: #ffffff;
 
-  --muted: var(--peach-50);
+  --muted: #ececef;
   --muted-foreground: var(--ink-soft);
 
-  --accent: var(--sage-50);
-  --accent-foreground: var(--forest-800);
+  --accent: #e7f7ff;
+  --accent-foreground: var(--navy-800);
 
-  --destructive: #b3261e;
+  --destructive: var(--signal);
   --destructive-foreground: #ffffff;
 
-  --border: #e6d8c4;
-  --input: #e6d8c4;
+  --border: #e6e4e0;
+  --input: #cfd0d8;
   --ring: var(--focus);
 
-  --chart-1: var(--sage-500);
-  --chart-2: var(--peach-400);
-  --chart-3: var(--clay-500);
-  --chart-4: var(--forest-500);
-  --chart-5: var(--sky-500);
+  --chart-1: var(--aqua-500);
+  --chart-2: var(--grass-500);
+  --chart-3: var(--peach-400);
+  --chart-4: var(--navy-600);
+  --chart-5: var(--signal);
 
   --radius: 0.75rem;
 
-  --sidebar: var(--peach-50);
+  --sidebar: #ffffff;
   --sidebar-foreground: var(--ink);
-  --sidebar-primary: var(--clay-600);
-  --sidebar-primary-foreground: #fff8f2;
-  --sidebar-accent: var(--sage-50);
-  --sidebar-accent-foreground: var(--forest-800);
+  --sidebar-primary: var(--navy-800);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--navy-800);
   --sidebar-border: var(--border);
   --sidebar-ring: var(--focus);
 }
 
 .dark {
-  --background: #0f1c14;
-  --foreground: #f2ede2;
-  --card: #16261b;
-  --card-foreground: #f2ede2;
-  --popover: #16261b;
-  --popover-foreground: #f2ede2;
+  --background: var(--navy-900);
+  --foreground: #eef1f8;
+  --card: #131f42;
+  --card-foreground: #eef1f8;
+  --popover: #131f42;
+  --popover-foreground: #eef1f8;
 
-  --primary: #e08a4f;
-  --primary-foreground: #1a0c05;
+  --primary: var(--aqua-500);
+  --primary-foreground: var(--navy-900);
 
-  --secondary: var(--sage-500);
-  --secondary-foreground: #0f1c14;
+  --secondary: var(--navy-600);
+  --secondary-foreground: #ffffff;
 
-  --muted: #1c2e21;
-  --muted-foreground: #b9c9bb;
+  --muted: #1a2750;
+  --muted-foreground: #b3bcd6;
 
-  --accent: #1c2e2199;
-  --accent-foreground: var(--sage-200);
+  --accent: #1a2750;
+  --accent-foreground: var(--aqua-500);
 
-  --destructive: #e5695f;
-  --destructive-foreground: #2a0906;
+  --destructive: #ff5b7f;
+  --destructive-foreground: var(--navy-900);
 
-  --border: #2a3f2e;
-  --input: #2a3f2e;
+  --border: #26335c;
+  --input: #26335c;
   --ring: #5ea0ff;
 
-  --sidebar: #16261b;
-  --sidebar-foreground: #f2ede2;
-  --sidebar-primary: #e08a4f;
-  --sidebar-primary-foreground: #1a0c05;
-  --sidebar-accent: #1c2e21;
-  --sidebar-accent-foreground: var(--sage-200);
-  --sidebar-border: #2a3f2e;
+  --sidebar: #131f42;
+  --sidebar-foreground: #eef1f8;
+  --sidebar-primary: var(--aqua-500);
+  --sidebar-primary-foreground: var(--navy-900);
+  --sidebar-accent: #1a2750;
+  --sidebar-accent-foreground: var(--aqua-500);
+  --sidebar-border: #26335c;
   --sidebar-ring: #5ea0ff;
+}
+
+/*
+ * Erişilebilirlik tercihlerinin token override'ları kasıtlı olarak katman
+ * DIŞINDA durur. CSS kaskadında katman sırası özgüllükten önce gelir, bu
+ * yüzden `@layer base` içindeki bir kural katmansız `:root` bloğunu ezemez —
+ * bu kurallar katman içindeyken sessizce etkisiz kalıyordu.
+ */
+
+/*
+ * Yüksek kontrast modu yalnızca metin rengini değil, fotoğraf üzerindeki
+ * karartma katmanlarını (scrim) ve açık renkli zeminleri de güçlendirir —
+ * aksi halde cesur geometrik tasarımda kontrast tavizi oluşur.
+ */
+html[data-contrast="high"] {
+  --ink-soft: #0d1b3d;
+  --ink-faint: #1c2a4d;
+  --border: #8b8d99;
+  --muted-foreground: #0d1b3d;
+  --muted: #e0e0e6;
+}
+
+html[data-contrast="high"] [data-scrim] {
+  --scrim-opacity: 0.92;
+}
+
+/*
+ * Yazı boyutu tercihi root ölçeğine çarpan olarak biner — yalnız gövde
+ * metnini değil, utility sınıflarından gelen tüm boşluk, ikon ve bileşen
+ * ölçülerini de büyütür. (Önceden yalnız `body`'nin font-size'ı değiştiği
+ * için `text-sm` / `p-6` / `size-11` gibi ölçüler tercihi yok sayıyordu.)
+ */
+html[data-text-scale="lg"] {
+  --a11y-scale: 1.125;
+}
+
+html[data-text-scale="xl"] {
+  --a11y-scale: 1.25;
 }
 
 @layer base {
@@ -261,7 +353,13 @@
 
   html {
     @apply font-sans scroll-smooth;
+    font-size: calc(var(--ui-scale) * var(--a11y-scale));
     text-size-adjust: 100%;
+    /*
+     * Yatay taşma emniyet ağı. `hidden` değil `clip`: `hidden` bir kaydırma
+     * bağlamı yaratıp sticky navbar'ı bozar, `clip` bozmaz.
+     */
+    overflow-x: clip;
   }
 
   html[data-motion="reduced"] *,
@@ -269,12 +367,28 @@
   html[data-motion="reduced"] *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
     transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
     scroll-behavior: auto !important;
   }
 
+  /* 
+   * Framer Motion initial state'lerini ezer. `whileInView` beklemeden
+   * elementin ilk render anında görünür olmasını sağlar.
+   */
+  html[data-motion="reduced"] .motion-reduce-instant {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  html[data-font="legible"] {
+    --font-sans: var(--font-legible);
+    --font-heading: var(--font-legible);
+    --font-display: var(--font-legible);
+  }
+
   html[data-font="legible"] body {
-    font-family: var(--font-legible), var(--font-sans), sans-serif;
     letter-spacing: 0.02em;
     line-height: 1.85;
   }
@@ -283,40 +397,13 @@
   html[data-font="legible"] h2,
   html[data-font="legible"] h3,
   html[data-font="legible"] h4 {
-    font-family: var(--font-legible), var(--font-sans), sans-serif;
     font-style: normal;
-  }
-
-  /*
-   * Yüksek kontrast modu yalnızca metin rengini değil, fotoğraf üzerindeki
-   * karartma katmanlarını (scrim) ve açık renkli zeminleri de güçlendirir —
-   * aksi halde cesur editoryal tasarımda kontrast tavizi oluşur.
-   */
-  html[data-contrast="high"] {
-    --ink-soft: #0d1c2c;
-    --ink-faint: #17293b;
-    --border: #7a6a4a;
-    --muted-foreground: #0d1c2c;
-    --muted: #f3e6d3;
-  }
-
-  html[data-contrast="high"] [data-scrim] {
-    --scrim-opacity: 0.92;
-  }
-
-  html[data-text-scale="lg"] body {
-    font-size: 1.125rem;
-  }
-
-  html[data-text-scale="xl"] body {
-    font-size: 1.25rem;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
     font-size: 1.0625rem;
-    line-height: 1.75;
-    letter-spacing: 0.01em;
+    line-height: 1.7;
     hyphens: none;
   }
 
@@ -324,7 +411,7 @@
   h2,
   h3,
   h4 {
-    @apply font-heading font-semibold text-ink text-balance;
+    @apply font-heading font-bold text-ink text-balance;
   }
 
   p {
@@ -333,15 +420,26 @@
 
   /* Odak halkası her koşulda görünür kalır — Rule 03 zero-trust erişilebilirlik */
   :focus-visible {
-    outline: 3px solid var(--focus);
-    outline-offset: 2px;
-    border-radius: 2px;
+    /* rem — monitör ölçeğiyle birlikte büyür, 1.45x'te 3px görünmez olmaz. */
+    outline: 0.1875rem solid var(--focus);
+    outline-offset: 0.125rem;
+    border-radius: 0.5rem;
+  }
+
+  /* Koyu lacivert bantlarda odak halkası da parlak kalsın */
+  [data-on-dark] :focus-visible {
+    outline-color: #7fc4ff;
   }
 }
 
 @layer utilities {
   .prose-copy {
     max-width: 66ch;
+  }
+  @media (min-width: 1024px) {
+    .prose-copy {
+      max-width: none;
+    }
   }
 
   .stretched-link::after {
@@ -355,17 +453,45 @@
   .scrim-bottom {
     background: linear-gradient(
       to top,
-      rgba(10, 20, 15, var(--scrim-opacity, 0.85)) 0%,
-      rgba(10, 20, 15, calc(var(--scrim-opacity, 0.85) * 0.55)) 45%,
-      rgba(10, 20, 15, 0) 100%
+      rgba(11, 21, 51, var(--scrim-opacity, 0.85)) 0%,
+      rgba(11, 21, 51, calc(var(--scrim-opacity, 0.85) * 0.55)) 45%,
+      rgba(11, 21, 51, 0) 100%
     );
   }
 
   .scrim-full {
     background: linear-gradient(
       180deg,
-      rgba(10, 20, 15, calc(var(--scrim-opacity, 0.85) * 0.5)) 0%,
-      rgba(10, 20, 15, var(--scrim-opacity, 0.85)) 100%
+      rgba(11, 21, 51, calc(var(--scrim-opacity, 0.85) * 0.5)) 0%,
+      rgba(11, 21, 51, var(--scrim-opacity, 0.85)) 100%
     );
+  }
+
+  /*
+   * Referans sitenin imza hover efekti: bağlantının altında sıfırdan tam
+   * genişliğe açılan kalın vurgu çubuğu. Klavye odağında da tetiklenir.
+   */
+  .hover-bar {
+    position: relative;
+  }
+
+  .hover-bar::after {
+    content: "";
+    position: absolute;
+    bottom: -0.375rem;
+    left: 0;
+    height: 0.1875rem;
+    width: 0;
+    border-radius: 999px;
+    background-color: var(--signal);
+    pointer-events: none;
+    transition: width 0.3s 0.1s var(--ease-spring);
+  }
+
+  .hover-bar:hover::after,
+  .hover-bar:focus-visible::after,
+  .group:hover .hover-bar::after,
+  .group:focus-visible .hover-bar::after {
+    width: 100%;
   }
 }

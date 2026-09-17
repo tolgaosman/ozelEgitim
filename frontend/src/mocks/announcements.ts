@@ -12,6 +12,7 @@ const rawAnnouncements: Announcement[] = [
       "2026-2027 eğitim dönemi için kontenjanlarımız sınırlı sayıdadır.",
       "Ön görüşme talebinde bulunan ailelerimizle bir hafta içinde iletişime geçilmektedir.",
     ],
+    image: "/images/cta-band.jpg",
     category: "duyuru",
     publishedAt: "2026-08-20T09:00:00.000Z",
   },
@@ -34,6 +35,7 @@ const rawAnnouncements: Announcement[] = [
     body: [
       "Aile danışmanlığı programımız kapsamında düzenlenen atölyede, evde uygulanabilecek pekiştirme stratejileri paylaşılacaktır.",
     ],
+    image: "/images/approach.jpg",
     category: "etkinlik",
     publishedAt: "2026-06-18T09:00:00.000Z",
   },

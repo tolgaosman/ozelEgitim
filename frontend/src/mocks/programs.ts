@@ -21,10 +21,22 @@ const rawPrograms: Program[] = [
     ageRangeLabel: "6-14 yaş",
     sessionFormatLabel: "Bire bir, haftada 2-3 seans",
     highlights: [
-      "Okuma akıcılığı ve anlama çalışmaları",
-      "Yazılı anlatım ve el yazısı desteği",
-      "Sayı algısı ve matematik akıl yürütme",
-      "Veli bilgilendirme görüşmeleri",
+      {
+        title: "Okuma akıcılığı ve anlama çalışmaları",
+        description: "Metinleri doğru hızda okuma ve okuduğunu anlamlandırma stratejileri.",
+      },
+      {
+        title: "Yazılı anlatım ve el yazısı desteği",
+        description: "Yazı yazma süreçlerindeki zorlukları aşmak için özel teknikler.",
+      },
+      {
+        title: "Sayı algısı ve matematik akıl yürütme",
+        description: "Soyut kavramları somutlaştırarak matematiksel düşünme becerisi geliştirme.",
+      },
+      {
+        title: "Veli bilgilendirme görüşmeleri",
+        description: "Evde eğitim desteği ve okul uyum süreçleri hakkında düzenli bilgilendirme.",
+      },
     ],
     sortOrder: 1,
     publishedAt: "2026-01-15T09:00:00.000Z",
@@ -43,10 +55,22 @@ const rawPrograms: Program[] = [
     ageRangeLabel: "2-12 yaş",
     sessionFormatLabel: "Bire bir, haftada 1-3 seans",
     highlights: [
-      "Artikülasyon ve sesletim çalışmaları",
-      "Alıcı ve ifade edici dil gelişimi",
-      "Kekemelik ve akıcılık desteği",
-      "Erken dil gecikmesi müdahalesi",
+      {
+        title: "Artikülasyon ve sesletim çalışmaları",
+        description: "Hatalı üretilen seslerin doğru ve anlaşılır şekilde çıkarılmasını hedefleyen egzersizler.",
+      },
+      {
+        title: "Alıcı ve ifade edici dil gelişimi",
+        description: "Dilbilgisi kuralları ve kelime dağarcığını genişleterek iletişimi güçlendirme.",
+      },
+      {
+        title: "Kekemelik ve akıcılık desteği",
+        description: "Konuşma akıcılığını sağlamak için kanıta dayalı modern terapi yöntemleri.",
+      },
+      {
+        title: "Erken dil gecikmesi müdahalesi",
+        description: "Konuşmaya geç başlayan çocuklar için erken dönem yoğun destek çalışmaları.",
+      },
     ],
     sortOrder: 2,
     publishedAt: "2026-01-15T09:00:00.000Z",
@@ -65,10 +89,22 @@ const rawPrograms: Program[] = [
     ageRangeLabel: "2-16 yaş",
     sessionFormatLabel: "Bire bir ve küçük grup, haftada 2-5 seans",
     highlights: [
-      "Sosyal beceri ve oyun terapisi grupları",
-      "Görsel destekli iletişim sistemleri",
-      "Davranış destek planları",
-      "Aile eğitimi ve danışmanlık",
+      {
+        title: "Sosyal beceri ve oyun terapisi grupları",
+        description: "Karşılıklı etkileşimi ve akran ilişkilerini geliştiren yapılandırılmış oyunlar.",
+      },
+      {
+        title: "Görsel destekli iletişim sistemleri",
+        description: "Sözel olmayan çocuklar için alternatif ve destekleyici iletişim (AAC) kullanımı.",
+      },
+      {
+        title: "Davranış destek planları",
+        description: "Problem davranışları azaltmaya yönelik fonksiyonel analiz ve müdahale yöntemleri.",
+      },
+      {
+        title: "Aile eğitimi ve danışmanlık",
+        description: "Otizm tanılı çocukların ebeveynlerine yönelik günlük yaşam stratejileri eğitimi.",
+      },
     ],
     sortOrder: 3,
     publishedAt: "2026-01-10T09:00:00.000Z",
@@ -87,10 +123,22 @@ const rawPrograms: Program[] = [
     ageRangeLabel: "4-18 yaş",
     sessionFormatLabel: "Bire bir ve küçük grup, haftada 2-4 seans",
     highlights: [
-      "Öz bakım ve günlük yaşam becerileri",
-      "Temel akademik kavram çalışmaları",
-      "İş ve meslek öncesi beceri hazırlığı",
-      "Bireyselleştirilmiş ölçme değerlendirme",
+      {
+        title: "Öz bakım ve günlük yaşam becerileri",
+        description: "Kişisel bakım, beslenme ve giyinme gibi temel becerilerin kazandırılması.",
+      },
+      {
+        title: "Temel akademik kavram çalışmaları",
+        description: "Renk, şekil, sayı ve temel okuma-yazma kavramlarının basamaklı öğretimi.",
+      },
+      {
+        title: "İş ve meslek öncesi beceri hazırlığı",
+        description: "Büyük yaş grupları için toplumsal yaşama uyum ve iş odaklı beceri eğitimleri.",
+      },
+      {
+        title: "Bireyselleştirilmiş ölçme değerlendirme",
+        description: "Her öğrencinin kendi hızında ilerleyişini takip eden sürekli performans kayıtları.",
+      },
     ],
     sortOrder: 4,
     publishedAt: "2026-01-10T09:00:00.000Z",
@@ -109,10 +157,22 @@ const rawPrograms: Program[] = [
     ageRangeLabel: "1-12 yaş",
     sessionFormatLabel: "Bire bir, haftada 1-3 seans",
     highlights: [
-      "Duyu bütünleme salonu uygulamaları",
-      "Kaba ve ince motor beceri çalışmaları",
-      "Denge ve koordinasyon egzersizleri",
-      "Duyusal düzenleme stratejileri",
+      {
+        title: "Duyu bütünleme salonu uygulamaları",
+        description: "Vestibüler, proprioseptif ve taktil duyuların işlenmesini sağlayan ekipmanlı çalışmalar.",
+      },
+      {
+        title: "Kaba ve ince motor beceri çalışmaları",
+        description: "Yürüme, zıplama, kalem tutma, düğme ilikleme gibi motor koordinasyon egzersizleri.",
+      },
+      {
+        title: "Denge ve koordinasyon egzersizleri",
+        description: "Postüral kontrolü artırarak bedensel farkındalığı geliştiren fizyoterapi yaklaşımları.",
+      },
+      {
+        title: "Duyusal düzenleme stratejileri",
+        description: "Aşırı veya az duyarlı çocukların çevresel uyaranlara adaptasyonunu artırma teknikleri.",
+      },
     ],
     sortOrder: 5,
     publishedAt: "2026-01-08T09:00:00.000Z",
@@ -131,10 +191,22 @@ const rawPrograms: Program[] = [
     ageRangeLabel: "0-6 yaş",
     sessionFormatLabel: "Bire bir, haftada 1-3 seans",
     highlights: [
-      "Erken gelişimsel tarama ve izlem",
-      "Oyun temelli öğrenme oturumları",
-      "Aile rehberliği ve ev programı",
-      "Okul öncesine geçiş hazırlığı",
+      {
+        title: "Erken gelişimsel tarama ve izlem",
+        description: "Risk altındaki çocukların gelişim alanlarının (bilişsel, motor, dil) düzenli değerlendirilmesi.",
+      },
+      {
+        title: "Oyun temelli öğrenme oturumları",
+        description: "Çocuğun doğal bağlamında, ilgi alanları üzerinden beceri kazandırma yöntemleri.",
+      },
+      {
+        title: "Aile rehberliği ve ev programı",
+        description: "Günlük rutinler içinde uygulanabilecek öğrenme fırsatları konusunda ailelere danışmanlık.",
+      },
+      {
+        title: "Okul öncesine geçiş hazırlığı",
+        description: "Kreş ve anaokulu uyum süreçlerini kolaylaştıracak sosyal ve bilişsel hazırlıklar.",
+      },
     ],
     sortOrder: 6,
     publishedAt: "2026-01-08T09:00:00.000Z",
@@ -153,10 +225,22 @@ const rawPrograms: Program[] = [
     ageRangeLabel: "5-14 yaş",
     sessionFormatLabel: "Bire bir, haftada 1-2 seans",
     highlights: [
-      "Dikkat ve odaklanma çalışmaları",
-      "Öz düzenleme ve dürtü kontrolü",
-      "Organizasyon becerisi desteği",
-      "Okul iş birliği ve öneriler",
+      {
+        title: "Dikkat ve odaklanma çalışmaları",
+        description: "Seçici, bölünmüş ve sürdürülebilir dikkati artırıcı bilişsel egzersizler.",
+      },
+      {
+        title: "Öz düzenleme ve dürtü kontrolü",
+        description: "Tepki inhibisyonu (bekleme, durma) becerilerini destekleyen oyunlar ve stratejiler.",
+      },
+      {
+        title: "Organizasyon becerisi desteği",
+        description: "Planlama, zaman yönetimi ve eşyalarını düzenleme konusunda pratik uygulamalar.",
+      },
+      {
+        title: "Okul iş birliği ve öneriler",
+        description: "Öğretmenlerle iletişim kurularak sınıf içi akademik ve davranışsal uyarlamalar.",
+      },
     ],
     sortOrder: 7,
     publishedAt: "2026-01-05T09:00:00.000Z",
@@ -175,10 +259,22 @@ const rawPrograms: Program[] = [
     ageRangeLabel: "Tüm aile bireyleri",
     sessionFormatLabel: "Bire bir görüşme, aylık planlanır",
     highlights: [
-      "Bireysel aile danışmanlığı görüşmeleri",
-      "Ebeveyn eğitim atölyeleri",
-      "Kardeş destek grupları",
-      "Süreç ve hak bilgilendirmesi",
+      {
+        title: "Bireysel aile danışmanlığı görüşmeleri",
+        description: "Özel gereksinimli bir çocuğa sahip olmanın getirdiği stres ve duygu durum yönetimi.",
+      },
+      {
+        title: "Ebeveyn eğitim atölyeleri",
+        description: "Tutum hataları, kriz yönetimi ve evde davranış değiştirme teknikleri hakkında eğitimler.",
+      },
+      {
+        title: "Kardeş destek grupları",
+        description: "Kardeşlerin yaşadığı duygu karmaşalarını ifade edebilecekleri güvenli etkileşim alanları.",
+      },
+      {
+        title: "Süreç ve hak bilgilendirmesi",
+        description: "Yasal haklar, raporlama süreçleri ve eğitim seçenekleri konusunda yönlendirme.",
+      },
     ],
     sortOrder: 8,
     publishedAt: "2026-01-05T09:00:00.000Z",

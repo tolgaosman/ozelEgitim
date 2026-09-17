@@ -1,16 +1,35 @@
+import type { SVGProps } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { Container } from "@/components/shared/container";
 import { footerNavigation } from "@/lib/navigation";
-import {
-  SITE_ADDRESS,
-  SITE_EMAIL,
-  SITE_NAME,
-  SITE_PHONE_DISPLAY,
-  SITE_PHONE_TEL,
-  SITE_SOCIAL_LINKS,
-} from "@/lib/seo/constants";
+import { SITE_NAME } from "@/lib/seo/constants";
+import { fetchSiteSettings } from "@/lib/repositories/site-settings";
+import type { SiteSocialLinks } from "@/lib/schemas/site-settings";
+
+/**
+ * lucide-react bu sürümde marka/logo ikonları taşımıyor (lisans nedeniyle
+ * kaldırıldılar), bu yüzden üç sosyal medya rozeti için küçük satır içi
+ * SVG glifler kullanılıyor.
+ */
+function InstagramGlyph(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function FacebookGlyph(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <path d="M14 9h3V5.5h-3C11.24 5.5 9.5 7.32 9.5 10v2H7v3.5h2.5V22h3.5v-6.5H16l.5-3.5h-3v-1.7c0-.86.4-1.3 1.5-1.3Z" />
+    </svg>
+  );
+}
 
 function FooterColumn({
   title,
@@ -21,11 +40,11 @@ function FooterColumn({
 }) {
   return (
     <div>
-      <h3 className="font-heading text-sm font-semibold text-white">{title}</h3>
-      <ul className="mt-3 space-y-2">
+      <h3 className="text-xs font-extrabold tracking-wider text-white uppercase">{title}</h3>
+      <ul className="mt-4 space-y-2.5">
         {links.map((link) => (
           <li key={link.href}>
-            <Link href={link.href} className="text-sm text-white/70 transition-colors hover:text-white">
+            <Link href={link.href} className="hover-bar inline-block text-sm text-white/75 hover:text-white">
               {link.label}
             </Link>
           </li>
@@ -35,48 +54,49 @@ function FooterColumn({
   );
 }
 
-export function SiteFooter() {
+/** Panelde boş bırakılan bir sosyal medya bağlantısı hiç gösterilmez. */
+function buildSocialLinks(socialLinks: SiteSocialLinks) {
+  return [
+    { href: socialLinks.instagram, label: "Instagram", icon: InstagramGlyph },
+    { href: socialLinks.facebook, label: "Facebook", icon: FacebookGlyph },
+  ].filter((social): social is { href: string; label: string; icon: typeof InstagramGlyph } =>
+    Boolean(social.href),
+  );
+}
+
+export async function SiteFooter() {
+  const { contact, socialLinks: configuredSocialLinks } = await fetchSiteSettings();
+  const socialLinks = buildSocialLinks(configuredSocialLinks);
+
   return (
-    <footer className="bg-ink text-white/80">
-      <Container className="py-16">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
-          <div className="lg:col-span-2">
-            <div className="flex items-center gap-2.5">
-              <Image src="/assets/browserLogo.png" alt="" width={36} height={36} className="size-9" />
-              <span className="font-heading text-lg font-semibold text-white">{SITE_NAME}</span>
-            </div>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
+    <footer data-on-dark className="bg-navy-900 text-white/80">
+      <Container className="py-16 lg:py-20">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:gap-12">
+          <div className="sm:col-span-2 md:col-span-3 lg:col-span-2">
+            <Image
+              src="/assets/logo-lockup-white.png"
+              alt={SITE_NAME}
+              width={426}
+              height={222}
+              className="h-12 w-auto"
+            />
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/75">
               Her çocuğun kendine özgü bir öğrenme yolculuğu vardır. Biz bu yolculukta
               ailelerin yanında, bilime dayalı ve şefkatli bir eğitim ortamı sunarız.
             </p>
-            <div className="mt-5 flex gap-3">
-              <a
-                href={SITE_SOCIAL_LINKS.instagram}
-                target="_blank"
-                rel="noreferrer"
-                className="flex size-9 items-center justify-center rounded-lg bg-white/10 text-white transition-colors hover:bg-white/20"
-              >
-                <ArrowUpRight className="size-4.5" aria-hidden="true" />
-                <span className="sr-only">Instagram (yeni sekmede açılır)</span>
-              </a>
-              <a
-                href={SITE_SOCIAL_LINKS.facebook}
-                target="_blank"
-                rel="noreferrer"
-                className="flex size-9 items-center justify-center rounded-lg bg-white/10 text-white transition-colors hover:bg-white/20"
-              >
-                <ArrowUpRight className="size-4.5" aria-hidden="true" />
-                <span className="sr-only">Facebook (yeni sekmede açılır)</span>
-              </a>
-              <a
-                href={SITE_SOCIAL_LINKS.youtube}
-                target="_blank"
-                rel="noreferrer"
-                className="flex size-9 items-center justify-center rounded-lg bg-white/10 text-white transition-colors hover:bg-white/20"
-              >
-                <ArrowUpRight className="size-4.5" aria-hidden="true" />
-                <span className="sr-only">YouTube (yeni sekmede açılır)</span>
-              </a>
+            <div className="mt-6 flex gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.href}
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex size-11 items-center justify-center rounded-xl bg-white/10 text-white transition-colors hover:bg-aqua-500 hover:text-navy-900"
+                >
+                  <social.icon className="size-4.5" aria-hidden="true" />
+                  <span className="sr-only">{social.label} (yeni sekmede açılır)</span>
+                </a>
+              ))}
             </div>
           </div>
 
@@ -84,35 +104,37 @@ export function SiteFooter() {
           <FooterColumn title="Aileler İçin" links={footerNavigation.aileler} />
 
           <div>
-            <h3 className="font-heading text-sm font-semibold text-white">İletişim</h3>
-            <ul className="mt-3 space-y-3 text-sm text-white/70">
-              <li className="flex items-start gap-2">
-                <MapPin className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
-                <span>{SITE_ADDRESS}</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Phone className="size-4 shrink-0" aria-hidden="true" />
-                <a href={`tel:${SITE_PHONE_TEL}`} className="hover:text-white">
-                  {SITE_PHONE_DISPLAY}
+            <h3 className="text-xs font-extrabold tracking-wider text-white uppercase">İletişim</h3>
+            <ul className="mt-4 space-y-3.5 text-sm text-white/75">
+              <li className="flex items-start gap-2.5">
+                <MapPin className="mt-0.5 size-4 shrink-0 text-aqua-500" aria-hidden="true" />
+                <a href={contact.mapsUrl} target="_blank" rel="noreferrer" className="hover-bar inline-block min-w-0 break-words hover:text-white">
+                  {contact.address}
                 </a>
               </li>
-              <li className="flex items-center gap-2">
-                <Mail className="size-4 shrink-0" aria-hidden="true" />
-                <a href={`mailto:${SITE_EMAIL}`} className="hover:text-white">
-                  {SITE_EMAIL}
+              <li className="flex items-center gap-2.5">
+                <Phone className="size-4 shrink-0 text-aqua-500" aria-hidden="true" />
+                <a href={`tel:${contact.phoneTel}`} className="hover-bar inline-block hover:text-white">
+                  {contact.phoneDisplay}
+                </a>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Mail className="size-4 shrink-0 text-aqua-500" aria-hidden="true" />
+                <a href={`mailto:${contact.email}`} className="hover-bar inline-block break-all hover:text-white">
+                  {contact.email}
                 </a>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-white/70 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-col gap-3 border-t border-white/15 pt-6 text-xs text-white/70 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} {SITE_NAME}. Tüm hakları saklıdır.
           </p>
           <div className="flex flex-wrap gap-4">
             {footerNavigation.kurumsalBilgi.map((link) => (
-              <Link key={link.href} href={link.href} className="hover:text-white">
+              <Link key={link.href} href={link.href} className="hover-bar inline-block hover:text-white">
                 {link.label}
               </Link>
             ))}

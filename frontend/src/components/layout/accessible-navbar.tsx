@@ -1,43 +1,70 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
 import { AccessibilityMenu } from "@/components/layout/accessibility-menu";
-import { MobileNavSheet } from "@/components/layout/mobile-nav-sheet";
-import { NavDropdownItem } from "@/components/layout/nav-dropdown-item";
+import { FullScreenNav } from "@/components/layout/full-screen-nav";
 import { Container } from "@/components/shared/container";
-import { primaryNavigation } from "@/lib/navigation";
 import { SITE_NAME } from "@/lib/seo/constants";
 
 export function AccessibleNavbar() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    // Initial check
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 supports-backdrop-filter:backdrop-blur-md">
-      <Container className="flex h-20 items-center justify-between gap-3 sm:h-24">
-        <Link href="/" className="flex items-center rounded-lg py-1 shrink-0">
+    <header
+      data-on-dark
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
+        scrolled ? "bg-navy-900 shadow-sm" : "bg-transparent"
+      )}
+    >
+      <Container
+        className={cn(
+          "grid grid-cols-[1fr_auto_1fr] items-center gap-3 transition-all duration-300 ease-[var(--ease-spring)]",
+          scrolled ? "h-20 sm:h-24" : "h-28 sm:h-32"
+        )}
+      >
+        <div className="flex min-w-0 items-center">
+          <FullScreenNav />
+        </div>
+
+        <Link href="/" className="flex min-w-0 items-center justify-self-center">
           <Image
-            src="/assets/siteLogo-tr.jpg"
+            src="/assets/logo-lockup-white.png"
             alt={SITE_NAME}
-            width={200}
-            height={200}
+            width={426}
+            height={222}
             priority
-            className="h-20 sm:h-24 w-auto object-contain mix-blend-multiply scale-[1.3] sm:scale-[1.4] origin-left dark:mix-blend-normal dark:bg-white/90 dark:rounded-xl dark:p-1"
+            className={cn(
+              "w-auto transition-all duration-300 ease-[var(--ease-spring)]",
+              scrolled ? "h-11 sm:h-14" : "h-14 sm:h-20"
+            )}
           />
         </Link>
 
-        <nav aria-label="Ana menü" className="hidden items-center gap-0.5 lg:flex">
-          {primaryNavigation.map((item) => (
-            <NavDropdownItem key={item.href} item={item} />
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 items-center justify-end gap-2 sm:gap-3">
           <AccessibilityMenu />
-          <Button
-            render={<Link href="/kayit" />}
-            className="hidden sm:inline-flex"
+          <Link
+            href="/iletisim"
+            className="hover-bar hidden min-h-11 items-center gap-2 px-3 text-sm font-bold tracking-wide text-white uppercase sm:inline-flex"
           >
-            Ön Görüşme Talep Et
-          </Button>
-          <MobileNavSheet />
+            İletişime Geç
+          </Link>
         </div>
       </Container>
     </header>

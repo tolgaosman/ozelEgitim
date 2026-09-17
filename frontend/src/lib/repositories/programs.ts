@@ -1,5 +1,6 @@
 import "server-only";
 import { fetchJson, isApiConfigured } from "@/lib/api/http";
+import { resolveRecordWithFallback, resolveWithFallback } from "@/lib/repositories/with-fallback";
 import { createCollectionEnvelopeSchema, createResourceEnvelopeSchema } from "@/lib/schemas/common";
 import { ProgramSchema, type Program } from "@/lib/schemas/program";
 import { mockPrograms } from "@/mocks/programs";
@@ -17,21 +18,35 @@ export async function fetchProgramCollection(): Promise<Program[]> {
     return sortByOrder(mockPrograms);
   }
 
-  const response = await fetchJson("/api/programs", ProgramCollectionResponseSchema, {
-    tags: ["programs"],
-  });
-  return sortByOrder(response.data);
+  return resolveWithFallback(
+    async () => {
+      const response = await fetchJson("/api/programs", ProgramCollectionResponseSchema, {
+        tags: ["programs"],
+      });
+      return sortByOrder(response.data);
+    },
+    sortByOrder(mockPrograms),
+    "program listesi",
+  );
 }
 
 export async function fetchProgramBySlug(slug: string): Promise<Program | null> {
+  const mockProgram = mockPrograms.find((program) => program.slug === slug) ?? null;
+
   if (!isApiConfigured()) {
-    return mockPrograms.find((program) => program.slug === slug) ?? null;
+    return mockProgram;
   }
 
-  const response = await fetchJson(`/api/programs/${slug}`, ProgramResourceResponseSchema, {
-    tags: [`program:${slug}`],
-  });
-  return response.data;
+  return resolveRecordWithFallback(
+    async () => {
+      const response = await fetchJson(`/api/programs/${slug}`, ProgramResourceResponseSchema, {
+        tags: [`program:${slug}`],
+      });
+      return response.data;
+    },
+    mockProgram,
+    `program (${slug})`,
+  );
 }
 
 function sortByOrder(programs: Program[]): Program[] {

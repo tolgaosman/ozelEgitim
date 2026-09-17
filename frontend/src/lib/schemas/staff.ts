@@ -7,6 +7,9 @@ export const StaffMemberSchema = z.object({
   title: z.string().min(1),
   specialties: z.array(z.string().min(1)).min(1).max(5),
   bio: z.string().min(1),
+  // Yönetim panelinden yüklenen fotoğrafın mutlak URL'i. Yüklenmemişse alan
+  // hiç gelmez ve kadro kartı ad-soyaddan baş harf avatarı üretir.
+  photo: z.url().optional(),
   sortOrder: z.number().int().nonnegative(),
 });
 export type StaffMember = z.infer<typeof StaffMemberSchema>;

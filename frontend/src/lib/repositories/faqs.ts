@@ -1,5 +1,6 @@
 import "server-only";
 import { fetchJson, isApiConfigured } from "@/lib/api/http";
+import { resolveWithFallback } from "@/lib/repositories/with-fallback";
 import { createCollectionEnvelopeSchema } from "@/lib/schemas/common";
 import { FaqSchema, type Faq } from "@/lib/schemas/faq";
 import { mockFaqs } from "@/mocks/faqs";
@@ -11,8 +12,14 @@ export async function fetchFaqCollection(): Promise<Faq[]> {
     return sortByOrder(mockFaqs);
   }
 
-  const response = await fetchJson("/api/faqs", FaqCollectionResponseSchema, { tags: ["faqs"] });
-  return sortByOrder(response.data);
+  return resolveWithFallback(
+    async () => {
+      const response = await fetchJson("/api/faqs", FaqCollectionResponseSchema, { tags: ["faqs"] });
+      return sortByOrder(response.data);
+    },
+    sortByOrder(mockFaqs),
+    "sıkça sorulan sorular",
+  );
 }
 
 function sortByOrder(faqs: Faq[]): Faq[] {

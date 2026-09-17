@@ -2,6 +2,7 @@
 
 import { motion, type Transition } from "motion/react";
 import type { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 const REVEAL_SPRING: Transition = {
   type: "spring",
@@ -30,7 +31,7 @@ type RevealProps = {
 export function Reveal({ children, className, delaySeconds = 0 }: RevealProps) {
   return (
     <motion.div
-      className={className}
+      className={cn("motion-reduce-instant", className)}
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}

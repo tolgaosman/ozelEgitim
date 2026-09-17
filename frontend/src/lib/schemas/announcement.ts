@@ -9,6 +9,7 @@ export const AnnouncementSchema = z.object({
   title: z.string().min(1),
   excerpt: z.string().min(1),
   body: z.array(z.string().min(1)).min(1),
+  image: z.string().optional(),
   category: AnnouncementCategorySchema,
   publishedAt: z.iso.datetime(),
 });

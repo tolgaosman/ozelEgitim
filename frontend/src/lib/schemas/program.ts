@@ -28,7 +28,18 @@ export const ProgramSchema = z.object({
   icon: ProgramIconSchema,
   ageRangeLabel: z.string().min(1),
   sessionFormatLabel: z.string().min(1),
-  highlights: z.array(z.string().min(1)).min(1).max(6),
+  highlights: z
+    .array(
+      z.object({
+        title: z.string().min(1),
+        description: z.string().min(1),
+      })
+    )
+    .min(1)
+    .max(6),
+  // Yönetim panelinden yüklenen görselin mutlak URL'i. Yüklenmemişse alan
+  // hiç gelmez ve `resolveProgramImage` slug tabanlı yer tutucuya düşer.
+  image: z.url().optional(),
   sortOrder: z.number().int().nonnegative(),
   publishedAt: z.iso.datetime(),
 });

@@ -1,27 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Fraunces, Atkinson_Hyperlegible, Geist_Mono } from "next/font/google";
+import { Figtree, Atkinson_Hyperlegible } from "next/font/google";
 import { AccessibleNavbar } from "@/components/layout/accessible-navbar";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SkipToContent } from "@/components/layout/skip-to-content";
+import { FloatingWhatsapp } from "@/components/layout/floating-whatsapp";
 import { MotionProvider } from "@/components/shared/motion-provider";
 import { SITE_NAME, SITE_URL } from "@/lib/seo/constants";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-});
-
 /**
- * Editoryal display fontu — başlıklar, dev rakamlar, pull-quote'lar.
- * Değişken eksenleri (opsz/wght) ve italik desteği, Gateway benzeri
- * referans sitelerdeki "editoryal" karakteri sağlar.
+ * Sitenin tek yazı ailesi — hem gövde hem başlık. Referans site (Scandia)
+ * gibi geometrik-hümanist bir sans; Figtree onun en yakın ücretsiz karşılığı
+ * ve latin-ext alt kümesiyle Türkçe karakterleri tam karşılar. Değişken font
+ * olduğu için 300-900 arası tüm ağırlıklar tek dosyadan gelir; başlıklardaki
+ * 800 ağırlık ayrı bir istek doğurmaz.
  */
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const figtree = Figtree({
+  variable: "--font-figtree",
   subsets: ["latin", "latin-ext"],
-  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -30,11 +26,6 @@ const atkinsonHyperlegible = Atkinson_Hyperlegible({
   weight: ["400", "700"],
   subsets: ["latin", "latin-ext"],
   display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -67,7 +58,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#12283f",
+  themeColor: "#0d1b3d",
   width: "device-width",
   initialScale: 1,
 };
@@ -102,7 +93,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="tr"
-      className={`${inter.variable} ${fraunces.variable} ${atkinsonHyperlegible.variable} ${geistMono.variable} h-full`}
+      className={`${figtree.variable} ${atkinsonHyperlegible.variable} h-full`}
       suppressHydrationWarning
     >
       <head>
@@ -112,10 +103,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <MotionProvider>
           <SkipToContent />
           <AccessibleNavbar />
-          <main id="ana-icerik" className="flex-1">
+          <main id="ana-icerik" className="flex-1 overflow-x-clip">
             {children}
           </main>
           <SiteFooter />
+          <FloatingWhatsapp />
         </MotionProvider>
       </body>
     </html>

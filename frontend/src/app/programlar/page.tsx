@@ -17,13 +17,14 @@ export default async function ProgramsPage() {
   return (
     <>
       <PageHero
-        title="Programlarımız"
+        lead="Destek Eğitim"
+        accent="PROGRAMLARIMIZ"
         description="Her program, RAM raporu ve klinik değerlendirme doğrultusunda çocuğunuza özel olarak planlanır."
         breadcrumbItems={[{ label: "Programlarımız" }]}
         image="/images/hero-programs.jpg"
       />
 
-      <section className="bg-white py-24 lg:py-32">
+      <section className="bg-white py-16 sm:py-20 lg:py-32">
         <Container>
           <ProgramShowcase programs={programs} />
         </Container>

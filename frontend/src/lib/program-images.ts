@@ -17,6 +17,15 @@ export const programImageMap: Record<string, string> = {
 
 const FALLBACK_PROGRAM_IMAGE = "/images/hero-programs.jpg";
 
-export function resolveProgramImage(slug: string): string {
-  return programImageMap[slug] ?? FALLBACK_PROGRAM_IMAGE;
+/**
+ * Öncelik sırası:
+ *  1. Yönetim panelinden yüklenen görsel (`Program.image`),
+ *  2. yukarıdaki slug→dosya eşlemesindeki editoryal yer tutucu,
+ *  3. genel program görseli.
+ *
+ * Eşleme kaldırılmadı: panelden görsel yüklenmemiş programlar, backend
+ * devreye girdikten sonra da bugünkü görsellerini korur.
+ */
+export function resolveProgramImage(slug: string, uploadedImageUrl?: string): string {
+  return uploadedImageUrl ?? programImageMap[slug] ?? FALLBACK_PROGRAM_IMAGE;
 }

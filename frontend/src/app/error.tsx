@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Container } from "@/components/shared/container";
 
 export default function GlobalErrorBoundary({
   error,
@@ -17,7 +18,7 @@ export default function GlobalErrorBoundary({
   }, [error]);
 
   return (
-    <section className="mx-auto flex max-w-xl flex-col items-center px-4 py-24 text-center sm:px-6">
+    <Container width="prose" as="section" className="flex max-w-xl flex-col items-center py-16 text-center sm:py-24">
       <span className="flex size-16 items-center justify-center rounded-2xl bg-destructive/10 text-destructive">
         <AlertTriangle className="size-8" aria-hidden="true" />
       </span>
@@ -28,6 +29,6 @@ export default function GlobalErrorBoundary({
       <Button className="mt-8" onClick={reset}>
         Yeniden Dene
       </Button>
-    </section>
+    </Container>
   );
 }

@@ -13,11 +13,11 @@ export function AnnouncementStrip({ announcements }: { announcements: Announceme
   const recentAnnouncements = announcements.slice(0, 3);
 
   return (
-    <section className="bg-paper py-24 lg:py-32">
+    <section className="bg-paper py-16 sm:py-20 lg:py-32">
       <Container>
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
           <SectionHeading eyebrow="Güncel" title="Duyurular ve Etkinlikler" />
-          <Link href="/duyurular" className="text-sm font-semibold text-clay-600 hover:underline">
+          <Link href="/duyurular" className="hover-bar text-sm font-bold text-navy-800">
             Tüm duyuruları görüntüle →
           </Link>
         </div>
@@ -37,13 +37,13 @@ export function AnnouncementStrip({ announcements }: { announcements: Announceme
                 <li className="group border-b border-border">
                   <Link
                     href={`/duyurular/${announcement.slug}`}
-                    className="flex items-center justify-between gap-6 py-7 transition-transform duration-300 ease-[var(--ease-spring)] group-hover:translate-x-2"
+                    className="flex items-center justify-between gap-4 py-5 transition-transform duration-300 ease-[var(--ease-spring)] group-hover:translate-x-2 sm:gap-6 sm:py-7"
                   >
-                    <div>
-                      <p className="text-xs font-semibold tracking-wide text-clay-600">
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold tracking-wide text-navy-600 uppercase">
                         {formatAnnouncementCategoryLabel(announcement.category)} · {formatDateLabel(announcement.publishedAt)}
                       </p>
-                      <h3 className="mt-1.5 font-display text-xl font-semibold text-ink">{announcement.title}</h3>
+                      <h3 className="mt-1.5 font-display text-xl font-bold text-ink">{announcement.title}</h3>
                       <p className="mt-1.5 max-w-2xl text-sm text-ink-soft">{announcement.excerpt}</p>
                     </div>
                     <ArrowBadge className="hidden sm:inline-flex" />

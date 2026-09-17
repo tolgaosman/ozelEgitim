@@ -15,7 +15,7 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#fbf7f1",
+          backgroundColor: "#f6f6f6",
           fontFamily: "sans-serif",
         }}
       >
@@ -24,13 +24,12 @@ export default function OpengraphImage() {
             display: "flex",
             width: 96,
             height: 96,
-            borderRadius: 24,
-            backgroundColor: "#b3541f",
+            backgroundColor: "#0cbeff",
             marginBottom: 32,
           }}
         />
-        <div style={{ display: "flex", fontSize: 64, fontWeight: 700, color: "#12283f" }}>{SITE_NAME}</div>
-        <div style={{ display: "flex", marginTop: 16, fontSize: 28, color: "#3d5266" }}>
+        <div style={{ display: "flex", fontSize: 64, fontWeight: 800, color: "#0d1b3d" }}>{SITE_NAME}</div>
+        <div style={{ display: "flex", marginTop: 16, fontSize: 28, color: "#414e6e" }}>
           Özel Eğitim ve Rehabilitasyon Merkezi
         </div>
       </div>

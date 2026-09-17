@@ -1,6 +1,20 @@
+import {
+  Activity,
+  Building2,
+  HelpCircle,
+  Info,
+  LayoutGrid,
+  MessageCircle,
+  Puzzle,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
+
 export type NavChildLink = {
   label: string;
   href: string;
+  description: string;
+  icon: LucideIcon;
 };
 
 export type NavItem = {
@@ -20,41 +34,84 @@ export const primaryNavigation: NavItem[] = [
     label: "Programlarımız",
     href: "/programlar",
     children: [
-      { label: "Tüm Programları Görüntüle", href: "/programlar" },
-      { label: "Özel Öğrenme Güçlüğü Desteği", href: "/programlar/ozel-ogrenme-guclugu" },
-      { label: "Dil ve Konuşma Terapisi", href: "/programlar/dil-ve-konusma-terapisi" },
-      { label: "Otizm Spektrum Destek Programı", href: "/programlar/otizm-spektrum-destek" },
-      { label: "Fizyoterapi ve Duyu Bütünleme", href: "/programlar/fizyoterapi-duyu-butunleme" },
+      {
+        label: "Tüm Programları Görüntüle",
+        href: "/programlar",
+        description: "Sunduğumuz tüm destek eğitim programlarına tek sayfadan göz atın.",
+        icon: LayoutGrid,
+      },
+      {
+        label: "Özel Öğrenme Güçlüğü Desteği",
+        href: "/programlar/ozel-ogrenme-guclugu",
+        description: "Okuma, yazma ve matematik becerilerini güçlendiren bireysel destek.",
+        icon: Info,
+      },
+      {
+        label: "Dil ve Konuşma Terapisi",
+        href: "/programlar/dil-ve-konusma-terapisi",
+        description: "Dil gelişimi ve artikülasyon için uzman eşliğinde seanslar.",
+        icon: MessageCircle,
+      },
+      {
+        label: "Otizm Spektrum Destek Programı",
+        href: "/programlar/otizm-spektrum-destek",
+        description: "Sosyal iletişim ve günlük yaşam becerilerine odaklı bireysel program.",
+        icon: Puzzle,
+      },
+      {
+        label: "Fizyoterapi ve Duyu Bütünleme",
+        href: "/programlar/fizyoterapi-duyu-butunleme",
+        description: "Motor beceriler ve duyusal işlemleme için klinik destek.",
+        icon: Activity,
+      },
     ],
   },
   {
     label: "Kurumsal",
     href: "/hakkimizda",
     children: [
-      { label: "Hakkımızda", href: "/hakkimizda" },
-      { label: "Kadromuz", href: "/kadromuz" },
-      { label: "Merkezimizde Yaşam", href: "/yasam" },
-      { label: "Sıkça Sorulan Sorular", href: "/sss" },
+      {
+        label: "Hakkımızda",
+        href: "/hakkimizda",
+        description: "Misyonumuz, yaklaşımımız ve merkezimizin hikayesi.",
+        icon: Info,
+      },
+      {
+        label: "Kadromuz",
+        href: "/kadromuz",
+        description: "Uzman eğitimci ve terapistlerimizle tanışın.",
+        icon: Users,
+      },
+      {
+        label: "Merkezimiz",
+        href: "/merkezimiz",
+        description: "Eğitim ortamımızı ve fiziki imkanlarımızı keşfedin.",
+        icon: Building2,
+      },
+      {
+        label: "Sıkça Sorulan Sorular",
+        href: "/sss",
+        description: "Kayıt, süreç ve programlar hakkında merak edilenler.",
+        icon: HelpCircle,
+      },
     ],
   },
   { label: "Duyurular", href: "/duyurular" },
-  { label: "Kayıt ve Başvuru", href: "/kayit" },
-  { label: "İletişim", href: "/iletisim" },
+  { label: "İletişim ve Başvuru", href: "/iletisim" },
 ];
 
 export const footerNavigation = {
   kurumsal: [
     { label: "Hakkımızda", href: "/hakkimizda" },
     { label: "Kadromuz", href: "/kadromuz" },
-    { label: "Merkezimizde Yaşam", href: "/yasam" },
+    { label: "Merkezimiz", href: "/merkezimiz" },
   ],
   aileler: [
-    { label: "Kayıt ve Başvuru", href: "/kayit" },
     { label: "Sıkça Sorulan Sorular", href: "/sss" },
     { label: "Duyurular", href: "/duyurular" },
   ],
   kurumsalBilgi: [
-    { label: "İletişim", href: "/iletisim" },
+    { label: "İletişim ve Başvuru", href: "/iletisim" },
     { label: "KVKK Aydınlatma Metni", href: "/kvkk" },
   ],
 } as const;

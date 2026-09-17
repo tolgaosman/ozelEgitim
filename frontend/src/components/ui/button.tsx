@@ -17,6 +17,9 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
+        /* Koyu lacivert bant / fotoğraf üzerinde duran çerçeveli buton. */
+        onDark:
+          "border-white/70 bg-transparent text-white hover:border-white hover:bg-white hover:text-navy-800",
       },
       size: {
         default:
@@ -30,6 +33,20 @@ const buttonVariants = cva(
         "icon-sm":
           "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
         "icon-lg": "size-9",
+        /*
+         * Referans sitenin birincil eylem biçimi: yüksek, tam yuvarlak hap
+         * buton. Sitedeki kare köşe kuralının tek istisnası budur.
+         *
+         * Sabit `h-*` yerine `min-h-*` + `py-*` ve taban varyanttaki
+         * `whitespace-nowrap`ı ezen `whitespace-normal`: uzun Türkçe CTA
+         * etiketleri ("Ücretsiz Ön Görüşme Talep Edin" ~343px) telefonda
+         * kırpılmak yerine satır kırıyor. Yükseklik yine 44px dokunma
+         * hedefinin altına inmiyor.
+         */
+        pill:
+          "min-h-14 gap-2.5 rounded-full px-6 py-3 text-center text-base font-bold tracking-[0.01em] whitespace-normal sm:px-10 [&_svg:not([class*='size-'])]:size-5",
+        "pill-sm":
+          "min-h-11 gap-2 rounded-full px-6 py-2 text-center text-sm font-bold tracking-[0.01em] whitespace-normal",
       },
     },
     defaultVariants: {

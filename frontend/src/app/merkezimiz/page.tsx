@@ -3,13 +3,15 @@ import Image from "next/image";
 import { Armchair, Trees, Users2, Waves } from "lucide-react";
 import { PageHero } from "@/components/shared/page-hero";
 import { Container } from "@/components/shared/container";
-import { OutlineNumeral } from "@/components/shared/outline-numeral";
+import { IconFeature, type IconFeatureAccent } from "@/components/shared/icon-feature";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/shared/reveal";
 import { ContactCtaBand } from "@/components/sections/contact-cta-band";
 
+const accentColors: IconFeatureAccent[] = ["aqua", "peach", "grass"];
+
 export const metadata: Metadata = {
-  title: "Merkezimizde Yaşam",
+  title: "Merkezimiz",
   description:
     "İz Özel Eğitim Merkezi'nde çocuğunuzu bekleyen sakin, güvenli ve destekleyici ortamı keşfedin.",
 };
@@ -51,59 +53,61 @@ export default function CampusLifePage() {
   return (
     <>
       <PageHero
-        title="Merkezimizde Yaşam"
+        lead=""
+        accent="MERKEZİMİZ"
         description="Çocuğunuzu her ziyaretinde tanıdık, sakin ve güven veren bir ortam karşılar."
-        breadcrumbItems={[{ label: "Merkezimizde Yaşam" }]}
+        breadcrumbItems={[{ label: "Merkezimiz" }]}
         image="/images/hero-life.jpg"
       />
 
-      <section className="bg-white py-24 lg:py-32">
+      <section className="bg-white py-16 sm:py-20 lg:py-32">
         <Container>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
             {galleryImages.map((src, index) => (
               <div
                 key={src}
-                className={`relative aspect-[3/4] overflow-hidden rounded-2xl ${index % 2 === 1 ? "mt-10" : ""}`}
+                className={`relative aspect-[3/4] overflow-hidden rounded-xl ${index % 2 === 1 ? "sm:mt-10" : ""}`}
               >
-                <Image src={src} alt="" fill sizes="25vw" className="object-cover" />
+                <Image src={src} alt="" fill sizes="(min-width: 640px) 25vw, 45vw" className="object-cover" />
               </div>
             ))}
           </div>
         </Container>
       </section>
 
-      <section className="bg-paper py-24 lg:py-32">
+      <section className="bg-paper py-16 sm:py-20 lg:py-32">
         <Container>
           <SectionHeading eyebrow="Mekanlarımız" title="Her alan, bir amaca hizmet eder" />
-          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
             {facilities.map((facility, index) => (
               <Reveal key={facility.title} delaySeconds={index * 0.06}>
-                <div className="h-full rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-card)]">
-                  <span className="flex size-11 items-center justify-center rounded-xl bg-clay-50 text-clay-600">
-                    <facility.icon className="size-5" aria-hidden="true" />
-                  </span>
-                  <h3 className="mt-4 font-display text-base font-semibold text-ink">{facility.title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{facility.description}</p>
-                </div>
+                <IconFeature
+                  icon={facility.icon}
+                  title={facility.title}
+                  description={facility.description}
+                  accentColor={accentColors[index % accentColors.length]}
+                />
               </Reveal>
             ))}
           </div>
         </Container>
       </section>
 
-      <section className="bg-white py-24 lg:py-32">
-        <Container className="max-w-4xl">
+      <section className="bg-white py-16 sm:py-20 lg:py-32">
+        <Container>
           <SectionHeading eyebrow="Öngörülebilirlik" title="Örnek bir gün akışı" align="center" />
-          <ol className="mt-12 space-y-2">
+          <ol className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-x-10 sm:grid-cols-2">
             {dailyFlow.map((item, index) => (
               <Reveal key={item.time} delaySeconds={index * 0.05}>
-                <li className="flex items-center gap-6 border-b border-border py-5 last:border-none">
-                  <OutlineNumeral
-                    value={String(index + 1).padStart(2, "0")}
-                    className="w-16 shrink-0 text-3xl text-sage-300"
-                  />
+                <li className="flex items-center gap-4 border-b border-border py-5 last:border-none sm:gap-6">
+                  <span
+                    aria-hidden="true"
+                    className="flex w-16 shrink-0 items-center justify-center bg-navy-800 py-2 font-display text-lg font-extrabold text-white"
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                   <div>
-                    <p className="font-display text-sm font-semibold text-clay-600">{item.time}</p>
+                    <p className="font-display text-sm font-bold text-navy-800">{item.time}</p>
                     <p className="mt-0.5 text-sm text-ink-soft">{item.description}</p>
                   </div>
                 </li>
