@@ -1,0 +1,266 @@
+[
+  {
+    "id": 1,
+    "slug": "ozel-ogrenme-guclugu",
+    "name": "Özel Öğrenme Güçlüğü Destek Programı",
+    "shortDescription": "Okuma, yazma ve matematik becerilerinde bireyselleştirilmiş, kanıta dayalı destek eğitimi.",
+    "description": [
+      "Disleksi, disgrafi ve diskalkuli tanılı çocuklar için akademik becerileri güçlendiren bire bir eğitim oturumları sunuyoruz.",
+      "Her çocuk için RAM raporu doğrultusunda hazırlanan Bireyselleştirilmiş Eğitim Programı (BEP) haftalık olarak güncellenir."
+    ],
+    "icon": "puzzle",
+    "ageRangeLabel": "6-14 yaş",
+    "sessionFormatLabel": "Bire bir, haftada 2-3 seans",
+    "highlights": [
+      {
+        "title": "Okuma akıcılığı ve anlama çalışmaları",
+        "description": "Metinleri doğru hızda okuma ve okuduğunu anlamlandırma stratejileri."
+      },
+      {
+        "title": "Yazılı anlatım ve el yazısı desteği",
+        "description": "Yazı yazma süreçlerindeki zorlukları aşmak için özel teknikler."
+      },
+      {
+        "title": "Sayı algısı ve matematik akıl yürütme",
+        "description": "Soyut kavramları somutlaştırarak matematiksel düşünme becerisi geliştirme."
+      },
+      {
+        "title": "Veli bilgilendirme görüşmeleri",
+        "description": "Evde eğitim desteği ve okul uyum süreçleri hakkında düzenli bilgilendirme."
+      }
+    ],
+    "sortOrder": 1,
+    "publishedAt": "2026-01-15T09:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "slug": "dil-ve-konusma-terapisi",
+    "name": "Dil ve Konuşma Terapisi",
+    "shortDescription": "Konuşma sesi bozuklukları, dil gecikmesi ve akıcılık güçlüklerinde uzman terapist desteği.",
+    "description": [
+      "Alanında uzman dil ve konuşma terapistlerimiz, çocuğun iletişim becerilerini günlük yaşama taşıyacak şekilde çalışır.",
+      "Aile katılımlı seanslarla evde uygulanabilecek pekiştirme teknikleri aktarılır."
+    ],
+    "icon": "message-circle",
+    "ageRangeLabel": "2-12 yaş",
+    "sessionFormatLabel": "Bire bir, haftada 1-3 seans",
+    "highlights": [
+      {
+        "title": "Artikülasyon ve sesletim çalışmaları",
+        "description": "Hatalı üretilen seslerin doğru ve anlaşılır şekilde çıkarılmasını hedefleyen egzersizler."
+      },
+      {
+        "title": "Alıcı ve ifade edici dil gelişimi",
+        "description": "Dilbilgisi kuralları ve kelime dağarcığını genişleterek iletişimi güçlendirme."
+      },
+      {
+        "title": "Kekemelik ve akıcılık desteği",
+        "description": "Konuşma akıcılığını sağlamak için kanıta dayalı modern terapi yöntemleri."
+      },
+      {
+        "title": "Erken dil gecikmesi müdahalesi",
+        "description": "Konuşmaya geç başlayan çocuklar için erken dönem yoğun destek çalışmaları."
+      }
+    ],
+    "sortOrder": 2,
+    "publishedAt": "2026-01-15T09:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "slug": "otizm-spektrum-destek",
+    "name": "Otizm Spektrum Destek Programı",
+    "shortDescription": "Sosyal iletişim, davranış ve günlük yaşam becerilerini geliştiren yapılandırılmış eğitim.",
+    "description": [
+      "Uygulamalı Davranış Analizi (ABA) temelli bireysel programlarla sosyal etkileşim ve iletişim becerileri desteklenir.",
+      "Duyusal hassasiyetler gözetilerek sakin, öngörülebilir bir öğrenme ortamı sunulur."
+    ],
+    "icon": "puzzle",
+    "ageRangeLabel": "2-16 yaş",
+    "sessionFormatLabel": "Bire bir ve küçük grup, haftada 2-5 seans",
+    "highlights": [
+      {
+        "title": "Sosyal beceri ve oyun terapisi grupları",
+        "description": "Karşılıklı etkileşimi ve akran ilişkilerini geliştiren yapılandırılmış oyunlar."
+      },
+      {
+        "title": "Görsel destekli iletişim sistemleri",
+        "description": "Sözel olmayan çocuklar için alternatif ve destekleyici iletişim (AAC) kullanımı."
+      },
+      {
+        "title": "Davranış destek planları",
+        "description": "Problem davranışları azaltmaya yönelik fonksiyonel analiz ve müdahale yöntemleri."
+      },
+      {
+        "title": "Aile eğitimi ve danışmanlık",
+        "description": "Otizm tanılı çocukların ebeveynlerine yönelik günlük yaşam stratejileri eğitimi."
+      }
+    ],
+    "sortOrder": 3,
+    "publishedAt": "2026-01-10T09:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "slug": "zihinsel-yetersizlik-destek",
+    "name": "Zihinsel Yetersizlik Destek Eğitimi",
+    "shortDescription": "Bağımsız yaşam ve akademik beceriler için basamaklı, somut öğretim yöntemleri.",
+    "description": [
+      "Öz bakım, günlük yaşam ve temel akademik becerileri hedefleyen adım adım öğretim teknikleri uygulanır.",
+      "İlerleme, her dönem RAM raporu ve gözlem verileriyle birlikte veliyle paylaşılır."
+    ],
+    "icon": "brain",
+    "ageRangeLabel": "4-18 yaş",
+    "sessionFormatLabel": "Bire bir ve küçük grup, haftada 2-4 seans",
+    "highlights": [
+      {
+        "title": "Öz bakım ve günlük yaşam becerileri",
+        "description": "Kişisel bakım, beslenme ve giyinme gibi temel becerilerin kazandırılması."
+      },
+      {
+        "title": "Temel akademik kavram çalışmaları",
+        "description": "Renk, şekil, sayı ve temel okuma-yazma kavramlarının basamaklı öğretimi."
+      },
+      {
+        "title": "İş ve meslek öncesi beceri hazırlığı",
+        "description": "Büyük yaş grupları için toplumsal yaşama uyum ve iş odaklı beceri eğitimleri."
+      },
+      {
+        "title": "Bireyselleştirilmiş ölçme değerlendirme",
+        "description": "Her öğrencinin kendi hızında ilerleyişini takip eden sürekli performans kayıtları."
+      }
+    ],
+    "sortOrder": 4,
+    "publishedAt": "2026-01-10T09:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "slug": "fizyoterapi-duyu-butunleme",
+    "name": "Fizyoterapi ve Duyu Bütünleme",
+    "shortDescription": "Kaba-ince motor beceriler ve duyu işlemleme güçlükleri için özel donanımlı terapi salonu.",
+    "description": [
+      "Duyu bütünleme salonumuzda denge, koordinasyon ve duyusal düzenleme becerileri desteklenir.",
+      "Fizyoterapistlerimiz, ortopedik ve nörogelişimsel değerlendirme sonrası bireysel egzersiz planı hazırlar."
+    ],
+    "icon": "activity",
+    "ageRangeLabel": "1-12 yaş",
+    "sessionFormatLabel": "Bire bir, haftada 1-3 seans",
+    "highlights": [
+      {
+        "title": "Duyu bütünleme salonu uygulamaları",
+        "description": "Vestibüler, proprioseptif ve taktil duyuların işlenmesini sağlayan ekipmanlı çalışmalar."
+      },
+      {
+        "title": "Kaba ve ince motor beceri çalışmaları",
+        "description": "Yürüme, zıplama, kalem tutma, düğme ilikleme gibi motor koordinasyon egzersizleri."
+      },
+      {
+        "title": "Denge ve koordinasyon egzersizleri",
+        "description": "Postüral kontrolü artırarak bedensel farkındalığı geliştiren fizyoterapi yaklaşımları."
+      },
+      {
+        "title": "Duyusal düzenleme stratejileri",
+        "description": "Aşırı veya az duyarlı çocukların çevresel uyaranlara adaptasyonunu artırma teknikleri."
+      }
+    ],
+    "sortOrder": 5,
+    "publishedAt": "2026-01-08T09:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "slug": "erken-cocukluk-ozel-egitimi",
+    "name": "Erken Çocukluk Özel Eğitimi",
+    "shortDescription": "0-6 yaş kritik gelişim döneminde erken tanılama ve erken müdahale programı.",
+    "description": [
+      "Gelişimsel gecikme riski taşıyan bebek ve küçük çocuklar için oyun temelli erken müdahale sunulur.",
+      "Aile merkezli yaklaşımla, öğrenilen becerilerin evde sürdürülmesi hedeflenir."
+    ],
+    "icon": "sprout",
+    "ageRangeLabel": "0-6 yaş",
+    "sessionFormatLabel": "Bire bir, haftada 1-3 seans",
+    "highlights": [
+      {
+        "title": "Erken gelişimsel tarama ve izlem",
+        "description": "Risk altındaki çocukların gelişim alanlarının (bilişsel, motor, dil) düzenli değerlendirilmesi."
+      },
+      {
+        "title": "Oyun temelli öğrenme oturumları",
+        "description": "Çocuğun doğal bağlamında, ilgi alanları üzerinden beceri kazandırma yöntemleri."
+      },
+      {
+        "title": "Aile rehberliği ve ev programı",
+        "description": "Günlük rutinler içinde uygulanabilecek öğrenme fırsatları konusunda ailelere danışmanlık."
+      },
+      {
+        "title": "Okul öncesine geçiş hazırlığı",
+        "description": "Kreş ve anaokulu uyum süreçlerini kolaylaştıracak sosyal ve bilişsel hazırlıklar."
+      }
+    ],
+    "sortOrder": 6,
+    "publishedAt": "2026-01-08T09:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "slug": "dehb-destek-programi",
+    "name": "DEHB Destek Programı",
+    "shortDescription": "Dikkat, dürtü kontrolü ve öz düzenleme becerilerini güçlendiren yapılandırılmış çalışmalar.",
+    "description": [
+      "Dikkat eksikliği ve hiperaktivite bozukluğu tanılı çocuklar için dikkat süresi ve öz düzenleme çalışmaları yapılır.",
+      "Okul ile iş birliği içinde sınıf içi uyarlama önerileri geliştirilir."
+    ],
+    "icon": "hand-heart",
+    "ageRangeLabel": "5-14 yaş",
+    "sessionFormatLabel": "Bire bir, haftada 1-2 seans",
+    "highlights": [
+      {
+        "title": "Dikkat ve odaklanma çalışmaları",
+        "description": "Seçici, bölünmüş ve sürdürülebilir dikkati artırıcı bilişsel egzersizler."
+      },
+      {
+        "title": "Öz düzenleme ve dürtü kontrolü",
+        "description": "Tepki inhibisyonu (bekleme, durma) becerilerini destekleyen oyunlar ve stratejiler."
+      },
+      {
+        "title": "Organizasyon becerisi desteği",
+        "description": "Planlama, zaman yönetimi ve eşyalarını düzenleme konusunda pratik uygulamalar."
+      },
+      {
+        "title": "Okul iş birliği ve öneriler",
+        "description": "Öğretmenlerle iletişim kurularak sınıf içi akademik ve davranışsal uyarlamalar."
+      }
+    ],
+    "sortOrder": 7,
+    "publishedAt": "2026-01-05T09:00:00.000Z"
+  },
+  {
+    "id": 8,
+    "slug": "aile-danismanligi",
+    "name": "Aile Danışmanlığı",
+    "shortDescription": "Ailelerin süreci bilinçli ve güçlü bir şekilde yürütmesi için düzenli danışmanlık desteği.",
+    "description": [
+      "Uzman psikologlarımız, aile içi iletişim ve süreç yönetimi konusunda düzenli görüşmeler sunar.",
+      "Kardeş desteği ve ebeveyn eğitim atölyeleri de programın bir parçasıdır."
+    ],
+    "icon": "users",
+    "ageRangeLabel": "Tüm aile bireyleri",
+    "sessionFormatLabel": "Bire bir görüşme, aylık planlanır",
+    "highlights": [
+      {
+        "title": "Bireysel aile danışmanlığı görüşmeleri",
+        "description": "Özel gereksinimli bir çocuğa sahip olmanın getirdiği stres ve duygu durum yönetimi."
+      },
+      {
+        "title": "Ebeveyn eğitim atölyeleri",
+        "description": "Tutum hataları, kriz yönetimi ve evde davranış değiştirme teknikleri hakkında eğitimler."
+      },
+      {
+        "title": "Kardeş destek grupları",
+        "description": "Kardeşlerin yaşadığı duygu karmaşalarını ifade edebilecekleri güvenli etkileşim alanları."
+      },
+      {
+        "title": "Süreç ve hak bilgilendirmesi",
+        "description": "Yasal haklar, raporlama süreçleri ve eğitim seçenekleri konusunda yönlendirme."
+      }
+    ],
+    "sortOrder": 8,
+    "publishedAt": "2026-01-05T09:00:00.000Z"
+  }
+]

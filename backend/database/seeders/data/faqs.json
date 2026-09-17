@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "category": "kayit",
+    "question": "Kayıt için hangi belgeler gereklidir?",
+    "answer": "Güncel RAM (Rehberlik ve Araştırma Merkezi) raporu, kimlik fotokopisi ve varsa önceki eğitim değerlendirme raporları yeterlidir. Raporunuz yoksa RAM başvuru sürecinde de yol gösteriyoruz.",
+    "sortOrder": 1
+  },
+  {
+    "id": 2,
+    "category": "kayit",
+    "question": "Ön görüşme ne kadar sürer, nasıl planlanır?",
+    "answer": "İlk görüşme yaklaşık 45 dakika sürer; çocuğunuzu ve ihtiyaçlarını tanımak, uygun programı birlikte belirlemek amacıyla yapılır. Kayıt formunu ilettikten sonra bir hafta içinde sizinle iletişime geçilir.",
+    "sortOrder": 2
+  },
+  {
+    "id": 3,
+    "category": "mali-destek",
+    "question": "MEB destek eğitim ödeneğinden nasıl yararlanabilirim?",
+    "answer": "RAM raporunuzda destek eğitim önerisi bulunan çocuklar, Milli Eğitim Bakanlığı'nın karşıladığı aylık seans desteğinden yararlanabilir. Başvuru sürecinde idari ekibimiz size eşlik eder.",
+    "sortOrder": 3
+  },
+  {
+    "id": 4,
+    "category": "programlar",
+    "question": "Bir çocuk birden fazla programa aynı anda katılabilir mi?",
+    "answer": "Evet, RAM raporu ve klinik değerlendirmemiz doğrultusunda birden fazla destek programı (örneğin dil terapisi ve duyu bütünleme) eş zamanlı planlanabilir.",
+    "sortOrder": 4
+  },
+  {
+    "id": 5,
+    "category": "gunluk-yasam",
+    "question": "Veliler seansları izleyebilir mi?",
+    "answer": "Gözlem odalarımız üzerinden belirli seansları izleyebilir, terapistlerimizle düzenli ilerleme görüşmeleri yapabilirsiniz.",
+    "sortOrder": 5
+  }
+]

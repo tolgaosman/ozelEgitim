@@ -1,0 +1,16 @@
+{
+  "name": "ozel-egitim-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "start": "npm --prefix frontend run start",
+    "install:frontend": "npm --prefix frontend install",
+    "backend:serve": "php backend/artisan serve --port=8000",
+    "backend:migrate": "php backend/artisan migrate",
+    "backend:seed": "php backend/artisan migrate:fresh --seed",
+    "backend:queue": "php backend/artisan queue:work",
+    "backend:test": "php backend/artisan test"
+  }
+}

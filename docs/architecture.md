@@ -1,9 +1,8 @@
 # Mimari — Frontend ↔ Laravel Backend Sözleşmesi
 
-Bu belge, `frontend/` (Next.js) ile ileride yazılacak `backend/` (Laravel)
-arasındaki entegrasyon sözleşmesini tanımlar. Şu an yalnızca frontend
-geliştirilmiştir; backend devreye girdiğinde bu belgedeki sözleşme
-korunmalıdır ki sayfa bileşenlerinde hiçbir değişiklik gerekmesin.
+Bu belge, `frontend/` (Next.js) ile `backend/` (Laravel) arasındaki entegrasyon
+sözleşmesini tanımlar. Backend uygulanmıştır; bu sözleşme korunduğu sürece
+sayfa bileşenlerinde değişiklik gerekmez.
 
 ## 1. Veri akışı
 
@@ -13,6 +12,8 @@ Server Component (app/**/page.tsx)
         ▼
 lib/repositories/*.ts   — API_BASE_URL tanımlıysa Laravel'e istek atar,
         │                  tanımlı değilse src/mocks/* döner.
+        │                  İstek başarısız olursa da mock'a düşer
+        │                  (lib/repositories/with-fallback.ts).
         ▼
 lib/api/http.ts         — fetch + timeout + Zod doğrulama (fetchJson)
         │
@@ -21,40 +22,50 @@ Laravel API Resource yanıtı → { data: T } veya { data: T[], meta: {...} }
 ```
 
 Tüm veri çekme işlemleri **Server Component** içinde `fetch` ile yapılır
-(`next: { revalidate, tags }` ile ISR). Yalnızca istemci tarafı etkileşimli
-kısımlar (ör. gelecekte eklenebilecek duyuru filtresi) SWR kullanır.
+(`next: { revalidate, tags }` ile ISR).
+
+**Hata politikası:** `API_BASE_URL` tanımlıyken backend erişilemezse
+`resolveWithFallback` devreye girer, hatayı loglar ve yer tutucu veriye düşer —
+site ayakta kalır. Tek istisna **404**: bu bir kesinti değil, backend'in kesin
+cevabıdır ("kayıt yok"), bu yüzden `resolveRecordWithFallback` doğrudan `null`
+döner ve sayfa `not-found` durumuna geçer. Aksi halde panelden silinmiş bir
+program sitede yer tutucudan yaşamaya devam ederdi.
 
 ## 2. Ortam değişkenleri
 
 | Değişken | Konum | Açıklama |
 |---|---|---|
-| `API_BASE_URL` | Sunucu (frontend `.env.local`) | Laravel API'nin taban URL'i, örn. `https://api.izozelegitim.com`. Tanımlı değilse repository katmanı mock veriye düşer. |
+| `API_BASE_URL` | frontend `.env.local` | Laravel API'nin taban URL'i. Tanımlı değilse repository katmanı mock veriye düşer. `next.config.ts` uzak görsel host'unu da bundan türetir. |
+| `REVALIDATE_SECRET` | frontend `.env.local` | Laravel'den gelen ISR tazeleme isteklerini doğrular. |
+| `FRONTEND_REVALIDATE_URL` | backend `.env` | Next.js'in `/api/revalidate` uç noktası. |
+| `FRONTEND_REVALIDATE_SECRET` | backend `.env` | `REVALIDATE_SECRET` ile **birebir aynı** olmalıdır. |
+| `INQUIRY_RECIPIENT_EMAIL` | backend `.env` | Ön görüşme talebi bildirimlerinin gideceği adres. |
+| `ADMIN_SEED_EMAIL` / `ADMIN_SEED_PASSWORD` | backend `.env` | Seeder'ın açtığı ilk yönetici hesabı. |
 
-`NEXT_PUBLIC_` öneki kullanılmaz çünkü istemci tarafında doğrudan API'ye
-istek atılmaz — tüm veri Server Component'ler üzerinden akar. Bu, API
-taban URL'inin ve ileride eklenecek API anahtarlarının tarayıcıya hiç
-sızmaması anlamına gelir.
+`NEXT_PUBLIC_` öneki kullanılmaz çünkü istemci tarafında doğrudan API'ye istek
+atılmaz — tüm veri Server Component'ler üzerinden akar. Bu, API taban URL'inin
+ve API anahtarlarının tarayıcıya hiç sızmaması anlamına gelir.
 
-## 3. Kimlik doğrulama — Laravel Sanctum (SPA modeli)
+## 3. Kimlik doğrulama
 
-Bu proje şu an herhangi bir yetkilendirilmiş (authenticated) alan
-içermiyor — tüm içerik herkese açık. İleride bir veli/yönetici paneli
-eklenirse:
+Sitedeki tüm içerik herkese açıktır; içerik uç noktaları kimlik doğrulaması
+gerektirmez.
 
-1. Next.js, Laravel'in `/sanctum/csrf-cookie` uç noktasına önce bir istek
-   atarak `XSRF-TOKEN` çerezini alır.
-2. Giriş isteği bu tokenı `X-XSRF-TOKEN` header'ında Laravel'e geri
-   gönderir; Laravel oturum çerezini `HttpOnly`, `Secure`, `SameSite=Lax`
-   (veya SPA farklı alt domainde ise `SameSite=None` + `Secure`) olarak
-   döner.
-3. Next.js tarafında oturum tokenı **asla** `localStorage` veya
-   `sessionStorage`'da tutulmaz — yalnızca tarayıcının otomatik yönettiği
-   `HttpOnly` çerez kullanılır (Rule 03).
-4. Sonraki tüm mutasyon istekleri (`POST`/`PUT`/`DELETE`), Next.js Server
-   Action'ları içinden `credentials: "include"` ile Laravel'e proxy'lenir;
-   CSRF tokenı her istekte header'a eklenir.
+Yönetim paneli (`/admin`, Filament) **klasik oturum kimlik doğrulaması**
+kullanır, Sanctum değil — panel Laravel'in kendi alanında çalıştığı için bir
+SPA token akışına ihtiyaç yoktur. Erişim `User::canAccessPanel` ile `is_admin`
+bayrağına bağlıdır; bu alan kütle atama dışıdır ve kayıt uç noktası yoktur.
 
-## 4. Uç nokta sözleşmesi (özet)
+İleride bir **veli paneli** (Next.js tarafında oturum açılan bir alan)
+eklenirse Sanctum SPA kimlik doğrulaması kullanılır:
+
+1. Next.js, `/sanctum/csrf-cookie` uç noktasına istek atarak `XSRF-TOKEN` alır.
+2. Giriş isteği bu tokenı `X-XSRF-TOKEN` header'ında geri gönderir; Laravel
+   oturum çerezini `HttpOnly`, `Secure`, `SameSite=Lax` olarak döner.
+3. Oturum tokenı **asla** `localStorage`/`sessionStorage`'da tutulmaz.
+4. Tüm mutasyonlar Server Action'lardan `credentials: "include"` ile proxy'lenir.
+
+## 4. Uç nokta sözleşmesi
 
 | Uç Nokta | Yöntem | Zod Şeması | Frontend Repository |
 |---|---|---|---|
@@ -65,20 +76,65 @@ eklenirse:
 | `/api/staff-members` | GET | `StaffMemberSchema` (koleksiyon) | `fetchStaffCollection` |
 | `/api/faqs` | GET | `FaqSchema` (koleksiyon) | `fetchFaqCollection` |
 | `/api/testimonials` | GET | `TestimonialSchema` (koleksiyon) | `fetchTestimonialCollection` |
-| `/api/inquiries` | POST | `InquirySchema` | `app/kayit/actions.ts` (henüz backend'e bağlı değil) |
+| `/api/site-settings` | GET | `SiteSettingsSchema` (tekil) | `fetchSiteSettings` |
+| `/api/inquiries` | POST | `InquirySchema` | `src/app/iletisim/actions.ts` |
 
 Tüm şemalar `frontend/src/lib/schemas/*.ts` içinde tanımlıdır ve TypeScript
-tipleri bu şemalardan `z.infer` ile türetilir — backend yanıtı şemadan
-saparsa `ApiError` fırlatılır (bkz. `frontend/src/lib/api/http.ts`).
+tipleri bu şemalardan `z.infer` ile türetilir — backend yanıtı şemadan saparsa
+`ApiError` fırlatılır (bkz. `frontend/src/lib/api/http.ts`).
 
-## 5. Geçiş adımları (backend hazır olduğunda)
+### Sözleşmenin iki kritik kuralı
 
-1. `frontend/.env.local` içine `API_BASE_URL` eklenir.
-2. Repository fonksiyonları otomatik olarak Laravel'e istek atmaya başlar
-   — sayfa bileşenlerinde herhangi bir değişiklik gerekmez.
-3. `docs/backend-blueprint.md` içindeki şema ve `ProgramController`
-   örneği referans alınarak diğer controller'lar (`AnnouncementController`,
-   `StaffMemberController`, `FaqController`, `TestimonialController`,
-   `InquiryController`) yazılır.
-4. `app/kayit/actions.ts` içindeki `TODO(backend)` yorumu çözülerek form
-   verisi gerçek `/api/inquiries` uç noktasına iletilir.
+1. **Tarihler Zulu biçiminde döner** (`2026-01-15T09:00:00.000Z`). Zod v4'ün
+   `z.iso.datetime()` doğrulayıcısı sayısal UTC farkını (`+00:00`) reddeder,
+   bu yüzden Carbon'un `toIso8601String()` metodu kullanılamaz. Biçimlendirme
+   `App\Support\IsoDate::formatIsoZulu()` üzerinden yapılır.
+2. **İsteğe bağlı alanlar `null` değil, hiç gönderilmez.** Zod'da
+   `z.string().optional()` `null` kabul etmez. Görsel/fotoğraf alanları için
+   `App\Support\MediaUrl::resolveOrMissing()`, sosyal medya bağlantıları için
+   `array_filter` bu işi yapar.
+
+## 5. Önbellek tazeleme (ISR)
+
+Panelden içerik kaydedildiğinde:
+
+```
+Filament kaydeder
+   → FrontendCacheObserver (saved / deleted / restored)
+   → DispatchFrontendRevalidation (kuyruk)
+   → POST {FRONTEND_REVALIDATE_URL}  { "tags": [...] }
+      header: X-Revalidate-Secret
+   → frontend/src/app/api/revalidate/route.ts
+   → revalidateTag(tag, "max")
+```
+
+Etiket adları iki tarafta da elle tutulur ve birebir eşleşmek zorundadır:
+
+| Etiket | Laravel sabiti | Frontend |
+|---|---|---|
+| `programs`, `program:{slug}` | `Program::FRONTEND_*` | `repositories/programs.ts` |
+| `announcements`, `announcement:{slug}` | `Announcement::FRONTEND_*` | `repositories/announcements.ts` |
+| `staff-members` | `StaffMember::FRONTEND_*` | `repositories/staff.ts` |
+| `faqs` | `Faq::FRONTEND_*` | `repositories/faqs.ts` |
+| `testimonials` | `Testimonial::FRONTEND_*` | `repositories/testimonials.ts` |
+| `site-settings` | `SiteSetting::FRONTEND_*`, `SiteStat::FRONTEND_*` | `repositories/site-settings.ts` |
+
+Route handler, gizli anahtarı sabit zamanlı karşılaştırır ve etiketleri beyaz
+listeye göre süzer — tanınmayan bir etiketle önbelleğin tamamı boşaltılamaz.
+
+`revalidateTag`'in ikinci argümanı Next.js 16'da zorunludur. `"max"` seçildiği
+için tazelemeden sonraki **ilk** istek bayat içeriği alır ve arka planda
+yenilemeyi tetikler; sonraki istek güncel içeriği görür. Ziyaretçi hiç
+bekletilmez.
+
+## 6. Görseller
+
+Panelden yüklenen görseller Laravel'in `storage` diskinde tutulur ve
+`/storage/...` altından servis edilir. `next.config.ts`, `API_BASE_URL`'den
+türettiği host'u `images.remotePatterns` listesine ekler.
+
+Program ve kadro görselleri isteğe bağlıdır. Yüklenmemişse:
+
+- program → `frontend/src/lib/program-images.ts` içindeki slug→dosya eşlemesi,
+  o da yoksa genel yer tutucu;
+- kadro → ad-soyaddan üretilen baş harf avatarı.

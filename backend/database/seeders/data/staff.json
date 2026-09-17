@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "slug": "kurucu-mudur",
+    "fullName": "Kurucu Müdür",
+    "title": "Özel Eğitim Uzmanı, Kurucu Müdür",
+    "specialties": [
+      "Özel Eğitim Yönetimi",
+      "Bireyselleştirilmiş Eğitim Programı"
+    ],
+    "bio": "18 yıllık özel eğitim deneyimiyle merkezin eğitim felsefesini ve kalite standartlarını yönetir.",
+    "sortOrder": 1
+  },
+  {
+    "id": 2,
+    "slug": "bas-dil-konusma-terapisti",
+    "fullName": "Baş Dil ve Konuşma Terapisti",
+    "title": "Dil ve Konuşma Terapisti, Klinik Koordinatör",
+    "specialties": [
+      "Erken Dil Gecikmesi",
+      "Akıcılık Bozuklukları"
+    ],
+    "bio": "Dil ve konuşma terapisi ekibinin klinik süreçlerini koordine eder, aile eğitimlerini yürütür.",
+    "sortOrder": 2
+  },
+  {
+    "id": 3,
+    "slug": "abas-uzmani",
+    "fullName": "ABA Uzmanı",
+    "title": "Uygulamalı Davranış Analisti",
+    "specialties": [
+      "Otizm Spektrum Bozukluğu",
+      "Davranış Destek Planlaması"
+    ],
+    "bio": "Bireysel davranış destek planlarını hazırlar ve uygulayıcı ekibi süpervize eder.",
+    "sortOrder": 3
+  },
+  {
+    "id": 4,
+    "slug": "cocuk-fizyoterapisti",
+    "fullName": "Çocuk Fizyoterapisti",
+    "title": "Fizyoterapist, Duyu Bütünleme Uzmanı",
+    "specialties": [
+      "Duyu Bütünleme Terapisi",
+      "Nörogelişimsel Fizyoterapi"
+    ],
+    "bio": "Duyu bütünleme salonunda bireysel motor gelişim programlarını yürütür.",
+    "sortOrder": 4
+  }
+]

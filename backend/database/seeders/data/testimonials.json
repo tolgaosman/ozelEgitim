@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "parentName": "Bir Veli",
+    "relationLabel": "8 yaşındaki oğlunun annesi",
+    "quote": "Oğlum bir yıl önce cümle kuramıyordu, şimdi sınıfında arkadaşlarıyla rahatça sohbet edebiliyor. Terapistlerinin sabrı ve şefkati bizim için çok değerliydi.",
+    "programSlug": "dil-ve-konusma-terapisi"
+  },
+  {
+    "id": 2,
+    "parentName": "Bir Veli",
+    "relationLabel": "6 yaşındaki kızının babası",
+    "quote": "Duyu bütünleme salonundaki çalışmalar sayesinde kızımızın günlük rutinlere uyumu inanılmaz derecede kolaylaştı.",
+    "programSlug": "fizyoterapi-duyu-butunleme"
+  },
+  {
+    "id": 3,
+    "parentName": "Bir Veli",
+    "relationLabel": "10 yaşındaki oğlunun annesi",
+    "quote": "Okuma güçlüğü yaşayan oğlum artık kendi kitabını seçip okuyabiliyor. Bu bizim için küçük değil, büyük bir zafer.",
+    "programSlug": "ozel-ogrenme-guclugu"
+  }
+]
