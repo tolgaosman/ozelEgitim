@@ -55,11 +55,27 @@ export async function resolveRecordWithFallback<RecordShape>(
   }
 }
 
+/**
+ * Geliştirmede backend'in hiç çalışmıyor olması (bağlantı reddi, zaman aşımı)
+ * beklenen bir durumdur; `console.error` her düşüşü Next.js geliştirme
+ * katmanında ayrı bir "issue" olarak saydığı için bu durum uyarı düzeyinde
+ * raporlanır. Backend'in verdiği hatalı yanıtlar (5xx, şema sapması) her
+ * ortamda gerçek bir sorundur ve hata olarak kalır.
+ */
 function reportFallback(sourceLabel: string, failureReason: unknown): void {
   const failureDetail =
     failureReason instanceof ApiError
       ? `${failureReason.message}${failureReason.status ? ` (HTTP ${failureReason.status})` : ""}`
       : String(failureReason);
 
-  console.error(`[api] ${sourceLabel} çekilemedi, yer tutucu veriye düşülüyor: ${failureDetail}`);
+  const message = `[api] ${sourceLabel} çekilemedi, yer tutucu veriye düşülüyor: ${failureDetail}`;
+  const isUnreachableInDevelopment =
+    process.env.NODE_ENV === "development" && !(failureReason instanceof ApiError);
+
+  if (isUnreachableInDevelopment) {
+    console.warn(message);
+    return;
+  }
+
+  console.error(message);
 }

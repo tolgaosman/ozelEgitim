@@ -35,12 +35,6 @@ export const primaryNavigation: NavItem[] = [
     href: "/programlar",
     children: [
       {
-        label: "Tüm Programları Görüntüle",
-        href: "/programlar",
-        description: "Sunduğumuz tüm destek eğitim programlarına tek sayfadan göz atın.",
-        icon: LayoutGrid,
-      },
-      {
         label: "Özel Öğrenme Güçlüğü Desteği",
         href: "/programlar/ozel-ogrenme-guclugu",
         description: "Okuma, yazma ve matematik becerilerini güçlendiren bireysel destek.",
