@@ -6,8 +6,8 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Aşama 2: PHP 8.3 + Nginx sunucusu
-FROM serversideup/php:8.3-fpm-nginx-alpine
+# Aşama 2: PHP 8.4 + Nginx sunucusu (local PHP ile aynı versiyon)
+FROM serversideup/php:8.4-fpm-nginx
 
 # Build-arg olarak Coolify'dan gelen değişkenleri al
 ARG APP_KEY
