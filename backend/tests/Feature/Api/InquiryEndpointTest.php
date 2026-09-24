@@ -121,6 +121,22 @@ final class InquiryEndpointTest extends TestCase
         Mail::assertNothingQueued();
     }
 
+    /**
+     * `email` sütunu nullable'dır (bkz. migration `2026_09_23_...`); bu
+     * regresyon testi olmadan `InquiryReceivedMail::envelope()`teki
+     * `replyTo: [$this->inquiry->email]` bir `null` adresle oluşturulur ve
+     * kuyruk işçisi mesajı işlerken (`ensureEnvelopeIsHydrated`) çöker —
+     * talep veritabanına yazılmış olsa bile bildirim e-postası hiç gitmezdi.
+     */
+    public function test_the_notification_mail_can_be_rendered_when_no_email_was_provided(): void
+    {
+        $inquiry = Inquiry::factory()->create(['email' => null]);
+
+        $renderedHtml = (new InquiryReceivedMail($inquiry))->render();
+
+        $this->assertStringContainsString($inquiry->parent_full_name, $renderedHtml);
+    }
+
     public function test_the_endpoint_is_rate_limited_to_six_requests_per_minute(): void
     {
         Mail::fake();

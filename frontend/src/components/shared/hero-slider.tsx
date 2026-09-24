@@ -78,7 +78,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
             src={slides[activeIndex].src}
             alt={slides[activeIndex].alt ?? ""}
             fill
-            priority={activeIndex === 0}
+            preload={activeIndex === 0}
             sizes="100vw"
             className="object-cover"
           />

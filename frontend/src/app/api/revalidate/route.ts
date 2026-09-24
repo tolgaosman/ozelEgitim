@@ -30,6 +30,7 @@ const ALLOWED_COLLECTION_TAGS = new Set([
   "faqs",
   "testimonials",
   "site-settings",
+  "page-content",
 ]);
 
 const ALLOWED_RECORD_TAG_PREFIXES = new Set(["program", "announcement"]);

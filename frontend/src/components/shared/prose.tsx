@@ -15,8 +15,8 @@ type ProseProps = {
 export function Prose({ paragraphs, className }: ProseProps) {
   return (
     <div className={cn("prose-copy space-y-4 text-base leading-relaxed text-ink-soft", className)}>
-      {paragraphs.map((paragraph) => (
-        <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+      {paragraphs.map((paragraph, index) => (
+        <p key={index}>{paragraph}</p>
       ))}
     </div>
   );

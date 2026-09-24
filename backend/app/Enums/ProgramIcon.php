@@ -21,7 +21,7 @@ enum ProgramIcon: string
     case HandHeart = 'hand-heart';
     case Users = 'users';
 
-    /** Filament formlarındaki açılır listede gösterilecek Türkçe etiket. */
+    /** Yönetim panelindeki açılır listede gösterilecek Türkçe etiket. */
     public function label(): string
     {
         return match ($this) {

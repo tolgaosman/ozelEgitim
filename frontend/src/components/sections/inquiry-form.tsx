@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { submitInquiryAction } from "@/app/iletisim/actions";
+import { submitInquiryAction } from "@/app/(site)/iletisim/actions";
 import type { InquiryFormState } from "@/lib/schemas/inquiry";
 import {
   Select,
@@ -152,7 +152,6 @@ export function InquiryForm({ programOptions: availablePrograms }: { programOpti
             id="email"
             name="email"
             type="email"
-            required
             className="h-11"
             autoComplete="email"
             aria-invalid={Boolean(formState.fieldErrors?.email)}
@@ -169,7 +168,7 @@ export function InquiryForm({ programOptions: availablePrograms }: { programOpti
 
       <div className="space-y-1.5">
         <Label htmlFor="programOfInterest">İlgilendiğiniz Program</Label>
-        <Select name="programOfInterest" defaultValue={defaultProgram}>
+        <Select name="programOfInterest" defaultValue={defaultProgram} items={programOptions}>
           <SelectTrigger
             id="programOfInterest"
             className={cn(

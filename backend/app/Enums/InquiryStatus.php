@@ -23,7 +23,7 @@ enum InquiryStatus: string
         };
     }
 
-    /** Filament tablosundaki durum rozetinin rengi. */
+    /** Yönetim panelindeki durum rozetinin rengi. */
     public function color(): string
     {
         return match ($this) {

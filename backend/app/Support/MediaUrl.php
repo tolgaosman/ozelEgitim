@@ -21,6 +21,26 @@ final class MediaUrl
             return new MissingValue;
         }
 
+        if (str_starts_with($storagePath, 'http://') || str_starts_with($storagePath, 'https://')) {
+            return $storagePath;
+        }
+
         return Storage::disk('public')->url($storagePath);
+    }
+
+    /**
+     * Sayfa içeriği bloklarındaki görsel alanları için: `PageContentBlueprint`
+     * varsayılanları site kökünden başlayan yollardır (`/images/...`, Next.js
+     * `public/` dizininden servis edilir) ve olduğu gibi bırakılır. Panelden
+     * yüklenen bir görsel ise `page-content/xxxx.jpg` gibi göreli bir storage
+     * yoludur ve mutlak bir URL'e çevrilmesi gerekir.
+     */
+    public static function resolvePageContentValue(string $value): string
+    {
+        if ($value === '' || str_starts_with($value, 'http://') || str_starts_with($value, 'https://') || str_starts_with($value, '/')) {
+            return $value;
+        }
+
+        return Storage::disk('public')->url($value);
     }
 }

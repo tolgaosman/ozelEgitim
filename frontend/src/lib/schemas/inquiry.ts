@@ -13,7 +13,7 @@ export const InquirySchema = z.object({
     .string()
     .trim()
     .regex(/^[0-9+()\s-]{10,20}$/u, "Geçerli bir telefon numarası girin."),
-  email: z.email("Geçerli bir e-posta adresi girin.").max(160),
+  email: z.string().trim().email("Geçerli bir e-posta adresi girin.").max(160).optional().or(z.literal("")),
   programOfInterest: z.string().trim().max(120).optional().or(z.literal("")),
   message: z.string().trim().max(1000).optional().or(z.literal("")),
   honeypot: z.string().max(0, "Doğrulama başarısız oldu.").optional().or(z.literal("")),

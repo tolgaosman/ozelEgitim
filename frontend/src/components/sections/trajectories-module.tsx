@@ -1,4 +1,3 @@
-import { Quote } from "lucide-react";
 import { Container } from "@/components/shared/container";
 import { CountUp } from "@/components/shared/count-up";
 import type { SiteStat } from "@/lib/schemas/site-settings";
@@ -6,7 +5,7 @@ import { Reveal } from "@/components/shared/reveal";
 import { Shape, ShapeField } from "@/components/shared/shape-field";
 import { SplitTitle } from "@/components/shared/split-title";
 import { cn } from "@/lib/utils";
-import type { Testimonial } from "@/lib/schemas/testimonial";
+import { fetchPageContentBlock } from "@/lib/repositories/page-content";
 
 const STAT_CIRCLE_CLASSES = ["bg-aqua-500/15", "bg-peach-400/15", "bg-grass-500/15", "bg-white/10"] as const;
 
@@ -16,17 +15,16 @@ const STAT_CIRCLE_CLASSES = ["bg-aqua-500/15", "bg-peach-400/15", "bg-grass-500/
 /**
  * "Hayat Değiştiren Yolculuklar" bölümü — referans sitenin
  * `module--trajectories` karşılığı. Tam genişlik koyu lacivert bant;
- * istatistik şeridi ve veli görüşleri burada birleşiyor (Faz 2'deki ayrı
- * `OutcomeStats` + `ParentTestimonials` bölümlerinin yerini alır).
+ * istatistik şeridini gösterir. Veli görüşleri bilinçli olarak kaldırıldı;
+ * `fetchTestimonialCollection` ve `/admin/veli-yorumlari` paneli hâlâ
+ * duruyor, ileride başka bir bölümde kullanılabilir.
  */
-export function TrajectoriesModule({
-  testimonials,
+export async function TrajectoriesModule({
   outcomeStats,
 }: {
-  testimonials: Testimonial[];
   outcomeStats: SiteStat[];
 }) {
-  const [featuredTestimonial, ...remainingTestimonials] = testimonials;
+  const content = await fetchPageContentBlock("home.trajectories");
 
   return (
     <section className="relative overflow-hidden bg-navy-800 py-16 sm:py-20 lg:py-32" data-on-dark>
@@ -37,7 +35,7 @@ export function TrajectoriesModule({
       </ShapeField>
 
       <Container className="relative">
-        <SplitTitle lead="Hayat Değiştiren" accent="Yolculuklar" onDark align="center" className="mx-auto" />
+        <SplitTitle lead={content.leadText} accent={content.accentText} onDark align="center" className="mx-auto" />
 
         <dl className="mt-16 flex flex-wrap justify-center gap-x-10 gap-y-12 sm:gap-x-16">
           {outcomeStats.map((stat, index) => (
@@ -59,39 +57,6 @@ export function TrajectoriesModule({
             </Reveal>
           ))}
         </dl>
-
-        {featuredTestimonial ? (
-          <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-            <Reveal delaySeconds={0.08}>
-              <Quote className="size-10 text-aqua-500" aria-hidden="true" />
-              <blockquote className="mt-4 font-display text-display-md font-semibold text-white text-balance">
-                “{featuredTestimonial.quote}”
-              </blockquote>
-              <p className="mt-5 text-sm font-medium text-white">
-                {featuredTestimonial.parentName}
-                <span className="text-white/70"> — {featuredTestimonial.relationLabel}</span>
-              </p>
-            </Reveal>
-
-            {remainingTestimonials.length > 0 ? (
-              <div className="grid grid-cols-1 gap-5">
-                {remainingTestimonials.map((testimonial, index) => (
-                  <Reveal key={testimonial.id} delaySeconds={0.08 + index * 0.08}>
-                    <div className="border-l-2 border-aqua-500/40 pl-5">
-                      <blockquote className="text-sm leading-relaxed text-white/85">
-                        “{testimonial.quote}”
-                      </blockquote>
-                      <p className="mt-3 text-sm font-medium text-white">
-                        {testimonial.parentName}
-                        <span className="text-white/60"> — {testimonial.relationLabel}</span>
-                      </p>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-            ) : null}
-          </div>
-        ) : null}
       </Container>
     </section>
   );

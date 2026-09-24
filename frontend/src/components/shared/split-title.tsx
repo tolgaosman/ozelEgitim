@@ -50,8 +50,9 @@ export function SplitTitle({
        * `className` içinde olduğu için bu sorundan etkilenmiyor.
        */}
       <span
+        lang="tr"
         className={`text-display-xl ${cn(
-          "block leading-[0.95] font-extrabold tracking-[-0.02em] break-words uppercase text-balance",
+          "block leading-[0.95] font-extrabold tracking-[-0.02em] break-words uppercase text-balance hyphens-auto",
           onDark ? "text-aqua-500" : "text-navy-800",
         )}`}
       >

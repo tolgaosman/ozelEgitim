@@ -9,8 +9,15 @@ import { AccessibilityMenu } from "@/components/layout/accessibility-menu";
 import { FullScreenNav } from "@/components/layout/full-screen-nav";
 import { Container } from "@/components/shared/container";
 import { SITE_NAME } from "@/lib/seo/constants";
+import type { NavItem } from "@/lib/navigation";
 
-export function AccessibleNavbar() {
+type AccessibleNavbarProps = {
+  phoneDisplay: string;
+  phoneTel: string;
+  primaryNavigation: NavItem[];
+};
+
+export function AccessibleNavbar({ phoneDisplay, phoneTel, primaryNavigation }: AccessibleNavbarProps) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -40,7 +47,7 @@ export function AccessibleNavbar() {
         )}
       >
         <div className="flex min-w-0 items-center">
-          <FullScreenNav />
+          <FullScreenNav phoneDisplay={phoneDisplay} phoneTel={phoneTel} primaryNavigation={primaryNavigation} />
         </div>
 
         <Link href="/" className="flex min-w-0 items-center justify-self-center">
@@ -49,7 +56,7 @@ export function AccessibleNavbar() {
             alt={SITE_NAME}
             width={426}
             height={222}
-            priority
+            preload
             className={cn(
               "w-auto transition-all duration-300 ease-[var(--ease-spring)]",
               scrolled ? "h-11 sm:h-14" : "h-14 sm:h-20"

@@ -27,6 +27,7 @@ final class StaffMemberResource extends JsonResource
             'fullName' => $this->full_name,
             'title' => $this->title,
             'specialties' => $this->specialties,
+            'education' => $this->education ?? [],
             'bio' => $this->bio,
             'photo' => MediaUrl::resolveOrMissing($this->photo_path),
             'sortOrder' => $this->sort_order,

@@ -122,6 +122,7 @@
   --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
 
   --animate-fade-up: fade-up 0.5s var(--ease-spring);
+  --animate-shake: shake 0.4s ease-in-out;
 
   /*
    * Display ölçeği — referans sitenin strapline ölçüleriyle eşleşir:
@@ -155,6 +156,21 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    20%,
+    60% {
+      transform: translateX(-4px);
+    }
+    40%,
+    80% {
+      transform: translateX(4px);
     }
   }
 }
@@ -493,5 +509,15 @@ html[data-text-scale="xl"] {
   .group:hover .hover-bar::after,
   .group:focus-visible .hover-bar::after {
     width: 100%;
+  }
+
+  /* Kaydırılabilir kalır ama kaydırma çubuğu görünmez (ör. admin sol menü). */
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }

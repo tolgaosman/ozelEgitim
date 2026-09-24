@@ -49,6 +49,30 @@ return [
     'frontend' => [
         'revalidate_url' => env('FRONTEND_REVALIDATE_URL'),
         'revalidate_secret' => env('FRONTEND_REVALIDATE_SECRET'),
+        // Yönetim paneli Next.js'te barındığı için e-posta bağlantıları gibi
+        // panele işaret eden mutlak URL'ler bu adresten kurulur.
+        'url' => env('FRONTEND_URL', 'http://localhost:3000'),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Güvenilen Vekiller (Trusted Proxies)
+    |--------------------------------------------------------------------------
+    |
+    | Next.js sunucusu API'yi kendi arka ucundan çağırır ve gerçek ziyaretçi
+    | IP'sini `X-Forwarded-For` başlığıyla iletir (bkz. bootstrap/app.php).
+    | Bu başlık YALNIZCA burada listelenen adreslerden gelen bağlantılar için
+    | güvenilir sayılır — aksi halde herkese açık `/api/inquiries` veya
+    | `/admin/login`'e DOĞRUDAN istek atan biri bu başlığı taklit ederek hız
+    | sınırlamasını (`throttle:*`) tamamen atlatabilirdi. Üretimde Next.js
+    | sunucusu farklı bir sunucuda çalışıyorsa bu değer onun gerçek adresine
+    | (veya CIDR blokuna) göre ayarlanmalıdır.
+    |
+    */
+
+    'trusted_proxies' => array_filter(array_map(
+        'trim',
+        explode(',', (string) env('TRUSTED_PROXIES', '127.0.0.1,::1')),
+    )),
 
 ];

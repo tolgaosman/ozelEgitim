@@ -7,8 +7,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Filament paneline erişim yalnızca bu bayrağa sahip kullanıcılara açıktır
- * (bkz. User::canAccessPanel). Varsayılan `false` — yeni bir kullanıcı
+ * Yönetim paneli API'sine erişim yalnızca bu bayrağa sahip kullanıcılara açıktır
+ * (bkz. AdminAuthController::login). Varsayılan `false` — yeni bir kullanıcı
  * kaydı kazara yönetici yetkisi kazanamaz.
  */
 return new class extends Migration

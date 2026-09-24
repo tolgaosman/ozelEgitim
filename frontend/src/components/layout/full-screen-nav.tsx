@@ -4,10 +4,41 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
-import { ArrowUpRight, Menu, PhoneCall, X } from "lucide-react";
+import {
+  Activity,
+  ArrowUpRight,
+  Building2,
+  HelpCircle,
+  Info,
+  Menu,
+  MessageCircle,
+  PhoneCall,
+  Puzzle,
+  Users,
+  X,
+  type LucideIcon,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
-import { primaryNavigation } from "@/lib/navigation";
-import { SITE_PHONE_DISPLAY, SITE_PHONE_TEL } from "@/lib/seo/constants";
+import type { NavIconKey, NavItem } from "@/lib/navigation";
+
+/** `NavIconKey` sunucudan serileştirilebilir bir anahtar olarak gelir; gerçek ikon bileşenine burada, istemci tarafında dönüştürülür. */
+const NAV_ICONS: Record<NavIconKey, LucideIcon> = {
+  info: Info,
+  messageCircle: MessageCircle,
+  puzzle: Puzzle,
+  activity: Activity,
+  users: Users,
+  building: Building2,
+  helpCircle: HelpCircle,
+};
+
+type FullScreenNavProps = {
+  /** Site ayarlarından gelir (bkz. `(site)/layout.tsx`) — panelden değiştirilebilir. */
+  phoneDisplay: string;
+  phoneTel: string;
+  /** `(site)/layout.tsx`te yayındaki programlarla kurulur (bkz. `buildPrimaryNavigation`). */
+  primaryNavigation: NavItem[];
+};
 
 /**
  * Sitenin tek gezinme yüzeyi — hem masaüstü hem mobilde aynı tam ekran
@@ -15,7 +46,7 @@ import { SITE_PHONE_DISPLAY, SITE_PHONE_TEL } from "@/lib/seo/constants";
  * kapanma, arka plan kaydırma kilidi ve portallanmış render `@base-ui/react`
  * Dialog primitifinden gelir; burada yalnız görünüm ve içerik eklenir.
  */
-export function FullScreenNav() {
+export function FullScreenNav({ phoneDisplay, phoneTel, primaryNavigation }: FullScreenNavProps) {
   const pathname = usePathname();
 
   return (
@@ -98,7 +129,9 @@ export function FullScreenNav() {
 
                     {item.children ? (
                       <ul className="grid grid-cols-1 gap-1 pb-3 sm:grid-cols-2">
-                        {item.children.map((childLink) => (
+                        {item.children.map((childLink) => {
+                          const ChildIcon = NAV_ICONS[childLink.icon];
+                          return (
                           <li key={childLink.href}>
                             <DialogPrimitive.Close
                               nativeButton={false}
@@ -110,7 +143,7 @@ export function FullScreenNav() {
                               }
                             >
                               <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-aqua-500 transition-colors group-hover/child:bg-aqua-500 group-hover/child:text-navy-900">
-                                <childLink.icon className="size-3.5" aria-hidden="true" />
+                                <ChildIcon className="size-3.5" aria-hidden="true" />
                               </span>
                               <span className="min-w-0">
                                 <span className="flex items-center gap-1.5 text-sm font-bold text-white">
@@ -126,7 +159,8 @@ export function FullScreenNav() {
                               </span>
                             </DialogPrimitive.Close>
                           </li>
-                        ))}
+                          );
+                        })}
                       </ul>
                     ) : null}
                   </li>
@@ -136,9 +170,9 @@ export function FullScreenNav() {
           </nav>
 
           <div className="flex flex-col gap-2 border-t border-white/15 px-[var(--gutter)] py-3 sm:flex-row sm:items-center sm:justify-between">
-            <a href={`tel:${SITE_PHONE_TEL}`} className="hover-bar inline-flex min-h-11 items-center gap-2 text-sm font-semibold">
+            <a href={`tel:${phoneTel}`} className="hover-bar inline-flex min-h-11 items-center gap-2 text-sm font-semibold">
               <PhoneCall className="size-4" aria-hidden="true" />
-              {SITE_PHONE_DISPLAY}
+              {phoneDisplay}
             </a>
             <DialogPrimitive.Close
               nativeButton={false}

@@ -18,6 +18,7 @@ final class StaffMemberSeeder extends Seeder
                     'full_name' => $staffRecord['fullName'],
                     'title' => $staffRecord['title'],
                     'specialties' => $staffRecord['specialties'],
+                    'education' => $staffRecord['education'],
                     'bio' => $staffRecord['bio'],
                     'photo_path' => null,
                     'sort_order' => $staffRecord['sortOrder'],

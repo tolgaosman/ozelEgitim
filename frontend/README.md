@@ -1,8 +1,9 @@
 # İz Özel Eğitim Merkezi — Frontend
 
 Next.js (App Router) + TypeScript + Tailwind CSS v4 + shadcn/ui ile
-geliştirilmiş kurumsal site. Laravel backend'i henüz devrede değil; tüm
-içerik `src/mocks/` altındaki tipli yer tutucu veriden gelir (bkz.
+geliştirilmiş kurumsal site. İçerik ve yönetim paneli Laravel backend'inden
+gelir; `src/mocks/` altındaki tipli yer tutucu veri yalnızca `API_BASE_URL`
+tanımsızken veya backend geçici olarak erişilemezken devreye girer (bkz.
 `../docs/architecture.md`).
 
 ## Geliştirme
@@ -27,6 +28,15 @@ npm run dev
 `.env.local` içine `API_BASE_URL` tanımlandığında `src/lib/repositories/*`
 otomatik olarak Laravel API'sine geçer; tanımsızken mock veri kullanılır.
 Ayrıntılar için `../docs/architecture.md` ve `../docs/backend-blueprint.md`.
+
+## Yönetim paneli
+
+`/admin` (giriş: `/admin/giris`) sitenin kendi Next.js ağacında yaşayan
+yönetim panelidir — `backend/app/Http/Controllers/Api/Admin/*` uç
+noktalarına Sanctum token'ıyla, sunucudan sunucuya bağlanır; token tarayıcıya
+hiç ulaşmaz, `HttpOnly` bir çerezde saklanır (bkz. `src/lib/admin/client.ts`).
+Girişte yalnızca şifre alanı vardır — hesap her zaman Ayarlar'da gösterilen
+işletme e-postasına bağlıdır.
 
 ## Erişilebilirlik notları
 

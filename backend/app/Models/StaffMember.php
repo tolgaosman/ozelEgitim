@@ -26,6 +26,7 @@ final class StaffMember extends Model implements ProvidesFrontendCacheTags
         'full_name',
         'title',
         'specialties',
+        'education',
         'bio',
         'photo_path',
         'sort_order',
@@ -35,6 +36,7 @@ final class StaffMember extends Model implements ProvidesFrontendCacheTags
     {
         return [
             'specialties' => 'array',
+            'education' => 'array',
             'sort_order' => 'integer',
         ];
     }

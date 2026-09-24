@@ -23,7 +23,7 @@ type PageHeroProps = {
 export function PageHero({ lead, accent, description, breadcrumbItems, image }: PageHeroProps) {
   return (
     <section className="relative overflow-hidden bg-navy-800" data-scrim data-on-dark>
-      <Image src={image} alt="" fill priority sizes="100vw" className="object-cover" />
+      <Image src={image} alt="" fill preload sizes="100vw" className="object-cover" />
       <div className="scrim-full absolute inset-0" aria-hidden="true" />
       <ShapeField>
         <Shape color="aqua" form="circle" scale={0.65} className="-top-16 right-[8%]" />

@@ -5,8 +5,9 @@
 
 1. **Herkese açık JSON API** (`/api/*`) — site içeriğini frontend'in Zod
    şemalarıyla birebir eşleşen bir sözleşmeyle servis eder.
-2. **Yönetim paneli** (`/admin`, Filament 5) — merkez personelinin içeriği
-   kendi başına güncelleyebilmesi için.
+2. **Yönetim paneli API'si** (`/api/admin/*`, Sanctum token) — sitenin kendi
+   `/admin` adresinde çalışan Next.js panelinin verisini besler. Panel
+   arayüzünün kendisi burada değil, `frontend/src/app/admin/`'dedir.
 
 Sözleşmenin tanımı: `docs/architecture.md` ve `docs/backend-blueprint.md`.
 
@@ -27,7 +28,9 @@ cp .env.example .env
 php artisan key:generate
 
 # .env içinde doldurulması gerekenler:
-#   ADMIN_SEED_EMAIL, ADMIN_SEED_PASSWORD   — ilk yönetici hesabı
+#   ADMIN_SEED_NAME, ADMIN_SEED_PASSWORD    — ilk yönetici hesabının adı/şifresi
+#                                              (e-posta SiteSettingSeeder'daki
+#                                              işletme e-postasıyla aynıdır)
 #   INQUIRY_RECIPIENT_EMAIL                 — talep bildirimlerinin gideceği adres
 #   FRONTEND_REVALIDATE_URL / _SECRET       — ISR tazeleme (aşağıya bakın)
 
@@ -36,7 +39,8 @@ php artisan storage:link      # yüklenen görsellerin servis edilmesi için
 php artisan serve --port=8000
 ```
 
-Panel: <http://127.0.0.1:8000/admin> — `.env`'deki yönetici bilgileriyle giriş.
+Panel: `frontend`'i de çalıştırdıktan sonra <http://127.0.0.1:3000/admin> —
+girişte yalnızca şifre alanı vardır (`ADMIN_SEED_PASSWORD`).
 
 Kuyruk işçisi ayrı bir terminalde çalışmalıdır; talep bildirim e-postaları ve
 ISR tazeleme istekleri kuyruk üzerinden gider:
@@ -93,22 +97,24 @@ zaman `...Z` (Zulu) olarak dönmelidir. Carbon'un varsayılan
 - `php artisan config:cache route:cache view:cache`
 - Kuyruk işçisi için bir süpervizör (Supervisor / systemd).
 - Yükleme boyutu sınırı: web sunucusunda `post_max_size` ve
-  `upload_max_filesize` en fazla birkaç MB olmalıdır (panel zaten dosya başına
-  2 MB sınırı uygular).
+  `upload_max_filesize` en az 5 MB olmalıdır — `StoreMediaRequest` dosya başına
+  4 MB sınırı uygular, ama PHP'nin bu sınırdan düşük varsayılanı doğrulamadan
+  önce isteği reddeder.
 
 ## Mimari notlar
 
-- **Sanctum kurulu değil.** Frontend API'ye yalnızca Server Component'lerden,
-  sunucudan sunucuya erişir; tarayıcı oturumu taşımaz. Panel klasik oturum
-  kimlik doğrulaması kullanır. İleride bir veli/yönetici SPA'i eklenirse
-  `php artisan install:api` ile Sanctum devreye alınır.
-- **Panel erişimi** `User::canAccessPanel` ile `is_admin` bayrağına bağlıdır.
-  Bu alan bilinçli olarak `$fillable` dışındadır — kütle atamayla yetki
-  yükseltmesi mümkün değildir. Hesaplar seeder veya `php artisan tinker` ile
-  açılır; kayıt (registration) uç noktası yoktur.
+- **Sanctum yalnızca yönetim paneli için kurulu.** Herkese açık API'ye
+  Server Component'lerden sunucudan sunucuya erişilir ve oturum taşımaz.
+  Panel ise Next.js sunucusundan `/api/admin/*`'e kişisel erişim token'ıyla
+  bağlanır (bkz. `AdminAuthController`); token tarayıcıya hiç ulaşmaz,
+  `HttpOnly` bir çerezde saklanır.
+- **Panel erişimi** `is_admin` bayrağına ve `auth:sanctum` + `ability:admin`
+  middleware'ine bağlıdır. Bu alan bilinçli olarak `$fillable` dışındadır —
+  kütle atamayla yetki yükseltmesi mümkün değildir. Hesaplar seeder veya
+  `php artisan tinker` ile açılır; kayıt (registration) uç noktası yoktur.
 - **Kategori ve ikon alanları** `enum()` yerine `string` kolonda tutulur
-  (SQLite ↔ MySQL uyumu); kısıtlama Eloquent cast'i, Form Request ve Filament
-  formunda üç katmanda birden uygulanır.
+  (SQLite ↔ MySQL uyumu); kısıtlama Eloquent cast'i ve Form Request'te iki
+  katmanda birden uygulanır.
 - **KVKK:** talep kayıtlarında ham IP saklanmaz, yalnızca uygulama anahtarıyla
   tuzlanmış geri döndürülemez bir özet (`ip_hash`) tutulur. Veli görüşleri
   (`testimonials`) varsayılan olarak yayında değildir; yazılı onay alınmadan

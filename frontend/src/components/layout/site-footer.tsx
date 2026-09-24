@@ -5,6 +5,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { Container } from "@/components/shared/container";
 import { footerNavigation } from "@/lib/navigation";
 import { SITE_NAME } from "@/lib/seo/constants";
+import { fetchPageContentBlock } from "@/lib/repositories/page-content";
 import { fetchSiteSettings } from "@/lib/repositories/site-settings";
 import type { SiteSocialLinks } from "@/lib/schemas/site-settings";
 
@@ -27,6 +28,14 @@ function FacebookGlyph(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
       <path d="M14 9h3V5.5h-3C11.24 5.5 9.5 7.32 9.5 10v2H7v3.5h2.5V22h3.5v-6.5H16l.5-3.5h-3v-1.7c0-.86.4-1.3 1.5-1.3Z" />
+    </svg>
+  );
+}
+
+function YoutubeGlyph(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <path d="M21.6 7.2a2.7 2.7 0 0 0-1.9-1.9C18 5 12 5 12 5s-6 0-7.7.3A2.7 2.7 0 0 0 2.4 7.2 28 28 0 0 0 2 12a28 28 0 0 0 .4 4.8 2.7 2.7 0 0 0 1.9 1.9C6 19 12 19 12 19s6 0 7.7-.3a2.7 2.7 0 0 0 1.9-1.9A28 28 0 0 0 22 12a28 28 0 0 0-.4-4.8ZM10 15V9l5 3-5 3Z" />
     </svg>
   );
 }
@@ -59,13 +68,17 @@ function buildSocialLinks(socialLinks: SiteSocialLinks) {
   return [
     { href: socialLinks.instagram, label: "Instagram", icon: InstagramGlyph },
     { href: socialLinks.facebook, label: "Facebook", icon: FacebookGlyph },
+    { href: socialLinks.youtube, label: "YouTube", icon: YoutubeGlyph },
   ].filter((social): social is { href: string; label: string; icon: typeof InstagramGlyph } =>
     Boolean(social.href),
   );
 }
 
 export async function SiteFooter() {
-  const { contact, socialLinks: configuredSocialLinks } = await fetchSiteSettings();
+  const [{ contact, socialLinks: configuredSocialLinks }, { tagline }] = await Promise.all([
+    fetchSiteSettings(),
+    fetchPageContentBlock("footer"),
+  ]);
   const socialLinks = buildSocialLinks(configuredSocialLinks);
 
   return (
@@ -80,10 +93,7 @@ export async function SiteFooter() {
               height={222}
               className="h-12 w-auto"
             />
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/75">
-              Her çocuğun kendine özgü bir öğrenme yolculuğu vardır. Biz bu yolculukta
-              ailelerin yanında, bilime dayalı ve şefkatli bir eğitim ortamı sunarız.
-            </p>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/75">{tagline}</p>
             <div className="mt-6 flex gap-3">
               {socialLinks.map((social) => (
                 <a

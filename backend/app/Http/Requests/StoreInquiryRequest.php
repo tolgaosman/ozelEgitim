@@ -26,7 +26,7 @@ final class StoreInquiryRequest extends FormRequest
             'parentFullName' => ['required', 'string', 'min:2', 'max:120'],
             'childAgeLabel' => ['required', 'string', 'max:30'],
             'phoneNumber' => ['required', 'string', 'regex:/^[0-9+()\s-]{10,20}$/u'],
-            'email' => ['required', 'email:rfc', 'max:160'],
+            'email' => ['nullable', 'email:rfc', 'max:160'],
             'programOfInterest' => ['nullable', 'string', 'max:120'],
             'message' => ['nullable', 'string', 'max:1000'],
             // Bal küpü alanı: gerçek ziyaretçi bunu hiç görmez, dolduran bir
@@ -47,7 +47,6 @@ final class StoreInquiryRequest extends FormRequest
             'childAgeLabel.required' => 'Çocuğunuzun yaşını belirtmeniz gerekir.',
             'phoneNumber.required' => 'Telefon numarası zorunludur.',
             'phoneNumber.regex' => 'Geçerli bir telefon numarası giriniz.',
-            'email.required' => 'E-posta adresi zorunludur.',
             'email.email' => 'Geçerli bir e-posta adresi giriniz.',
             'message.max' => 'Mesajınız en fazla 1000 karakter olabilir.',
         ];
@@ -67,7 +66,7 @@ final class StoreInquiryRequest extends FormRequest
             'parent_full_name' => $validatedInput['parentFullName'],
             'child_age_label' => $validatedInput['childAgeLabel'],
             'phone_number' => $validatedInput['phoneNumber'],
-            'email' => $validatedInput['email'],
+            'email' => $validatedInput['email'] ?? null,
             'program_of_interest' => blank($validatedInput['programOfInterest'] ?? null)
                 ? null
                 : $validatedInput['programOfInterest'],

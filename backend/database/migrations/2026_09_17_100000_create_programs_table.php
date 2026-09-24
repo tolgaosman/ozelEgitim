@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Kategori ve ikon alanları bilinçli olarak `enum()` yerine `string` olarak
  * tutulur: SQLite (geliştirme) ile MySQL (üretim) arasında şema kayması
- * oluşmasın diye. Kısıtlama Eloquent cast'i, Form Request ve Filament
+ * oluşmasın diye. Kısıtlama Eloquent cast'i ve Form Request
  * formundaki `Rule::enum()` ile üç katmanda birden uygulanır.
  */
 return new class extends Migration

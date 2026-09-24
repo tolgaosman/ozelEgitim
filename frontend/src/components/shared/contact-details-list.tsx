@@ -32,7 +32,7 @@ export function ContactDetailsList({ items, tone = "light", className }: Contact
                 "group flex items-center gap-4 rounded-2xl border p-4 transition-all duration-200",
                 isDark 
                   ? "border-white/10 bg-white/5 hover:bg-white/10" 
-                  : "border-border bg-white shadow-sm hover:border-aqua-500 hover:bg-aqua-50/30 hover:shadow-md",
+                  : "border-border bg-white shadow-sm hover:border-aqua-500 hover:bg-aqua-100/40 hover:shadow-md",
                 !detail.href && "cursor-default hover:border-border hover:bg-white hover:shadow-sm" // href yoksa buton efektlerini iptal et
               )}
             >
@@ -48,7 +48,7 @@ export function ContactDetailsList({ items, tone = "light", className }: Contact
                 <p className={cn("text-xs font-semibold uppercase tracking-wider", isDark ? "text-white/70" : "text-ink-soft")}>
                   {detail.label}
                 </p>
-                <p className={cn("mt-0.5 truncate text-[15px] font-medium transition-colors", isDark ? "text-white" : "text-navy-900", detail.href && !isDark && "group-hover:text-aqua-600")}>
+                <p className={cn("mt-0.5 text-[15px] font-medium break-words transition-colors", isDark ? "text-white" : "text-navy-900", detail.href && !isDark && "group-hover:text-aqua-600")}>
                   {detail.value}
                 </p>
               </div>

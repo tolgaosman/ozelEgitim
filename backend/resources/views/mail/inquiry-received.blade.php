@@ -19,7 +19,7 @@
 {{ $inquiry->message }}
 @endif
 
-<x-mail::button :url="url('/admin/inquiries/' . $inquiry->getKey())">
+<x-mail::button :url="rtrim(config('services.frontend.url'), '/') . '/admin/talepler/' . $inquiry->getKey()">
 Panelde aç
 </x-mail::button>
 

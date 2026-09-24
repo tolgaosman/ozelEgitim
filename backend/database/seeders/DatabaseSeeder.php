@@ -11,8 +11,11 @@ final class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            AdminUserSeeder::class,
+            // AdminUserSeeder önce site ayarlarına bakar (işletme e-postasıyla
+            // eşleşen hesabı oluşturur), bu yüzden SiteSettingSeeder'dan SONRA
+            // çalışmalıdır.
             SiteSettingSeeder::class,
+            AdminUserSeeder::class,
             SiteStatSeeder::class,
             ProgramSeeder::class,
             AnnouncementSeeder::class,

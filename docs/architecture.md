@@ -40,7 +40,7 @@ program sitede yer tutucudan yaşamaya devam ederdi.
 | `FRONTEND_REVALIDATE_URL` | backend `.env` | Next.js'in `/api/revalidate` uç noktası. |
 | `FRONTEND_REVALIDATE_SECRET` | backend `.env` | `REVALIDATE_SECRET` ile **birebir aynı** olmalıdır. |
 | `INQUIRY_RECIPIENT_EMAIL` | backend `.env` | Ön görüşme talebi bildirimlerinin gideceği adres. |
-| `ADMIN_SEED_EMAIL` / `ADMIN_SEED_PASSWORD` | backend `.env` | Seeder'ın açtığı ilk yönetici hesabı. |
+| `ADMIN_SEED_NAME` / `ADMIN_SEED_PASSWORD` | backend `.env` | Seeder'ın açtığı ilk yönetici hesabının adı ve şifresi. E-posta ayrı tutulmaz — her zaman `SiteSetting.email` (işletme e-postası) ile aynıdır. |
 
 `NEXT_PUBLIC_` öneki kullanılmaz çünkü istemci tarafında doğrudan API'ye istek
 atılmaz — tüm veri Server Component'ler üzerinden akar. Bu, API taban URL'inin
@@ -51,19 +51,34 @@ ve API anahtarlarının tarayıcıya hiç sızmaması anlamına gelir.
 Sitedeki tüm içerik herkese açıktır; içerik uç noktaları kimlik doğrulaması
 gerektirmez.
 
-Yönetim paneli (`/admin`, Filament) **klasik oturum kimlik doğrulaması**
-kullanır, Sanctum değil — panel Laravel'in kendi alanında çalıştığı için bir
-SPA token akışına ihtiyaç yoktur. Erişim `User::canAccessPanel` ile `is_admin`
-bayrağına bağlıdır; bu alan kütle atama dışıdır ve kayıt uç noktası yoktur.
+Yönetim paneli artık Filament değil, sitenin kendi `/admin` adresinde çalışan
+bir Next.js bölümüdür (bkz. `frontend/src/app/admin/`). Kimlik doğrulama
+Laravel Sanctum kişisel erişim token'larıyla yapılır:
 
-İleride bir **veli paneli** (Next.js tarafında oturum açılan bir alan)
-eklenirse Sanctum SPA kimlik doğrulaması kullanılır:
+1. Next.js sunucusu `POST /api/admin/login`'e yalnızca `{password}` gönderir
+   (`app/Http/Controllers/Api/Admin/AdminAuthController`) — giriş ekranında
+   e-posta alanı yoktur, hesap her zaman `SiteSetting.email` (sitede gösterilen
+   işletme e-postası) ile eşleşen, `is_admin=true` kullanıcıdır.
+2. Başarılı girişte `admin` yeteneğine sahip, 7 gün geçerli bir Sanctum
+   token'ı döner. Next.js bu token'ı tarayıcıya hiç göndermeden `iz_admin_token`
+   adlı `HttpOnly`, `SameSite=Strict` bir çerezde saklar
+   (`frontend/src/lib/admin/actions/auth.ts`).
+3. `/admin/*` altındaki her istek `src/proxy.ts` ile hızlı bir ön kontrolden
+   (çerez var mı) geçer; gerçek doğrulama `app/admin/(protected)/layout.tsx`
+   içinde `GET /api/admin/me` ile yapılır — token geçersizse `/admin/giris`'e
+   yönlendirilir.
+4. Tüm `/api/admin/*` uç noktaları `auth:sanctum` + `ability:admin`
+   middleware'leriyle korunur (`routes/api.php`). `is_admin` kütle atama
+   dışındadır (`User` modelindeki `#[Fillable(...)]` özniteliği), bu yüzden
+   yalnızca seeder veya konsol üzerinden açıkça atanabilir.
+5. İşletme e-postası panelden (Ayarlar) değiştirilirse yönetici hesabının
+   e-postası otomatik senkronize edilir (`Admin\SiteSettingController::update`)
+   — aksi halde giriş kuralı ile ayarlardaki e-posta birbirinden sapardı.
 
-1. Next.js, `/sanctum/csrf-cookie` uç noktasına istek atarak `XSRF-TOKEN` alır.
-2. Giriş isteği bu tokenı `X-XSRF-TOKEN` header'ında geri gönderir; Laravel
-   oturum çerezini `HttpOnly`, `Secure`, `SameSite=Lax` olarak döner.
-3. Oturum tokenı **asla** `localStorage`/`sessionStorage`'da tutulmaz.
-4. Tüm mutasyonlar Server Action'lardan `credentials: "include"` ile proxy'lenir.
+İleride bir **veli paneli** (Next.js tarafında oturum açılan ayrı bir alan)
+eklenirse, tarayıcıdan doğrudan çerezli oturum gerektiği için Sanctum'un SPA
+akışı (`/sanctum/csrf-cookie`, `X-XSRF-TOKEN`) kullanılır; yönetim paneli
+bunun aksine yalnızca sunucudan sunucuya bearer token kullanır.
 
 ## 4. Uç nokta sözleşmesi
 
@@ -99,7 +114,7 @@ tipleri bu şemalardan `z.infer` ile türetilir — backend yanıtı şemadan sa
 Panelden içerik kaydedildiğinde:
 
 ```
-Filament kaydeder
+Admin API controller bir modeli kaydeder/siler
    → FrontendCacheObserver (saved / deleted / restored)
    → DispatchFrontendRevalidation (kuyruk)
    → POST {FRONTEND_REVALIDATE_URL}  { "tags": [...] }

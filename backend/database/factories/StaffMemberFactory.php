@@ -23,6 +23,7 @@ final class StaffMemberFactory extends Factory
             'full_name' => $fullName,
             'title' => 'Özel Eğitim Uzmanı',
             'specialties' => [$this->faker->word(), $this->faker->word()],
+            'education' => [$this->faker->sentence()],
             'bio' => $this->faker->paragraph(),
             'photo_path' => null,
             'sort_order' => $this->faker->numberBetween(0, 50),

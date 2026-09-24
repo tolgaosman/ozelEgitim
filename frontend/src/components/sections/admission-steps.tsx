@@ -1,54 +1,35 @@
-import { ClipboardList, FileCheck2, MessagesSquare, Rocket } from "lucide-react";
+import { ClipboardList, FileCheck2, MessagesSquare, Rocket, type LucideIcon } from "lucide-react";
 import { IconFeature, type IconFeatureAccent } from "@/components/shared/icon-feature";
 import { Reveal } from "@/components/shared/reveal";
+import { fetchPageContentBlock } from "@/lib/repositories/page-content";
 
-const admissionSteps: { icon: typeof ClipboardList; accentColor: IconFeatureAccent; title: string; description: string }[] = [
-  {
-    icon: ClipboardList,
-    accentColor: "aqua",
-    title: "Ön Görüşme Formunu Doldurun",
-    description:
-      "Bu sayfadaki formu doldurarak çocuğunuz hakkında temel bilgileri bizimle paylaşın. Ekibimiz bir hafta içinde sizinle iletişime geçer.",
-  },
-  {
-    icon: FileCheck2,
-    accentColor: "peach",
-    title: "RAM Raporunuzu İletin",
-    description:
-      "Güncel RAM raporunuz varsa süreç hızlanır. Raporunuz yoksa RAM başvurusu için size adım adım rehberlik ediyoruz.",
-  },
-  {
-    icon: MessagesSquare,
-    accentColor: "grass",
-    title: "Değerlendirme Görüşmesi",
-    description:
-      "Uzman ekibimiz çocuğunuzla tanışır, güçlü yönlerini ve ihtiyaçlarını birlikte belirleriz.",
-  },
-  {
-    icon: Rocket,
-    accentColor: "aqua",
-    title: "Bireyselleştirilmiş Programla Başlayın",
-    description:
-      "Çocuğunuza özel hazırlanan eğitim programı onaylanır ve seans takvimi birlikte planlanır.",
-  },
+/** İkon ve vurgu rengi tasarımın sabit bir parçasıdır; metin panelden (`contact.admission_steps`) gelir. */
+const STEP_PRESENTATION: readonly { icon: LucideIcon; accentColor: IconFeatureAccent }[] = [
+  { icon: ClipboardList, accentColor: "aqua" },
+  { icon: FileCheck2, accentColor: "peach" },
+  { icon: MessagesSquare, accentColor: "grass" },
+  { icon: Rocket, accentColor: "aqua" },
 ];
 
-export function AdmissionSteps() {
+export async function AdmissionSteps() {
+  const content = await fetchPageContentBlock("contact.admission_steps");
+
   return (
     <ol className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-4 lg:gap-x-14">
-      {admissionSteps.map((step, index) => (
-        <Reveal key={step.title} delaySeconds={index * 0.06}>
-          <li>
+      {content.steps.map((step, index) => {
+        const presentation = STEP_PRESENTATION[index % STEP_PRESENTATION.length];
+        return (
+          <Reveal key={`${index}-${step.title}`} as="li" delaySeconds={index * 0.06}>
             <IconFeature
-              icon={step.icon}
+              icon={presentation.icon}
               title={step.title}
               description={step.description}
-              accentColor={step.accentColor}
+              accentColor={presentation.accentColor}
               index={String(index + 1).padStart(2, "0")}
             />
-          </li>
-        </Reveal>
-      ))}
+          </Reveal>
+        );
+      })}
     </ol>
   );
 }

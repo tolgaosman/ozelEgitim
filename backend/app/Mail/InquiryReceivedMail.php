@@ -28,8 +28,10 @@ final class InquiryReceivedMail extends Mailable implements ShouldQueue
     {
         return new Envelope(
             subject: "Yeni ön görüşme talebi — {$this->inquiry->parent_full_name}",
-            // Ekip doğrudan "Yanıtla" diyerek veliye dönebilsin diye.
-            replyTo: [$this->inquiry->email],
+            // Ekip doğrudan "Yanıtla" diyerek veliye dönebilsin diye — e-posta
+            // alanı zorunlu değil, boşsa `replyTo` hiç ayarlanmaz (aksi halde
+            // Mailable, null bir adres üzerinde çökerdi).
+            replyTo: $this->inquiry->email !== null ? [$this->inquiry->email] : [],
         );
     }
 
