@@ -18,30 +18,25 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-      args:
-        - APP_KEY=${APP_KEY}
-        - APP_ENV=${APP_ENV:-production}
-        - APP_DEBUG=${APP_DEBUG:-false}
-        - DB_CONNECTION=${DB_CONNECTION:-sqlite}
-        - ADMIN_SEED_NAME=${ADMIN_SEED_NAME:-Admin}
-        - ADMIN_SEED_PASSWORD=${ADMIN_SEED_PASSWORD:-izozelegitim2026}
+    # 8000 Coolify panelinin portu — backend 4004'ten yayınlanır.
     ports:
-      - "8000:8080"
+      - "4004:8080"
     environment:
       - APP_KEY=${APP_KEY}
       - APP_ENV=${APP_ENV:-production}
       - APP_DEBUG=${APP_DEBUG:-false}
-      - APP_URL=${APP_URL:-http://5.75.128.196:8000}
+      - APP_URL=${APP_URL:-http://5.75.128.196:4004}
       - DB_CONNECTION=${DB_CONNECTION:-sqlite}
+      - DB_DATABASE=/var/www/html/database/sqlite/database.sqlite
       - ADMIN_SEED_NAME=${ADMIN_SEED_NAME:-Admin}
-      - ADMIN_SEED_PASSWORD=${ADMIN_SEED_PASSWORD:-izozelegitim2026}
+      - ADMIN_SEED_PASSWORD=${ADMIN_SEED_PASSWORD:?ADMIN_SEED_PASSWORD tanımlı olmalı}
       - FRONTEND_URL=${FRONTEND_URL:-http://5.75.128.196:4003}
       - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-http://5.75.128.196:4003}
     restart: unless-stopped
     volumes:
       - backend_storage:/var/www/html/storage
-      - backend_db:/var/www/html/database
+      - backend_sqlite:/var/www/html/database/sqlite
 
 volumes:
   backend_storage:
-  backend_db:
+  backend_sqlite:
