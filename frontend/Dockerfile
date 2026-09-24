@@ -24,12 +24,8 @@ RUN adduser --system --uid 1001 nextjs
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
-# Kopyalama işlemleri
-COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/next.config.ts ./next.config.ts
+# Tüm build edilmiş dosyaları kopyala
+COPY --from=builder --chown=nextjs:nodejs /app ./
 
 USER nextjs
 
