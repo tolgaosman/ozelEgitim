@@ -1,0 +1,13 @@
+node_modules
+vendor
+.env
+.env.backup
+.env.production
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+public/build
+database/*.sqlite*
+.git
+.DS_Store

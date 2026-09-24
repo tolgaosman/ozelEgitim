@@ -1,15 +1,15 @@
-version: '3.8'
-
 services:
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        - API_BASE_URL=${API_BASE_URL:-http://backend:8080}
     ports:
       - "4003:3000"
     environment:
       - NODE_ENV=production
-      - API_BASE_URL=${API_BASE_URL:-http://5.75.128.196:8000}
+      - API_BASE_URL=${API_BASE_URL:-http://backend:8080}
     restart: unless-stopped
     depends_on:
       - backend
@@ -18,17 +18,30 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+      args:
+        - APP_KEY=${APP_KEY}
+        - APP_ENV=${APP_ENV:-production}
+        - APP_DEBUG=${APP_DEBUG:-false}
+        - DB_CONNECTION=${DB_CONNECTION:-sqlite}
+        - ADMIN_SEED_NAME=${ADMIN_SEED_NAME:-Admin}
+        - ADMIN_SEED_PASSWORD=${ADMIN_SEED_PASSWORD:-izozelegitim2026}
     ports:
-      - "8000:8080" # serversideup image varsayılan olarak 8080 portunu kullanır. Dışarıya 8000 olarak açıyoruz.
+      - "8000:8080"
     environment:
-      - APP_ENV=production
-      - APP_DEBUG=false
       - APP_KEY=${APP_KEY}
+      - APP_ENV=${APP_ENV:-production}
+      - APP_DEBUG=${APP_DEBUG:-false}
+      - APP_URL=${APP_URL:-http://5.75.128.196:8000}
+      - DB_CONNECTION=${DB_CONNECTION:-sqlite}
       - ADMIN_SEED_NAME=${ADMIN_SEED_NAME:-Admin}
       - ADMIN_SEED_PASSWORD=${ADMIN_SEED_PASSWORD:-izozelegitim2026}
-      - DB_CONNECTION=sqlite
+      - FRONTEND_URL=${FRONTEND_URL:-http://5.75.128.196:4003}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-http://5.75.128.196:4003}
     restart: unless-stopped
     volumes:
-      # SQLite kullanıyorsanız veritabanının kaybolmaması için volume tanımlayabilirsiniz.
-      # MySQL vb. kullanacaksanız buraya gerek yok.
-      - ./backend/database:/var/www/html/database
+      - backend_storage:/var/www/html/storage
+      - backend_db:/var/www/html/database
+
+volumes:
+  backend_storage:
+  backend_db:

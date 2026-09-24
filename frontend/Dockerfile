@@ -10,7 +10,12 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+# Next.js build sırasında backend adresini bilmeli (SSR/SSG için)
+ARG API_BASE_URL
+ENV API_BASE_URL=${API_BASE_URL}
 ENV NEXT_TELEMETRY_DISABLED=1
+
 RUN npm run build
 
 FROM base AS runner
@@ -21,10 +26,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
-
-# Tüm build edilmiş dosyaları kopyala
+# Next.js standalone output kullanmıyorsa tüm dosyaları kopyala
 COPY --from=builder --chown=nextjs:nodejs /app ./
 
 USER nextjs
