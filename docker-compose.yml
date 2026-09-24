@@ -9,7 +9,7 @@ services:
       - "4003:3000"
     environment:
       - NODE_ENV=production
-      # - API_BASE_URL=http://5.75.128.196:8000 # Eğer IP ile girecekseniz bunu frontend .env dosyasından da ayarlayabilirsiniz.
+      - API_BASE_URL=${API_BASE_URL:-http://5.75.128.196:8000}
     restart: unless-stopped
     depends_on:
       - backend
@@ -23,7 +23,10 @@ services:
     environment:
       - APP_ENV=production
       - APP_DEBUG=false
-      # Veritabanı ve APP_KEY gibi hassas ayarları Coolify'da "Environment Variables" sekmesinden girmelisiniz.
+      - APP_KEY=${APP_KEY}
+      - ADMIN_SEED_NAME=${ADMIN_SEED_NAME:-Admin}
+      - ADMIN_SEED_PASSWORD=${ADMIN_SEED_PASSWORD:-izozelegitim2026}
+      - DB_CONNECTION=sqlite
     restart: unless-stopped
     volumes:
       # SQLite kullanıyorsanız veritabanının kaybolmaması için volume tanımlayabilirsiniz.
